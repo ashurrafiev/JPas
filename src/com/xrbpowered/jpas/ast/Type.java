@@ -1,0 +1,129 @@
+package com.xrbpowered.jpas.ast;
+
+import com.xrbpowered.jpas.JPasError;
+
+public class Type {
+
+	public abstract static class Comparator {
+		public abstract int compare(Object x, Object y);
+	}
+	
+	public abstract static class Ordinator {
+		public abstract int ord(Object x);
+		public abstract Object unord(int i);
+		
+		public Object pred(Object x) {
+			return unord(ord(x)-1);
+		}
+		
+		public Object succ(Object x) {
+			return unord(ord(x)+1);
+		}
+	}
+	
+	public static final Type integer = new Type(true, "Integer", 0).setComparator(new Comparator() {
+		@Override
+		public int compare(Object x, Object y) {
+			return Integer.compare((Integer) x, (Integer) y);
+		}
+	}).setOrdinator(new Ordinator() {
+		@Override
+		public int ord(Object x) {
+			return (Integer) x;
+		}
+		@Override
+		public Object unord(int i) {
+			return new Integer(i);
+		}
+	});
+	
+	public static final Type real = new Type(true, "Real", 0.0).setComparator(new Comparator() {
+		@Override
+		public int compare(Object x, Object y) {
+			return Double.compare((Double) x, (Double) y);
+		}
+	});
+	
+	public static final Type bool = new Type(true, "Boolean", false).setComparator(new Comparator() {
+		@Override
+		public int compare(Object x, Object y) {
+			return Boolean.compare((Boolean) x, (Boolean) y);
+		}
+	}).setOrdinator(new Ordinator() {
+		@Override
+		public int ord(Object x) {
+			return (Boolean) x ? 1 : 0;
+		}
+		@Override
+		public Object unord(int i) {
+			if(i==0)
+				return new Boolean(false);
+			else if(i==1)
+				return new Boolean(true);
+			else
+				throw new JPasError("Out of range.");
+		}
+	});
+	
+	private static final Type[] stringIndexTypes = {Type.integer};
+	public static final Type string = new Type(true, "String", "") {
+		@Override
+		public Type[] indexTypes() {
+			return stringIndexTypes;
+		};
+	}.setComparator(new Comparator() {
+		@Override
+		public int compare(Object x, Object y) {
+			return ((String) x).compareTo((String) y);
+		}
+	});
+	
+	public final boolean builtIn;
+	public final String name;
+	private Comparator comparator = null;
+	private Ordinator ordinator = null;
+	
+	private Object defValue = null;
+	
+	protected Type(boolean builtIn, String name, Object defValue) {
+		this.builtIn = builtIn;
+		this.name = name;
+		this.defValue = defValue;
+	}
+	
+	protected Type setComparator(Comparator comp) {
+		this.comparator = comp;
+		return this;
+	}
+	
+	public Comparator getComparator() {
+		return comparator;
+	}
+
+	protected Type setOrdinator(Ordinator ord) {
+		this.ordinator = ord;
+		return this;
+	}
+	
+	public Ordinator getOrdinator() {
+		return ordinator;
+	}
+
+	public Object getDefValue() {
+		return defValue;
+	}
+	
+	public Type[] indexTypes() {
+		return null;
+	}
+	
+	public Object assign(Object old, Object v) {
+		return v;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this==obj;
+	}
+	
+}
