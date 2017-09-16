@@ -1,22 +1,26 @@
 package com.xrbpowered.jpas.ast;
 
-import com.xrbpowered.jpas.ast.exp.Expression;
+import java.util.List;
 
-public class RepeatUntil extends Statement {
+import com.xrbpowered.jpas.ast.exp.Expression;
+import com.xrbpowered.jpas.mem.StackFrameDesc;
+
+public class RepeatUntil extends BlockStatement {
 
 	private final Expression cond;
-	private final Statement s;
 	
-	public RepeatUntil(Statement s, Expression cond) {
+	public RepeatUntil(List<Statement> statements, StackFrameDesc sf, Expression cond) {
+		super(statements, sf);
 		this.cond = cond;
-		this.s = s;
 	}
 	
 	@Override
 	public void execute() {
+		enter();
 		do {
-			s.execute();
+			executeBody();
 		} while(!((Boolean) cond.evaluate()));
+		leave();
 	}
 
 }

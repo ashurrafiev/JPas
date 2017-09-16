@@ -1,7 +1,8 @@
 package com.xrbpowered.jpas.ast;
 
 import com.xrbpowered.jpas.JPasError;
-import com.xrbpowered.jpas.ast.Type.Ordinator;
+import com.xrbpowered.jpas.ast.data.Type;
+import com.xrbpowered.jpas.ast.data.Type.Ordinator;
 import com.xrbpowered.jpas.ast.exp.Expression;
 
 public class Range {
@@ -26,6 +27,10 @@ public class Range {
 	public Range(Expression min, Expression max) {
 		this.min = min;
 		this.max = max;
+	}
+	
+	public Type getType() {
+		return min.getType();
 	}
 	
 	public Fixed fix() {

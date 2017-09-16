@@ -1,4 +1,4 @@
-package com.xrbpowered.jpas;
+package com.xrbpowered.jpas.parse;
 
 import java.util.HashMap;
 

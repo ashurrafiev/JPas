@@ -1,4 +1,4 @@
-package com.xrbpowered.jpas.ast;
+package com.xrbpowered.jpas.ast.data;
 
 import com.xrbpowered.jpas.JPasError;
 
@@ -21,7 +21,7 @@ public class Type {
 		}
 	}
 	
-	public static final Type integer = new Type(true, "Integer", 0).setComparator(new Comparator() {
+	public static final Type integer = new Type(true, 0).setComparator(new Comparator() {
 		@Override
 		public int compare(Object x, Object y) {
 			return Integer.compare((Integer) x, (Integer) y);
@@ -37,14 +37,14 @@ public class Type {
 		}
 	});
 	
-	public static final Type real = new Type(true, "Real", 0.0).setComparator(new Comparator() {
+	public static final Type real = new Type(true, 0.0).setComparator(new Comparator() {
 		@Override
 		public int compare(Object x, Object y) {
 			return Double.compare((Double) x, (Double) y);
 		}
 	});
 	
-	public static final Type bool = new Type(true, "Boolean", false).setComparator(new Comparator() {
+	public static final Type bool = new Type(true, false).setComparator(new Comparator() {
 		@Override
 		public int compare(Object x, Object y) {
 			return Boolean.compare((Boolean) x, (Boolean) y);
@@ -65,11 +65,26 @@ public class Type {
 		}
 	});
 	
-	private static final Type[] stringIndexTypes = {Type.integer};
-	public static final Type string = new Type(true, "String", "") {
+	public static final Type character = new Type(true, '\0').setComparator(new Comparator() {
 		@Override
-		public Type[] indexTypes() {
-			return stringIndexTypes;
+		public int compare(Object x, Object y) {
+			return Character.compare((Character) x, (Character) y);
+		}
+	}).setOrdinator(new Ordinator() {
+		@Override
+		public int ord(Object x) {
+			return Character.getNumericValue((Character) x);
+		}
+		@Override
+		public Object unord(int i) {
+			return new Character((char) i);
+		}
+	});
+	
+	public static final Type string = new IndexableType(true, "") {
+		@Override
+		public Type indexType() {
+			return Type.integer;
 		};
 	}.setComparator(new Comparator() {
 		@Override
@@ -79,15 +94,13 @@ public class Type {
 	});
 	
 	public final boolean builtIn;
-	public final String name;
 	private Comparator comparator = null;
 	private Ordinator ordinator = null;
 	
 	private Object defValue = null;
 	
-	protected Type(boolean builtIn, String name, Object defValue) {
+	protected Type(boolean builtIn, Object defValue) {
 		this.builtIn = builtIn;
-		this.name = name;
 		this.defValue = defValue;
 	}
 	
@@ -109,12 +122,8 @@ public class Type {
 		return ordinator;
 	}
 
-	public Object getDefValue() {
-		return defValue;
-	}
-	
-	public Type[] indexTypes() {
-		return null;
+	public Object init(Object v) {
+		return v==null ? defValue : v;
 	}
 	
 	public Object assign(Object old, Object v) {

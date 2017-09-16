@@ -6,9 +6,13 @@ Begin
 var s: String = 'Hello world! ';
 var i, j: Integer;
 
+i := 0;
 repeat
 	for j:=0 to Length(s)-1 do
-		Write(s[(i+j) mod Length(s) + 1]);
+		begin
+			var x: Integer = (i+j) mod Length(s);
+			Write(s[x+1]);
+		end;
 	WriteLn();
 	
 	i := i+1;

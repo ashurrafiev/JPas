@@ -1,6 +1,6 @@
 package com.xrbpowered.jpas.ast.exp;
 
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.ast.data.Type;
 
 public class IntAsReal extends Expression {
 

@@ -1,11 +1,14 @@
-package com.xrbpowered.jpas;
+package com.xrbpowered.jpas.ast;
 
 import java.util.HashMap;
 
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Function;
 import com.xrbpowered.jpas.ast.exp.Variable;
+import com.xrbpowered.jpas.mem.StackFrameDesc;
 import com.xrbpowered.jpas.system.Delay;
+import com.xrbpowered.jpas.system.Format;
 import com.xrbpowered.jpas.system.Length;
 import com.xrbpowered.jpas.system.Write;
 import com.xrbpowered.jpas.system.math.Abs;
@@ -28,6 +31,7 @@ public class Scope {
 		variable, function, procedure, type, argument, result
 	}
 	
+	public final StackFrameDesc stackFrame = new StackFrameDesc();
 	public final Scope parent;
 	private HashMap<String, ScopeEntry> idMap = new HashMap<>();
 
@@ -50,7 +54,7 @@ public class Scope {
 	}
 	
 	public Variable addVariable(String name, Type type) {
-		Variable v = new Variable(type);
+		Variable v = new Variable(type, stackFrame);
 		put(name, v);
 		return v;
 	}
@@ -65,6 +69,7 @@ public class Scope {
 		
 		global.addFunction("write", new Write(false));
 		global.addFunction("writeln", new Write(true));
+		global.addFunction("format", new Format());
 		global.addFunction("delay", new Delay());
 		
 		RealMath.register(global);

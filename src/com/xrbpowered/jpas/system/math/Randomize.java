@@ -2,8 +2,8 @@ package com.xrbpowered.jpas.system.math;
 
 import java.util.Random;
 
-import com.xrbpowered.jpas.Scope.EntryType;
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.ast.Scope.EntryType;
+import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
 

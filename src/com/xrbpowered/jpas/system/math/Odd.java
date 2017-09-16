@@ -1,6 +1,6 @@
 package com.xrbpowered.jpas.system.math;
 
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Function;
 
 public class Odd extends Function {

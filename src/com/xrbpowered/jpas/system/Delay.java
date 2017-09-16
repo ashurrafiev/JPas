@@ -1,7 +1,7 @@
 package com.xrbpowered.jpas.system;
 
-import com.xrbpowered.jpas.Scope.EntryType;
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.ast.Scope.EntryType;
+import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Function;
 
 public class Delay extends Function {

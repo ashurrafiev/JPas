@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.xrbpowered.jpas.ast.Statement;
+import com.xrbpowered.jpas.parse.JPasParser;
 
 public class JPas extends Thread {
 
@@ -15,8 +16,14 @@ public class JPas extends Thread {
 	
 	@Override
 	public void run() {
-		code.execute();
-		System.exit(0);
+		try {
+			code.execute();
+			System.exit(0);
+		}
+		catch(Exception e) {
+			System.err.println("Runtime error: "+e.getMessage());
+			System.exit(1);
+		}
 	}
 	
 	public static void main(String[] args) {

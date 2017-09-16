@@ -1,6 +1,6 @@
 package com.xrbpowered.jpas.ast;
 
-import com.xrbpowered.jpas.ast.Type.Ordinator;
+import com.xrbpowered.jpas.ast.data.Type.Ordinator;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Variable;
 

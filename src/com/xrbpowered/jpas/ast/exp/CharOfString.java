@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.ast.exp;
 
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.data.Type;
 
 public class CharOfString extends Expression {
 
@@ -14,7 +15,7 @@ public class CharOfString extends Expression {
 	
 	@Override
 	public Type getType() {
-		return Type.string;
+		return Type.character;
 	}
 
 	@Override
@@ -26,7 +27,9 @@ public class CharOfString extends Expression {
 	public Object evaluate() {
 		String str = (String) s.evaluate();
 		int i = (Integer) index.evaluate();
-		return str.substring(i-1, i);
+		if(i<1 || i>str.length())
+			throw new JPasError("Range check error");
+		return new Character(str.charAt(i-1));
 	}
 
 }

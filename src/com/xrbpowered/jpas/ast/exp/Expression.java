@@ -1,7 +1,7 @@
 package com.xrbpowered.jpas.ast.exp;
 
 import com.xrbpowered.jpas.ast.Statement;
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.ast.data.Type;
 
 public abstract class Expression {
 
@@ -22,12 +22,12 @@ public abstract class Expression {
 	public abstract Object evaluate();
 	public abstract boolean isConst();
 	
-	public static Expression checkTypeCast(Type dt, Expression src) {
+	public static Expression implicitCast(Type dt, Expression src) {
 		Type st = src.getType();
 		if(dt.equals(st))
 			return src;
 		else if(dt==Type.string)
-			return ToString.make(src);
+			return ToString.make(src); // TODO remove implicit cast to String
 		else if(dt==Type.real && st==Type.integer)
 			return IntAsReal.make(src);
 		else
@@ -35,6 +35,8 @@ public abstract class Expression {
 	}
 	
 	public static Expression precalc(Expression ex) {
+		if(ex==null)
+			return null;
 		if(ex.isConst() && !(ex instanceof Constant)) {
 			return new Constant(ex.getType(), ex.evaluate());
 		}

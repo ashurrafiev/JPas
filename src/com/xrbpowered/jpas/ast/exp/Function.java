@@ -1,9 +1,9 @@
 package com.xrbpowered.jpas.ast.exp;
 
 import com.xrbpowered.jpas.JPasError;
-import com.xrbpowered.jpas.Scope.EntryType;
-import com.xrbpowered.jpas.Scope.ScopeEntry;
-import com.xrbpowered.jpas.ast.Type;
+import com.xrbpowered.jpas.ast.Scope.EntryType;
+import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
+import com.xrbpowered.jpas.ast.data.Type;
 
 public abstract class Function implements ScopeEntry {
 
@@ -82,7 +82,7 @@ public abstract class Function implements ScopeEntry {
 	}
 	
 	protected Expression checkTypeCast(Type dt, Expression arg) {
-		Expression ex = Expression.checkTypeCast(dt, arg);
+		Expression ex = Expression.implicitCast(dt, arg);
 		if(ex!=null)
 			return ex;
 		throw new JPasError("Argument type mismatch");
@@ -90,7 +90,7 @@ public abstract class Function implements ScopeEntry {
 	
 	public Function.Call makeCall(Expression[] args) {
 		testArgNumber(getArgTypes().length, args);
-			if(args!=null) {
+		if(args!=null) {
 			for(int i=0; i<args.length; i++) {
 				Type dt = getArgType(i, args);
 				args[i] = checkTypeCast(dt, args[i]);
