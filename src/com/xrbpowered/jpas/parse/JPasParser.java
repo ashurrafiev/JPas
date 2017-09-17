@@ -22,9 +22,11 @@ import com.xrbpowered.jpas.ast.exp.ArrayItem;
 import com.xrbpowered.jpas.ast.exp.BinaryOp;
 import com.xrbpowered.jpas.ast.exp.CharOfString;
 import com.xrbpowered.jpas.ast.exp.Constant;
+import com.xrbpowered.jpas.ast.exp.CustomFunction;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
 import com.xrbpowered.jpas.ast.exp.LValue;
+import com.xrbpowered.jpas.ast.exp.LValueArrayItem;
 import com.xrbpowered.jpas.ast.exp.UnaryOp;
 import com.xrbpowered.jpas.ast.exp.Variable;
 import com.xrbpowered.jpas.parse.JPasToken.TokenType;
@@ -124,8 +126,12 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		Expression res = null;
 		if(type==Type.string)
 			res = new CharOfString(x, ex);
-		else if(type instanceof ArrayType)
-			res = new ArrayItem((LValue) x, ex);
+		else if(type instanceof ArrayType) {
+			// if(x instanceof LValue)
+				res = new LValueArrayItem((LValue) x, ex); // TODO non-lvalue arrays
+			// else
+			//	res = new ArrayItem(x, ex);
+		}
 		
 		if(res==null)
 			return null;
@@ -352,7 +358,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 					throw new JPasError("Expected ;");
 				Statement s = checkedStatement(inner);
 				if(s!=null) {
-					block.add(s);
+					if(s!=Statement.nop)
+						block.add(s);
 					sep = false;
 				}
 				else
@@ -385,7 +392,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 					throw new JPasError("Expected ;");
 				Statement s = checkedStatement(inner);
 				if(s!=null) {
-					block.add(s);
+					if(s!=Statement.nop)
+						block.add(s);
 					sep = false;
 				}
 				else
@@ -469,6 +477,16 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return null;
 			return ArrayType.make(r, type);
 		}
+		else if(TokenType.identifier.token.equals(token)) {
+			String name = (String) token.value;
+			next();
+			ScopeEntry e = scope.find(name);
+			if(e==null)
+				throw new JPasError("Unknown identifier: "+name);
+			if(e.getScopeEntryType()!=EntryType.type)
+				throw new JPasError("Expected type.");
+			return (Type) e;
+		}
 		else
 			return null;
 	}
@@ -515,6 +533,92 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		return new Variable.VarInit(vars, def);
 	}
 	
+	private List<CustomFunction.ArgDef> argDefList(Scope scope) {
+		List<CustomFunction.ArgDef> list = new ArrayList<>();
+		boolean sep = true;
+		for(;;) {
+			if(new JPasToken(')').equals(token)) {
+				next();
+				return list;
+			}
+			else if(new JPasToken(';').equals(token)) {
+				sep = true;
+				next();
+			}
+			else {
+				if(!sep)
+					throw new JPasError("Expected ;");
+				
+				boolean lvalue = false;
+				if(JPasToken.keyword("var").equals(token)) {
+					next();
+					lvalue = true;
+				}
+				List<String> names = varList();
+				if(names==null)
+					return null;
+				Type type = type(scope);
+				if(type==null)
+					return null;
+				
+				for(String name : names)
+					list.add(new CustomFunction.ArgDef(name, type, lvalue));
+				sep = false;
+			}
+		}
+	}
+	
+	private Statement functionDecl(Scope scope, boolean proc) {
+		JPasToken t = token;
+		if(!accept(TokenType.identifier.token))
+			return null;
+		String name = (String) t.value;
+		ScopeEntry e = scope.find(name);
+		if(CustomFunction.isDuplicateId(e, proc ? EntryType.procedure : EntryType.function))
+			throw new JPasError("Duplicate identifier");
+		List<CustomFunction.ArgDef> args = null;
+		if(new JPasToken('(').equals(token)) {
+			next();
+			args = argDefList(scope);
+			if(args==null)
+				return null;
+		}
+		Type type = null;
+		if(!proc) {
+			if(!accept(new JPasToken(':')))
+				return null;
+			type = type(scope);
+			if(type==null)
+				return null;
+		}
+		if(!accept(new JPasToken(';')))
+			return null;
+		
+		CustomFunction f = new CustomFunction(args, type);
+		scope.addFunction(name, f);
+		
+		Scope inner = f.createScope(scope);
+		// TODO forward
+		Statement st = checkedStatement(inner);
+		if(st==null)
+			return null;
+		f.body = st;
+		
+		return Statement.nop;
+	}
+	
+	private Statement typeDecl(Scope scope) {
+		JPasToken t = token;
+		if(!accept(TokenType.identifier.token))
+			return null;
+		String name = (String) t.value;
+		if(!accept(new JPasToken(TokenType.operator, "=")))
+			return null;
+		Type type = type(scope); // TODO type fixing
+		scope.addType(name, type);
+		return Statement.nop;
+	}
+	
 	private Statement statement(Scope scope) {
 		
 		if(JPasToken.keyword("begin").equals(token)) {
@@ -532,7 +636,20 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return varDecl(scope);
 		}
 		
-		// TODO type name = def;
+		else if(JPasToken.keyword("type").equals(token)) {
+			next();
+			return typeDecl(scope);
+		}
+		
+		else if(JPasToken.keyword("function").equals(token)) {
+			next();
+			return functionDecl(scope, false);
+		}
+
+		else if(JPasToken.keyword("procedure").equals(token)) {
+			next();
+			return functionDecl(scope, true);
+		}
 		
 		else if(JPasToken.keyword("if").equals(token)) {
 			next();
@@ -620,8 +737,6 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return null;
 		}
 		
-		// TODO epression call
-		
 		else {
 			if(TokenType.identifier.token.equals(token)) {
 				String name = (String) token.value;
@@ -632,7 +747,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 					next();
 					Expression f = function(scope, name, (Function) e);
 					if(f!=null)
-						return new Expression.Call(f);
+						return Expression.call(f);
 					else
 						return null;
 				}
@@ -654,41 +769,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return new Assignment(dst, ex);
 			}
 			else
-				return new Expression.Call(e);
+				return Expression.call(e);
 		}
-		
-		/*else if(TokenType.identifier.token.equals(token)) {
-			String name = (String) token.value; // TODO lvalue expression?
-			next();
-			ScopeEntry e = scope.find(name);
-			if(e==null)
-				throw new JPasError("Unknown identifier: "+name);
-			if(e.getScopeEntryType()==EntryType.procedure) {
-				Expression f = function(scope, name, (Function) e);
-				if(f!=null)
-					return new Expression.Call(f);
-				else
-					return null;
-			}
-			if(new JPasToken(TokenType.operator, ":=").equals(token)) {
-				if(!(e instanceof LValue))
-					throw new JPasError("Expected LValue.");
-				LValue dst = (LValue) e;
-				next();
-				Expression ex = expression(scope);
-				if(ex==null)
-					return null;
-				ex = Expression.implicitCast(dst.getType(), ex);
-				if(ex==null)
-					throw new JPasError("Assignment type mismatch.");
-				return new Assignment(dst, ex);
-			}
-			else
-				return null;
-		}
-		
-		else
-			return null;*/
 	}
 	
 	private Statement checkedStatement(Scope scope) {

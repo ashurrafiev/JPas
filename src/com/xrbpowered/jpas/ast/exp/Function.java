@@ -28,8 +28,12 @@ public abstract class Function implements ScopeEntry {
 				return f.call(null);
 			else {
 				Object[] v = new Object[args.length];
-				for(int i=0; i<args.length; i++)
-					v[i] = args[i].evaluate();
+				for(int i=0; i<args.length; i++) {
+					if(f.isLValue(i))
+						v[i] = ((LValue) args[i]).getPointer();
+					else
+						v[i] = args[i].evaluate();
+				}
 				return f.call(v);
 			}
 		}
@@ -65,7 +69,8 @@ public abstract class Function implements ScopeEntry {
 	}
 
 	public abstract Type getType();
-	public abstract Type[] getArgTypes();
+	public abstract int getArgNum();
+	public abstract Type getArgType(int argIndex);
 	public abstract Object call(Object[] args);
 	
 	protected void testArgNumber(int numArgs, Expression[] args) {
@@ -77,8 +82,7 @@ public abstract class Function implements ScopeEntry {
 	}
 	
 	protected Type getArgType(int i, Expression[] args) {
-		Type[] argTypes = getArgTypes();
-		return i>=argTypes.length ? argTypes[argTypes.length-1] : argTypes[i];
+		return i>=getArgNum() ? getArgType(getArgNum()-1) : getArgType(i);
 	}
 	
 	protected Expression checkTypeCast(Type dt, Expression arg) {
@@ -89,7 +93,7 @@ public abstract class Function implements ScopeEntry {
 	}
 	
 	public Function.Call makeCall(Expression[] args) {
-		testArgNumber(getArgTypes().length, args);
+		testArgNumber(getArgNum(), args);
 		if(args!=null) {
 			for(int i=0; i<args.length; i++) {
 				Type dt = getArgType(i, args);
@@ -97,6 +101,11 @@ public abstract class Function implements ScopeEntry {
 			}
 		}
 		return new Function.Call(this, args);
+	}
+	
+	public boolean isEquivalent(Function f) {
+		// only custom function declarations are checked for equivalence
+		return false;
 	}
 
 }

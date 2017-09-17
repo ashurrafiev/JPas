@@ -11,8 +11,6 @@ public class Randomize extends Function {
 
 	public static final Random random =new Random(0L);
 
-	private static final Type[] argTypes = {Type.integer};
-
 	@Override
 	public EntryType getScopeEntryType() {
 		return EntryType.procedure;
@@ -24,9 +22,15 @@ public class Randomize extends Function {
 	}
 	
 	@Override
-	public Type[] getArgTypes() {
-		return argTypes;
+	public int getArgNum() {
+		return 1;
 	}
+	
+	@Override
+	public Type getArgType(int argIndex) {
+		return Type.integer;
+	}
+
 
 	@Override
 	public Object call(Object[] args) {

@@ -1,8 +1,11 @@
 package com.xrbpowered.jpas.ast.data;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope.EntryType;
+import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
+import com.xrbpowered.jpas.mem.Pointer;
 
-public class Type {
+public class Type implements ScopeEntry {
 
 	public abstract static class Comparator {
 		public abstract int compare(Object x, Object y);
@@ -73,7 +76,7 @@ public class Type {
 	}).setOrdinator(new Ordinator() {
 		@Override
 		public int ord(Object x) {
-			return Character.getNumericValue((Character) x);
+			return (Character) x;
 		}
 		@Override
 		public Object unord(int i) {
@@ -122,12 +125,17 @@ public class Type {
 		return ordinator;
 	}
 
+	@Override
+	public EntryType getScopeEntryType() {
+		return EntryType.type;
+	}
+	
 	public Object init(Object v) {
 		return v==null ? defValue : v;
 	}
 	
-	public Object assign(Object old, Object v) {
-		return v;
+	public void assign(Pointer ptr, Object v) {
+		ptr.write(v);
 	}
 	
 	@Override

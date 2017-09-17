@@ -37,7 +37,12 @@ public class Sqr extends Function {
 	}
 
 	@Override
-	public Type[] getArgTypes() {
+	public int getArgNum() {
+		return 1;
+	}
+	
+	@Override
+	public Type getArgType(int argIndex) {
 		return null;
 	}
 

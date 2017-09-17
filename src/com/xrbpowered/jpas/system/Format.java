@@ -9,8 +9,6 @@ import com.xrbpowered.jpas.ast.exp.Function;
 
 public class Format extends Function {
 
-	private static final Type[] argTypes = {Type.string, Type.string};
-	
 	@Override
 	public Type getType() {
 		return Type.string;
@@ -22,8 +20,13 @@ public class Format extends Function {
 	}
 	
 	@Override
-	public Type[] getArgTypes() {
-		return argTypes;
+	public int getArgNum() {
+		return 2;
+	}
+	
+	@Override
+	public Type getArgType(int argIndex) {
+		return Type.string;
 	}
 
 	@Override
@@ -40,7 +43,7 @@ public class Format extends Function {
 	}
 	
 	public Function.Call makeCall(Expression[] args) {
-		testArgNumber(getArgTypes().length, args);
+		testArgNumber(getArgNum(), args);
 		if(args!=null) {
 			args[0] = checkTypeCast(getArgType(0, args), args[0]);
 			for(int i=1; i<args.length; i++) {

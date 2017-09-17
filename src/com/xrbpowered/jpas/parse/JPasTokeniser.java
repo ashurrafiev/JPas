@@ -9,7 +9,7 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 
 	public static final String[] KEYWORDS = {
 			"begin", "end",
-			"var",
+			"var", "type", "function", "procedure", "forward",
 			"if", "then", "else", "while", "do", "repeat", "until", "for", "to", "downto",
 			"integer", "real", "boolean", "char", "string", "array", "of",
 			"not", "div", "mod", "and", "shl", "shr", "add", "sub", "or", "xor",

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Function;
+import com.xrbpowered.jpas.ast.exp.RefArgument;
 import com.xrbpowered.jpas.ast.exp.Variable;
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 import com.xrbpowered.jpas.system.Delay;
@@ -20,6 +21,7 @@ import com.xrbpowered.jpas.system.math.Rand;
 import com.xrbpowered.jpas.system.math.Randomize;
 import com.xrbpowered.jpas.system.math.RealMath;
 import com.xrbpowered.jpas.system.math.Sqr;
+import com.xrbpowered.jpas.system.ord.IncDec;
 
 public class Scope {
 
@@ -28,7 +30,7 @@ public class Scope {
 	};
 	
 	public static enum EntryType {
-		variable, function, procedure, type, argument, result
+		variable, function, procedure, type
 	}
 	
 	public final StackFrameDesc stackFrame = new StackFrameDesc();
@@ -47,7 +49,7 @@ public class Scope {
 	}
 	
 	private void put(String name, ScopeEntry e) {
-		if(find(name)!=null)
+		if(idMap.containsKey(name))
 			throw new JPasError("Duplicate identifier: "+name);
 		else
 			idMap.put(name, e);
@@ -58,10 +60,21 @@ public class Scope {
 		put(name, v);
 		return v;
 	}
-	
+
+	public Variable addRefArgument(String name, Type type) {
+		Variable v = new RefArgument(type, stackFrame);
+		put(name, v);
+		return v;
+	}
+
 	public Function addFunction(String name, Function f) {
 		put(name, f);
 		return f;
+	}
+
+	public Type addType(String name, Type t) {
+		put(name, t);
+		return t;
 	}
 
 	public static Scope global() {
@@ -79,6 +92,10 @@ public class Scope {
 		global.addFunction("min", new Min());
 		global.addFunction("max", new Max());
 		global.addFunction("odd", new Odd());
+		// TODO ord functions
+		global.addFunction("inc", new IncDec(true));
+		global.addFunction("dec", new IncDec(false));
+		// TODO string functions
 
 		global.addFunction("randomize", new Randomize());
 		global.addFunction("random", new Rand());

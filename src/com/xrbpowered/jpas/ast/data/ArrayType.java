@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Range;
+import com.xrbpowered.jpas.mem.Pointer;
 
 public class ArrayType extends IndexableType {
 
@@ -30,8 +31,13 @@ public class ArrayType extends IndexableType {
 	}
 	
 	@Override
-	public Object assign(Object old, Object v) {
+	public void assign(Pointer ptr, Object v) {
 		throw new JPasError("Array assignment."); // TODO array copy on assign
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj); // TODO array type comparison
 	}
 	
 	public static Type make(List<Range> r, Type type) {

@@ -35,9 +35,15 @@ public class Rand extends Function {
 	}
 
 	@Override
-	public Type[] getArgTypes() {
+	public int getArgNum() {
+		return 0;
+	}
+	
+	@Override
+	public Type getArgType(int argIndex) {
 		return null;
 	}
+
 
 	@Override
 	public boolean hasSideEffects() {

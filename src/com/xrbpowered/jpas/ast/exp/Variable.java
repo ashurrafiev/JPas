@@ -4,6 +4,7 @@ import com.xrbpowered.jpas.ast.Statement;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.ast.data.Type;
+import com.xrbpowered.jpas.mem.Pointer;
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 import com.xrbpowered.jpas.mem.StackFrameObject;
 
@@ -26,9 +27,9 @@ public class Variable extends LValue implements ScopeEntry, StackFrameObject {
 		};
 	}
 	
-	private final Type type;
-	private final StackFrameDesc sf;
-	private final int sfIndex;
+	protected final Type type;
+	protected final StackFrameDesc sf;
+	protected final int sfIndex;
 	
 	public Variable(Type type, StackFrameDesc sf) {
 		this.type = type;
@@ -57,10 +58,10 @@ public class Variable extends LValue implements ScopeEntry, StackFrameObject {
 	}
 
 	@Override
-	public void assign(Object val) {
-		sf.write(sfIndex, type.assign(sf.read(sfIndex), val));
+	public Pointer getPointer() {
+		return sf.getPointer(type, sfIndex);
 	}
-
+	
 	@Override
 	public Object evaluate() {
 		return sf.read(sfIndex);

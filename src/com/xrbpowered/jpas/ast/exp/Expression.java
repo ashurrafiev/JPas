@@ -5,7 +5,7 @@ import com.xrbpowered.jpas.ast.data.Type;
 
 public abstract class Expression {
 
-	public static class Call extends Statement {
+	private static class Call extends Statement {
 		private final Expression ex;
 		
 		public Call(Expression ex) {
@@ -42,6 +42,13 @@ public abstract class Expression {
 		}
 		else
 			return ex;
+	}
+	
+	public static Statement call(Expression ex) {
+		if(ex.isConst())
+			return Statement.nop;
+		else
+			return new Call(ex);
 	}
 	
 }

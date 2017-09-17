@@ -4,12 +4,12 @@ import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.Type;
 
-public class ArrayItem extends LValue {
+public class ArrayItem extends Expression {
 
-	private final LValue ar;
+	private final Expression ar;
 	private final Expression index;
 	
-	public ArrayItem(LValue ar, Expression index) {
+	public ArrayItem(Expression ar, Expression index) {
 		this.ar = ar;
 		this.index = index;
 	}
@@ -28,19 +28,7 @@ public class ArrayItem extends LValue {
 
 	@Override
 	public boolean isConst() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void init(Object val) {
-	}
-
-	@Override
-	public void assign(Object val) {
-		ArrayObject arv = (ArrayObject) ar.evaluate();
-		Object iv = index.evaluate();
-		arv.write(iv, ((ArrayType) ar.getType()).type.assign(arv.read(iv), val));
+		return ar.isConst() && index.isConst();
 	}
 
 }

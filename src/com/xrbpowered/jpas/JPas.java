@@ -21,6 +21,7 @@ public class JPas extends Thread {
 			System.exit(0);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			System.err.println("Runtime error: "+e.getMessage());
 			System.exit(1);
 		}

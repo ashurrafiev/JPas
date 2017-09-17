@@ -35,9 +35,15 @@ public class Min extends Function {
 	}
 
 	@Override
-	public Type[] getArgTypes() {
+	public int getArgNum() {
+		return 2;
+	}
+	
+	@Override
+	public Type getArgType(int argIndex) {
 		return null;
 	}
+
 
 	@Override
 	public Object call(Object[] args) {

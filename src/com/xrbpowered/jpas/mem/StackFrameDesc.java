@@ -3,6 +3,8 @@ package com.xrbpowered.jpas.mem;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import com.xrbpowered.jpas.ast.data.Type;
+
 public class StackFrameDesc {
 
 	private ArrayList<StackFrameObject> objects = new ArrayList<>();
@@ -23,6 +25,10 @@ public class StackFrameDesc {
 	
 	public void release() {
 		frames.removeLast();
+	}
+	
+	public Pointer getPointer(Type type, int index) {
+		return new Pointer(type, frames.getLast(), index);
 	}
 	
 	public Object read(int index) {

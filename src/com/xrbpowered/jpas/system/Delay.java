@@ -6,8 +6,6 @@ import com.xrbpowered.jpas.ast.exp.Function;
 
 public class Delay extends Function {
 
-	private static final Type[] argTypes = {Type.integer};
-	
 	@Override
 	public EntryType getScopeEntryType() {
 		return EntryType.procedure;
@@ -19,8 +17,13 @@ public class Delay extends Function {
 	}
 
 	@Override
-	public Type[] getArgTypes() {
-		return argTypes;
+	public int getArgNum() {
+		return 1;
+	}
+	
+	@Override
+	public Type getArgType(int argIndex) {
+		return Type.integer;
 	}
 
 	@Override

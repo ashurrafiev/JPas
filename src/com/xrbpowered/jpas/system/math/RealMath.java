@@ -6,18 +6,21 @@ import com.xrbpowered.jpas.ast.exp.Function;
 
 public abstract class RealMath extends Function {
 
-	private static final Type[] argTypes = {Type.real};
-	
 	@Override
 	public Type getType() {
 		return Type.real;
 	}
 	
 	@Override
-	public Type[] getArgTypes() {
-		return argTypes;
+	public int getArgNum() {
+		return 1;
 	}
 	
+	@Override
+	public Type getArgType(int argIndex) {
+		return Type.real;
+	}
+
 	public static void register(Scope global) {
 		
 		global.addFunction("arctan", new RealMath() {

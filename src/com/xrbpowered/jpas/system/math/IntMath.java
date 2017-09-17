@@ -6,10 +6,10 @@ import com.xrbpowered.jpas.ast.exp.Function;
 
 public abstract class IntMath extends Function {
 
-	private final Type[] argTypes;
+	private final Type argType;
 	
 	public IntMath(Type argType) {
-		this.argTypes = new Type[] {argType};
+		this.argType = argType;
 	}
 	
 	@Override
@@ -18,10 +18,15 @@ public abstract class IntMath extends Function {
 	}
 	
 	@Override
-	public Type[] getArgTypes() {
-		return argTypes;
+	public int getArgNum() {
+		return 1;
 	}
 	
+	@Override
+	public Type getArgType(int argIndex) {
+		return argType;
+	}
+
 	public static void register(Scope global) {
 		
 		global.addFunction("int", new IntMath(Type.real) {
