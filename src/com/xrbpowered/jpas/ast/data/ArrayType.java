@@ -8,10 +8,10 @@ import com.xrbpowered.jpas.mem.Pointer;
 
 public class ArrayType extends IndexableType {
 
-	public final Range range;
+	public final Range.Fixed range;
 	public final Type type;
 	
-	public ArrayType(Range range, Type t) {
+	public ArrayType(Range.Fixed range, Type t) {
 		super(false, null);
 		this.range = range;
 		this.type = t;
@@ -19,35 +19,50 @@ public class ArrayType extends IndexableType {
 	
 	@Override
 	public Type indexType() {
-		return range.getType(); // TODO null range
+		return range.type;
 	}
 	
 	@Override
 	public Object init(Object v) {
-		ArrayObject ar = new ArrayObject(range.fix()); // TODO optimise range fix for multi-dim arrays
-		for(int i=0; i<ar.values.length; i++)
-			ar.values[i] = type.init(null);
+		ArrayObject ar = new ArrayObject(range, type);
+		if(v!=null)
+			ArrayObject.copy(this, ar, (ArrayObject) v);
 		return ar;
 	}
 	
 	@Override
+	public void free(Pointer ptr) {
+		((ArrayObject) ptr.read()).free();
+	}
+	
+	@Override
 	public void assign(Pointer ptr, Object v) {
-		throw new JPasError("Array assignment."); // TODO array copy on assign
+		ArrayObject.copy(this, (ArrayObject) ptr.read(), (ArrayObject) v);
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		return super.equals(obj); // TODO array type comparison
+		if(!super.equals(obj)) {
+			if(obj instanceof ArrayType) {
+				ArrayType at = (ArrayType) obj;
+				return type.equals(at.type) && range.equals(at.range);
+			}
+			return false;
+		}
+		else
+			return true;
 	}
 	
 	public static Type make(List<Range> r, Type type) {
 		if(r==null)
-			return new ArrayType(null, type);
+			throw new JPasError("Undefined range."); // TODO abstracted array types
+			// return new ArrayType(null, type);
 		else {
 			Type t = type;
 			for(int i=r.size()-1; i>=0; i--)
-				t = new ArrayType(r.get(i), t);
+				t = new ArrayType(r.get(i).fix(), t);
 			return t;
 		}
 	}
+	
 }

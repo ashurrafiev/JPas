@@ -3,7 +3,7 @@ The program scrolls text in an infinite loop.
 }
 Begin
 
-var s: String = 'Hello world! ';
+const s: String = 'Hello world! ';
 var i, j: Integer;
 
 i := 0;

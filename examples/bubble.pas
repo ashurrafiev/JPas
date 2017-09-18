@@ -4,7 +4,7 @@ The program creates an array of random numbers then sorts it using bubble sort.
 Begin
 Randomize;
 
-var n: Integer = 20;
+const n = 20;
 var X: Array[0..n-1] of Integer;
 var i: Integer;
 

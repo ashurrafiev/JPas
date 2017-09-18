@@ -58,6 +58,12 @@ public class Variable extends LValue implements ScopeEntry, StackFrameObject {
 	}
 
 	@Override
+	public void free() {
+		type.free(getPointer());
+	}
+	
+
+	@Override
 	public Pointer getPointer() {
 		return sf.getPointer(type, sfIndex);
 	}
@@ -71,5 +77,5 @@ public class Variable extends LValue implements ScopeEntry, StackFrameObject {
 	public boolean isConst() {
 		return false;
 	}
-	
+
 }

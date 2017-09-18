@@ -29,14 +29,14 @@ public abstract class IntMath extends Function {
 
 	public static void register(Scope global) {
 		
-		global.addFunction("int", new IntMath(Type.real) {
+		global.add("int", new IntMath(Type.real) {
 			@Override
 			public Object call(Object[] args) {
 				return new Integer((int) ((double) args[0]));
 			}
 		});
 
-		global.addFunction("round", new IntMath(Type.real) {
+		global.add("round", new IntMath(Type.real) {
 			@Override
 			public Object call(Object[] args) {
 				return new Integer((int) Math.round((Double) args[0]));

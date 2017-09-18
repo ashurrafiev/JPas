@@ -4,7 +4,7 @@ The program multiplies two random matrices.
 Begin
 Randomize;
 
-var n: Integer = 5;
+const n = 5;
 type Matrix = Array[1..n, 1..n] of Integer;
 
 {Output matrix.}

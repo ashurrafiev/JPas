@@ -1,8 +1,11 @@
 package com.xrbpowered.jpas.ast.exp;
 
+import com.xrbpowered.jpas.ast.Scope.EntryType;
+import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
+import com.xrbpowered.jpas.ast.data.PointerType;
 import com.xrbpowered.jpas.ast.data.Type;
 
-public class Constant extends Expression {
+public class Constant extends Expression implements ScopeEntry {
 
 	private final Object val;
 	private final Type type;
@@ -10,6 +13,11 @@ public class Constant extends Expression {
 	public Constant(Type type, Object val) {
 		this.type = type;
 		this.val = val;
+	}
+	
+	@Override
+	public EntryType getScopeEntryType() {
+		return EntryType.variable;
 	}
 	
 	@Override
@@ -40,4 +48,9 @@ public class Constant extends Expression {
 			}
 		}
 	}
+	
+	public static final Constant constTrue = new Constant(Type.bool, true);
+	public static final Constant constFalse = new Constant(Type.bool, false);
+	public static final Constant constNil = new Constant(new PointerType(null), null);
+	public static final Constant constPi = new Constant(Type.real, Math.PI);
 }

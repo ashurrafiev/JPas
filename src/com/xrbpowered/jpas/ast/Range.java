@@ -20,6 +20,20 @@ public class Range {
 		public int length() {
 			return (max-min)+1;
 		}
+		
+		public Object indexFor(int i) {
+			return type.getOrdinator().unord(i+min);
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(obj instanceof Fixed) {
+				Fixed f = (Fixed) obj;
+				return type.equals(f.type) && min==f.min && max==f.max;
+			}
+			else
+				return false;
+		}
 	}
 	
 	private final Expression min, max;
@@ -50,6 +64,11 @@ public class Range {
 			throw new JPasError("Range requires ordinal type.");
 		if(!mint.equals(maxt))
 			throw new JPasError("Range type mismatch.");
+		
+		// TODO dynamic ranges
+		if(!min.isConst() || !max.isConst())
+			throw new JPasError("Expression is not constant.");
+		
 		return new Range(min, max);
 	}
 	

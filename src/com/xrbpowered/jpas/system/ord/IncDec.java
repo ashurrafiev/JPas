@@ -66,7 +66,7 @@ public class IncDec extends Function {
 	@Override
 	public Object call(Object[] args) {
 		Pointer ptr = (Pointer) args[0];
-		Ordinator ord = ptr.type.getOrdinator();
+		Ordinator ord = type.getOrdinator();
 		Object v = inc ? ord.succ(ptr.read()) : ord.pred(ptr.read());
 		ptr.write(v);
 		return null;
@@ -74,6 +74,7 @@ public class IncDec extends Function {
 
 	public Function.Call makeCall(Expression[] args) {
 		testArgNumber(1, args);
+		checkLValue(0, args[0]);
 		if(args[0].getType()==Type.integer)
 			return new Function.Call(inc ? intInc : intDec, args);
 		else if(args[0].getType().getOrdinator()!=null)

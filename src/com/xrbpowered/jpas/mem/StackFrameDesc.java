@@ -24,19 +24,19 @@ public class StackFrameDesc {
 	}
 	
 	public void release() {
-		frames.removeLast();
+		frames.removeLast().free();
 	}
 	
 	public Pointer getPointer(Type type, int index) {
-		return new Pointer(type, frames.getLast(), index);
+		return new StackFramePointer(type, frames.getLast(), index);
 	}
 	
 	public Object read(int index) {
-		return frames.getLast().values[index];
+		return frames.getLast().read(index);
 	}
 	
 	public void write(int index, Object value) {
-		frames.getLast().values[index] = value;
+		frames.getLast().write(index, value);
 	}
 	
 }

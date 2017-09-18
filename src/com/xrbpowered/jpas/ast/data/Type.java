@@ -134,6 +134,9 @@ public class Type implements ScopeEntry {
 		return v==null ? defValue : v;
 	}
 	
+	public void free(Pointer ptr) {
+	}
+	
 	public void assign(Pointer ptr, Object v) {
 		ptr.write(v);
 	}

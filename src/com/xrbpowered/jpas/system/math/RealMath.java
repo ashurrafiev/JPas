@@ -23,49 +23,49 @@ public abstract class RealMath extends Function {
 
 	public static void register(Scope global) {
 		
-		global.addFunction("arctan", new RealMath() {
+		global.add("arctan", new RealMath() {
 			@Override
 			public Object call(Object[] args) {
 				return new Double(Math.atan((Double) args[0]));
 			}
 		});
 		
-		global.addFunction("sin", new RealMath() {
+		global.add("sin", new RealMath() {
 			@Override
 			public Object call(Object[] args) {
 				return new Double(Math.sin((Double) args[0]));
 			}
 		});
 		
-		global.addFunction("cos", new RealMath() {
+		global.add("cos", new RealMath() {
 			@Override
 			public Object call(Object[] args) {
 				return new Double(Math.cos((Double) args[0]));
 			}
 		});
 		
-		global.addFunction("exp", new RealMath() {
+		global.add("exp", new RealMath() {
 			@Override
 			public Object call(Object[] args) {
 				return new Double(Math.exp((Double) args[0]));
 			}
 		});
 
-		global.addFunction("ln", new RealMath() {
+		global.add("ln", new RealMath() {
 			@Override
 			public Object call(Object[] args) {
 				return new Double(Math.log((Double) args[0]));
 			}
 		});
 		
-		global.addFunction("sqrt", new RealMath() {
+		global.add("sqrt", new RealMath() {
 			@Override
 			public Object call(Object[] args) {
 				return new Double(Math.sqrt((Double) args[0]));
 			}
 		});
 
-		global.addFunction("frac", new RealMath() {
+		global.add("frac", new RealMath() {
 			@Override
 			public Object call(Object[] args) {
 				double x = Math.abs((Double) args[0]);

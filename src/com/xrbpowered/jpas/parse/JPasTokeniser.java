@@ -9,11 +9,11 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 
 	public static final String[] KEYWORDS = {
 			"begin", "end",
-			"var", "type", "function", "procedure", "forward",
+			"var", "const", "type", "function", "procedure", "forward",
 			"if", "then", "else", "while", "do", "repeat", "until", "for", "to", "downto",
-			"integer", "real", "boolean", "char", "string", "array", "of",
+			"integer", "real", "boolean", "char", "string", "array", "of", "record",
 			"not", "div", "mod", "and", "shl", "shr", "add", "sub", "or", "xor",
-			"true", "false"
+			"true", "false", "nil",
 		};
 	
 	public JPasTokeniser() {
@@ -46,7 +46,7 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 				for(int i=0; i<KEYWORDS.length; i++)
 					if(KEYWORDS[i].equalsIgnoreCase(raw))
 						return JPasToken.keyword(KEYWORDS[i]);
-				return new JPasToken(TokenType.identifier, raw.toLowerCase());
+				return new JPasToken(TokenType.identifier, raw);
 			case 6:
 			case 7:
 			case 8:

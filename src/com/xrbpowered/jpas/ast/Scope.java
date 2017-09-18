@@ -1,16 +1,12 @@
 package com.xrbpowered.jpas.ast;
 
-import java.util.HashMap;
-
-import com.xrbpowered.jpas.JPasError;
-import com.xrbpowered.jpas.ast.data.Type;
-import com.xrbpowered.jpas.ast.exp.Function;
-import com.xrbpowered.jpas.ast.exp.RefArgument;
-import com.xrbpowered.jpas.ast.exp.Variable;
+import com.xrbpowered.jpas.ast.exp.Constant;
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 import com.xrbpowered.jpas.system.Delay;
 import com.xrbpowered.jpas.system.Format;
 import com.xrbpowered.jpas.system.Length;
+import com.xrbpowered.jpas.system.NewPtr;
+import com.xrbpowered.jpas.system.Read;
 import com.xrbpowered.jpas.system.Write;
 import com.xrbpowered.jpas.system.math.Abs;
 import com.xrbpowered.jpas.system.math.IntMath;
@@ -35,71 +31,61 @@ public class Scope {
 	
 	public final StackFrameDesc stackFrame = new StackFrameDesc();
 	public final Scope parent;
-	private HashMap<String, ScopeEntry> idMap = new HashMap<>();
+	private IdMap<ScopeEntry> idMap = new IdMap<>();
 
 	public Scope(Scope parent) {
 		this.parent = parent;
 	}
 	
-	public ScopeEntry find(String name) {
-		ScopeEntry e = idMap.get(name);
+	private IdMap<ScopeEntry>.IdEntry findEx(String name) {
+		IdMap<ScopeEntry>.IdEntry e = idMap.get(name);
 		if(e==null && parent!=null)
-			e = parent.find(name);
+			e = parent.findEx(name);
 		return e;
 	}
 	
-	private void put(String name, ScopeEntry e) {
-		if(idMap.containsKey(name))
-			throw new JPasError("Duplicate identifier: "+name);
-		else
-			idMap.put(name, e);
+	public ScopeEntry find(String name) {
+		IdMap<ScopeEntry>.IdEntry e = findEx(name.toLowerCase());
+		return e==null ? null : e.e;
 	}
 	
-	public Variable addVariable(String name, Type type) {
-		Variable v = new Variable(type, stackFrame);
-		put(name, v);
-		return v;
+	public String findTrueName(String name) {
+		IdMap<ScopeEntry>.IdEntry e = findEx(name.toLowerCase());
+		return e==null ? null : e.trueName;
 	}
-
-	public Variable addRefArgument(String name, Type type) {
-		Variable v = new RefArgument(type, stackFrame);
-		put(name, v);
-		return v;
-	}
-
-	public Function addFunction(String name, Function f) {
-		put(name, f);
-		return f;
-	}
-
-	public Type addType(String name, Type t) {
-		put(name, t);
-		return t;
+	
+	public ScopeEntry add(String name, ScopeEntry e) {
+		idMap.put(name, e);
+		return e;
 	}
 
 	public static Scope global() {
 		Scope global = new Scope(null);
+
+		global.add("New", new NewPtr());
+
+		global.add("Write", new Write(false));
+		global.add("WriteLn", new Write(true));
+		global.add("ReadLn", new Read());
+		global.add("Format", new Format());
+		global.add("Delay", new Delay());
 		
-		global.addFunction("write", new Write(false));
-		global.addFunction("writeln", new Write(true));
-		global.addFunction("format", new Format());
-		global.addFunction("delay", new Delay());
-		
+		global.add("Pi", Constant.constPi);
 		RealMath.register(global);
 		IntMath.register(global);
-		global.addFunction("abs", new Abs());
-		global.addFunction("sqr", new Sqr());
-		global.addFunction("min", new Min());
-		global.addFunction("max", new Max());
-		global.addFunction("odd", new Odd());
+		global.add("Abs", new Abs());
+		global.add("Sqr", new Sqr());
+		global.add("Min", new Min());
+		global.add("Max", new Max());
+		global.add("Odd", new Odd());
 		// TODO ord functions
-		global.addFunction("inc", new IncDec(true));
-		global.addFunction("dec", new IncDec(false));
+		global.add("Inc", new IncDec(true));
+		global.add("Dec", new IncDec(false));
 		// TODO string functions
 
-		global.addFunction("randomize", new Randomize());
-		global.addFunction("random", new Rand());
-		global.addFunction("length", new Length());
+		global.add("Randomize", new Randomize());
+		global.add("Random", new Rand());
+		global.add("Length", new Length());
 
 		return global;
 	}

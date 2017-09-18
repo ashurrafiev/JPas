@@ -8,6 +8,9 @@ import com.xrbpowered.jpas.parse.JPasParser;
 
 public class JPas extends Thread {
 
+	private static boolean verboseErrors = false;
+	private static boolean timing = false;
+	
 	private final Statement code;
 	
 	public JPas(Statement code) {
@@ -17,18 +20,55 @@ public class JPas extends Thread {
 	@Override
 	public void run() {
 		try {
+			long t = System.currentTimeMillis();
 			code.execute();
+			if(timing)
+				System.err.printf("Finished in %d ms.\n", System.currentTimeMillis()-t);
 			System.exit(0);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
-			System.err.println("Runtime error: "+e.getMessage());
+			if(verboseErrors)
+				e.printStackTrace();
+			else
+				System.err.println("Runtime error: "+e.getMessage());
 			System.exit(1);
 		}
 	}
 	
+	private static void printHelp() {
+		System.out.println("Usage:");
+		System.out.println("java -jas jpas.jar [options] inputfile");
+		System.out.println();
+		System.out.println("Options:");
+		System.out.println("-time \t Print timing information about pre-compilation stage and program execution.");
+		System.out.println("-verr \t Print Java stack traces on runtime errors (dev mode).");
+		System.out.println("-help \t Print this message.");
+	}
+	
 	public static void main(String[] args) {
-		if(args.length<1) {
+		String in = null;
+		boolean help = false;
+		if(args.length<1)
+			help = true;
+		else {
+			for(String arg : args) {
+				if(arg.equalsIgnoreCase("-time"))
+					timing = true;
+				else if(arg.equalsIgnoreCase("-verr"))
+					verboseErrors = true;
+				else if(arg.equalsIgnoreCase("-help"))
+					help = true;
+				else
+					in = arg;
+			}
+		}
+		
+		if(help) {
+			printHelp();
+			System.exit(1);
+		}
+		
+		if(in==null) {
 			System.err.println("Input file?");
 			System.exit(1);
 		}
@@ -36,7 +76,10 @@ public class JPas extends Thread {
 		JPasParser parser = new JPasParser();
 		Statement code = null;
 		try {
-			code = parser.parse(new File(args[0]));
+			long t = System.currentTimeMillis();
+			code = parser.parse(new File(in));
+			if(timing)
+				System.err.printf("Compiled in %d ms.\n", System.currentTimeMillis()-t);
 			if(code==null) {
 				System.err.println("Compiled with errors.");
 				System.exit(1);

@@ -9,8 +9,8 @@ public abstract class Function implements ScopeEntry {
 
 	public static class Call extends Expression {
 		
-		private final Function f;
-		private final Expression[] args;
+		protected final Function f;
+		protected final Expression[] args;
 		
 		public Call(Function f, Expression[] args) {
 			this.f = f;
@@ -61,7 +61,7 @@ public abstract class Function implements ScopeEntry {
 	}
 	
 	public boolean isLValue(int argIndex) {
-		return false; // TODO is arg lvalue
+		return false;
 	}
 	
 	public boolean hasSideEffects() {
@@ -85,6 +85,11 @@ public abstract class Function implements ScopeEntry {
 		return i>=getArgNum() ? getArgType(getArgNum()-1) : getArgType(i);
 	}
 	
+	protected void checkLValue(int index, Expression arg) {
+		if(isLValue(index) && !(arg instanceof LValue))
+			throw new JPasError("Expected LValue");
+	}
+	
 	protected Expression checkTypeCast(Type dt, Expression arg) {
 		Expression ex = Expression.implicitCast(dt, arg);
 		if(ex!=null)
@@ -98,6 +103,7 @@ public abstract class Function implements ScopeEntry {
 			for(int i=0; i<args.length; i++) {
 				Type dt = getArgType(i, args);
 				args[i] = checkTypeCast(dt, args[i]);
+				checkLValue(i, args[i]);
 			}
 		}
 		return new Function.Call(this, args);

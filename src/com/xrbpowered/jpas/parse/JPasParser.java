@@ -17,16 +17,22 @@ import com.xrbpowered.jpas.ast.Statement;
 import com.xrbpowered.jpas.ast.WhileLoop;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.IndexableType;
+import com.xrbpowered.jpas.ast.data.PointerType;
+import com.xrbpowered.jpas.ast.data.RecordType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.ArrayItem;
 import com.xrbpowered.jpas.ast.exp.BinaryOp;
 import com.xrbpowered.jpas.ast.exp.CharOfString;
 import com.xrbpowered.jpas.ast.exp.Constant;
 import com.xrbpowered.jpas.ast.exp.CustomFunction;
+import com.xrbpowered.jpas.ast.exp.DerefPointer;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
+import com.xrbpowered.jpas.ast.exp.GetPointer;
 import com.xrbpowered.jpas.ast.exp.LValue;
 import com.xrbpowered.jpas.ast.exp.LValueArrayItem;
+import com.xrbpowered.jpas.ast.exp.LValueRecordItem;
+import com.xrbpowered.jpas.ast.exp.RecordItem;
 import com.xrbpowered.jpas.ast.exp.UnaryOp;
 import com.xrbpowered.jpas.ast.exp.Variable;
 import com.xrbpowered.jpas.parse.JPasToken.TokenType;
@@ -43,25 +49,26 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 
 	private Expression expressionLit(Scope scope) {
 		if(TokenType.number.token.equals(token)) {
-			Expression x = Constant.parseNumber((String) token.value);
+			String s = (String) token.value;
 			next();
-			return x;
+			return Constant.parseNumber(s);
 		}
 		else if(TokenType.string.token.equals(token)) {
 			String s = (String) token.value;
-			Expression x = s.length()==1 ? new Constant(Type.character, new Character(s.charAt(0))) : new Constant(Type.string, s);
 			next();
-			return x;
+			return s.length()==1 ? new Constant(Type.character, new Character(s.charAt(0))) : new Constant(Type.string, s);
 		}
 		else if(JPasToken.keyword("true").equals(token)) {
-			Expression x = new Constant(Type.bool, true);
 			next();
-			return x;
+			return Constant.constTrue;
 		}
 		else if(JPasToken.keyword("false").equals(token)) {
-			Expression x = new Constant(Type.bool, false);
 			next();
-			return x;
+			return Constant.constFalse;
+		}
+		else if(JPasToken.keyword("nil").equals(token)) {
+			next();
+			return Constant.constNil;
 		}
 		else if(TokenType.identifier.token.equals(token)) {
 			String name = (String) token.value;
@@ -70,14 +77,22 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				throw new JPasError("Unknown identifier: "+name);
 			if(e.getScopeEntryType()==EntryType.function) {
 				next();
-				return function(scope, name, (Function) e);
+				return function(scope, scope.findTrueName(name), (Function) e);
 			}
 			else if(e.getScopeEntryType()==EntryType.variable) {
 				next();
-				return (Variable) e;
+				return (Expression) e;
 			}
 			else
 				return null;
+		}
+		else if(new JPasToken('@').equals(token)) {
+			next();
+			Expression x = expressionPost(scope);
+			if(x instanceof LValue)
+				return new GetPointer((LValue) x);
+			else
+				throw new JPasError("Expected LValue.");
 		}
 		else if(new JPasToken('(').equals(token)) {
 			next();
@@ -127,10 +142,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		if(type==Type.string)
 			res = new CharOfString(x, ex);
 		else if(type instanceof ArrayType) {
-			// if(x instanceof LValue)
+			if(x instanceof LValue)
 				res = new LValueArrayItem((LValue) x, ex); // TODO non-lvalue arrays
-			// else
-			//	res = new ArrayItem(x, ex);
+			else
+				res = new ArrayItem(x, ex);
 		}
 		
 		if(res==null)
@@ -153,8 +168,30 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 					return null;
 				x = indexAccess(x, indices, 0);
 			}
-			else if(new JPasToken('.').equals(token))
-				return null; // TODO recordMember(scope);
+			else if(new JPasToken('.').equals(token)) {
+				// return null; // TODO recordMember(scope);
+				next();
+				if(!(x.getType() instanceof RecordType))
+					throw new JPasError("Not a record.");
+				RecordType rec = (RecordType) x.getType();
+				JPasToken t = token;
+				if(!accept(TokenType.identifier.token))
+					return null;
+				String name = (String) t.value;
+				int index = rec.find(name);
+				if(index<0)
+					throw new JPasError("No such member.");
+				if(x instanceof LValue)
+					x = new LValueRecordItem((LValue) x, index); // TODO non-lvalue records
+				else
+					x = new RecordItem(x, index);
+			}
+			else if(new JPasToken('^').equals(token)) {
+				next();
+				if(!(x.getType() instanceof PointerType))
+					throw new JPasError("Not a pointer.");
+				x = new DerefPointer(((PointerType) x.getType()).type, x);
+			}
 			else
 				return x;
 		}
@@ -336,7 +373,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return f.makeCall(args);
 		}
 		catch(JPasError e) {
-			throw new JPasError(e.getMessage() + " in "+name);
+			throw new JPasError(e.getMessage() + " in call to "+name);
 		}
 	}
 	
@@ -438,7 +475,38 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 	}
 	
+	private boolean recordMembers(Scope scope, RecordType rec, String selfName, Type selfType) {
+		boolean sep = true;
+		for(;;) {
+			if(JPasToken.keyword("end").equals(token)) {
+				next();
+				return true;
+			}
+			else if(new JPasToken(';').equals(token)) {
+				sep = true;
+				next();
+			}
+			else {
+				if(!sep)
+					throw new JPasError("Expected ;");
+				List<String> names = varList();
+				if(names==null)
+					return false;
+				Type type = type(scope, selfName, selfType);
+				if(type==null)
+					return false;
+				for(String name : names)
+					rec.add(name, type);
+				sep = false;
+			}
+		}
+	}
+	
 	private Type type(Scope scope) {
+		return type(scope, null, null);
+	}
+	
+	private Type type(Scope scope, String selfName, Type selfType) {
 		if(JPasToken.keyword("integer").equals(token)) {
 			next();
 			return Type.integer;
@@ -472,20 +540,36 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			}
 			if(!accept(JPasToken.keyword("of")))
 				return null;
-			Type type = type(scope);
+			Type type = type(scope, selfName, selfType);
 			if(type==null)
 				return null;
 			return ArrayType.make(r, type);
 		}
+		else if(JPasToken.keyword("record").equals(token)) {
+			next();
+			RecordType rec = new RecordType();
+			if(!recordMembers(scope, rec, selfName, selfType==null ? rec : selfType))
+				return null;
+			return rec;
+		}
 		else if(TokenType.identifier.token.equals(token)) {
 			String name = (String) token.value;
 			next();
+			if(selfName!=null && selfType!=null && name.equalsIgnoreCase(selfName))
+				return selfType;
 			ScopeEntry e = scope.find(name);
 			if(e==null)
 				throw new JPasError("Unknown identifier: "+name);
 			if(e.getScopeEntryType()!=EntryType.type)
 				throw new JPasError("Expected type.");
 			return (Type) e;
+		}
+		else if(new JPasToken('^').equals(token)) {
+			next();
+			Type t = type(scope, selfName, selfType);
+			if(t==null)
+				return null;
+			return new PointerType(t);
 		}
 		else
 			return null;
@@ -529,10 +613,47 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 		Variable[] vars = new Variable[names.size()];
 		for(int i=0; i<vars.length; i++)
-			vars[i] = scope.addVariable(names.get(i), type);
+			vars[i] = (Variable) scope.add(names.get(i), new Variable(type, scope.stackFrame));
 		return new Variable.VarInit(vars, def);
 	}
-	
+
+	private Statement constDecl(Scope scope) {
+		JPasToken t = token;
+		if(!accept(TokenType.identifier.token))
+			return null;
+		String name = (String) t.value;
+		Type type = null;
+		if(new JPasToken(':').equals(token)) {
+			next();
+			type = type(scope);
+			if(type==null)
+				return null;
+		}
+		if(!accept(new JPasToken(TokenType.operator, "=")))
+			return null;
+		Expression def = expression(scope);
+		if(def==null)
+			return null;
+		if(type!=null) {
+			def = Expression.implicitCast(type, def);
+			if(def==null)
+				throw new JPasError("Initialization type mismatch.");
+		}
+		else
+			type = def.getType();
+
+		if(def.isConst()) {
+			scope.add(name, new Constant(type, def.evaluate()));
+			return Statement.nop;
+		}
+		else {
+			// TODO dynamic const 
+			//scope.addVariable(names.get(i), type);
+			//return new Variable.VarInit(vars, def);
+			throw new JPasError("Expression is not constant.");
+		}
+	}
+
 	private List<CustomFunction.ArgDef> argDefList(Scope scope) {
 		List<CustomFunction.ArgDef> list = new ArrayList<>();
 		boolean sep = true;
@@ -595,7 +716,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return null;
 		
 		CustomFunction f = new CustomFunction(args, type);
-		scope.addFunction(name, f);
+		scope.add(name, f);
 		
 		Scope inner = f.createScope(scope);
 		// TODO forward
@@ -614,14 +735,18 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		String name = (String) t.value;
 		if(!accept(new JPasToken(TokenType.operator, "=")))
 			return null;
-		Type type = type(scope); // TODO type fixing
-		scope.addType(name, type);
+		Type type = type(scope, name, null); // TODO type fixing
+		scope.add(name, type);
 		return Statement.nop;
 	}
 	
 	private Statement statement(Scope scope) {
 		
-		if(JPasToken.keyword("begin").equals(token)) {
+		if(new JPasToken(';').equals(token)) {
+			return Statement.nop;
+		}
+		
+		else if(JPasToken.keyword("begin").equals(token)) {
 			next();
 			return block(scope);
 		}
@@ -635,7 +760,12 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			next();
 			return varDecl(scope);
 		}
-		
+
+		else if(JPasToken.keyword("const").equals(token)) {
+			next();
+			return constDecl(scope);
+		}
+
 		else if(JPasToken.keyword("type").equals(token)) {
 			next();
 			return typeDecl(scope);
@@ -676,6 +806,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return null;
 		}
 		
+		// TODO case <ord> of <val> [..<val>] :  statement; ... end 
+		
 		else if(JPasToken.keyword("while").equals(token)) {
 			next();
 			Expression ex = expression(scope);
@@ -696,16 +828,12 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		
 		else if(JPasToken.keyword("for").equals(token)) {
 			next();
-			if(!TokenType.identifier.token.equals(token)) // TODO lvalue for
+			Expression ex = expression(scope);
+			if(ex==null)
 				return null;
-			String name = (String) token.value; // TODO lvalue expression?
-			next();
-			ScopeEntry e = scope.find(name);
-			if(e==null)
-				throw new JPasError("Unknown identifier: "+name);
-			if(!(e instanceof LValue))
+			if(!(ex instanceof LValue))
 				throw new JPasError("Expected LValue.");
-			LValue dst = (LValue) e;
+			LValue dst = (LValue) ex;
 			if(dst.getType().getOrdinator()==null)
 				throw new JPasError("For loop requires ordinal type.");
 			if(!accept(new JPasToken(TokenType.operator, ":=")))
@@ -731,7 +859,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return null;
 			Statement s = checkedStatement(scope);
 			if(s!=null) {
-				return new ForLoop(dir, (Variable) dst, start, end, s); // TODO lvalue instead of variable
+				return ForLoop.make(dir, dst, start, end, s);
 			}
 			else
 				return null;
@@ -745,7 +873,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 					throw new JPasError("Unknown identifier: "+name);
 				if(e.getScopeEntryType()==EntryType.procedure) {
 					next();
-					Expression f = function(scope, name, (Function) e);
+					Expression f = function(scope, scope.findTrueName(name), (Function) e);
 					if(f!=null)
 						return Expression.call(f);
 					else

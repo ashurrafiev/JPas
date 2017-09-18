@@ -1,17 +1,38 @@
 package com.xrbpowered.jpas.ast;
 
+import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.data.Type.Ordinator;
 import com.xrbpowered.jpas.ast.exp.Expression;
-import com.xrbpowered.jpas.ast.exp.Variable;
+import com.xrbpowered.jpas.ast.exp.LValue;
 
 public class ForLoop extends Statement {
 
-	private int dir;
-	private Variable var; 
-	private final Expression start, end;
-	private final Statement s;
+	private static class Int extends ForLoop {
+		public Int(int dir, LValue var, Expression start, Expression end, Statement s) {
+			super(dir, var, start, end, s);
+		}
+			
+		@Override
+		public void execute() {
+			var.assign(start.evaluate());
+			int d = dir==0 ? 1 : -1;
+			for(;;) {
+				int i = (Integer) var.evaluate();
+				int endi = (Integer) end.evaluate();
+				if(dir==0 && i>endi || dir!=0 && i<endi)
+					return;
+				s.execute();
+				var.assign((Integer) var.evaluate() + d);
+			}
+		}
+	}
 	
-	public ForLoop(int dir, Variable var, Expression start, Expression end, Statement s) {
+	protected int dir;
+	protected LValue var; 
+	protected final Expression start, end;
+	protected final Statement s;
+	
+	private ForLoop(int dir, LValue var, Expression start, Expression end, Statement s) {
 		this.dir = dir;
 		this.var = var;
 		this.start = start;
@@ -38,6 +59,13 @@ public class ForLoop extends Statement {
 				return;
 			var.assign(dir==0 ? ord.succ(var.evaluate()) : ord.pred(var.evaluate()));
 		}
+	}
+	
+	public static ForLoop make(int dir, LValue var, Expression start, Expression end, Statement s) {
+		if(var.getType()==Type.integer)
+			return new Int(dir, var, start, end, s);
+		else
+			return new ForLoop(dir, var, start, end, s);
 	}
 
 }

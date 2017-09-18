@@ -20,10 +20,14 @@ public class Equals extends BinaryOp {
 	public Object evaluate() {
 		Object xv = x.evaluate();
 		Object yv = y.evaluate();
+		return neg ^ new Boolean(test(xv, yv));
+	}
+	
+	public static boolean test(Object xv, Object yv) {
 		if(xv==null || yv==null)
-			return neg ^ new Boolean(xv==null && yv==null);
+			return xv==null && yv==null;
 		else
-			return neg ^ new Boolean(xv.equals(yv));
+			return xv.equals(yv);
 	}
 
 }
