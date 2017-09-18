@@ -23,6 +23,12 @@ public class CustomFunction extends Function {
 			this.type = type;
 			this.lvalue = lvalue;
 		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			ArgDef def = (ArgDef) obj;
+			return lvalue==def.lvalue && Type.checkEqual(type, def.type);
+		}
 	}
 	
 	private StackFrameDesc sf = null;
@@ -31,7 +37,7 @@ public class CustomFunction extends Function {
 	public Scope forwardScope = null;
 	public Statement body = null;
 	
-	private final List<ArgDef> argDefs;
+	private List<ArgDef> argDefs;
 	private final Type type;
 	
 	public CustomFunction(List<ArgDef> args, Type type) {
@@ -52,12 +58,16 @@ public class CustomFunction extends Function {
 		if(argDefs!=null) {
 			for(ArgDef arg : argDefs) {
 				arg.var = (Variable) s.add(arg.name, arg.lvalue ? new RefArgument(arg.type, s.stackFrame) : new Variable(arg.type, s.stackFrame));
-				//arg.var = arg.lvalue ? s.addRefArgument(arg.name, arg.type) : s.addVariable(arg.name, arg.type);
 			}
 		}
 		return s;
 	}
 	
+	@Override
+	public boolean checkImpl() {
+		return body!=null;
+	}
+
 	@Override
 	public Type getType() {
 		return type;
@@ -110,6 +120,24 @@ public class CustomFunction extends Function {
 		if(!(e instanceof CustomFunction))
 			return true;
 		return ((CustomFunction) e).body!=null; 
+	}
+	
+	public static CustomFunction match(CustomFunction prev, List<ArgDef> args, Type type) {
+		if(args==null && type==null)
+			return prev;
+		if(!Type.checkEqual(prev.type, type))
+			return null;
+		if((prev.argDefs==null || prev.argDefs.size()==0) && args!=null && args.size()>0)
+			return null;
+		if(prev.argDefs!=null) {
+			if(prev.argDefs.size()!=args.size())
+				return null;
+			for(int i=0; i<prev.argDefs.size(); i++)
+				if(!prev.argDefs.get(i).equals(args.get(i)))
+					return null;
+		}
+		prev.argDefs = args;
+		return prev;
 	}
 	
 }

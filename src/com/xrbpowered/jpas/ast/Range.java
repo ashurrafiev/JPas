@@ -65,7 +65,6 @@ public class Range {
 		if(!mint.equals(maxt))
 			throw new JPasError("Range type mismatch.");
 		
-		// TODO dynamic ranges
 		if(!min.isConst() || !max.isConst())
 			throw new JPasError("Expression is not constant.");
 		

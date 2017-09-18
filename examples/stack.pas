@@ -1,12 +1,19 @@
 {
-This program implements dynamic memory stack using pointers.
+This is a module implementing dynamic memory stack.
+Running this file will not do anything, run 'stackdemo.pas' instead.
 }
-Begin
+Interface
 
 type Item = record
 		Value: String;
 		Next: ^Item;
 	end;
+
+procedure Push(Val: String);
+function Pop: String;
+function CanPop: Boolean;
+
+implementation
 
 var Top: ^Item = nil;
 
@@ -26,31 +33,9 @@ begin
 	{No need for Dispose, GC will save us all.}
 end;
 
-WriteLn('Stack demo.');
+function CanPop: Boolean;
+begin
+	Result := Top<>nil;
+end;
 
-repeat
-	var Cmd: String;
-	Write('pop, push or exit? ');
-	ReadLn(Cmd);
-	
-	if Cmd='pop' then
-		begin
-			if Top=nil then
-				WriteLn('Stack is empty.')
-			else
-				WriteLn('Popped ''', Pop, '''.');
-		end
-	else if Cmd='push' then
-		begin
-			var Val: String;
-			WriteLn('Enter new string value:');
-			ReadLn(Val);
-			Push(Val);
-			WriteLn('Pushed ''', Val, '''.');
-		end;
-
-until Cmd='exit';
-
-WriteLn('Done.');
-	
 End.

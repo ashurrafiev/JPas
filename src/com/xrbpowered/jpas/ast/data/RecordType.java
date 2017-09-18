@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xrbpowered.jpas.ast.IdMap;
+import com.xrbpowered.jpas.ast.Scope;
+import com.xrbpowered.jpas.ast.exp.LValue;
+import com.xrbpowered.jpas.ast.exp.LValueRecordItem;
 import com.xrbpowered.jpas.mem.Pointer;
 
 public class RecordType extends Type {
@@ -45,6 +48,12 @@ public class RecordType extends Type {
 	@Override
 	public void assign(Pointer ptr, Object v) {
 		RecordObject.copy(this, (RecordObject) ptr.read(), (RecordObject) v);
+	}
+	
+	public void addTo(LValue rec, Scope scope) {
+		for(IdMap<Integer>.IdEntry e : idMap.map.values()) {
+			scope.add(e.trueName, new LValueRecordItem(rec, e.e));
+		}
 	}
 	
 }

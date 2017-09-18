@@ -21,6 +21,11 @@ public class Constant extends Expression implements ScopeEntry {
 	}
 	
 	@Override
+	public boolean checkImpl() {
+		return true;
+	}
+
+	@Override
 	public Type getType() {
 		return type;
 	}

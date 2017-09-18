@@ -48,6 +48,11 @@ public class Variable extends LValue implements ScopeEntry, StackFrameObject {
 	}
 	
 	@Override
+	public boolean checkImpl() {
+		return true;
+	}
+	
+	@Override
 	public Type getType() {
 		return type;
 	}

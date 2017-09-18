@@ -45,6 +45,29 @@ public class JPas extends Thread {
 		System.out.println("-help \t Print this message.");
 	}
 	
+	public static Statement compile(JPasParser parser, File file) {
+		Statement code = null;
+		try {
+			file = file.getAbsoluteFile();
+			parser.workingDir = file.getParentFile();
+			
+			if(timing)
+				System.err.printf("Compiling %s...\n", file.getName());
+			long t = System.currentTimeMillis();
+			code = parser.parse(file);
+			if(timing)
+				System.err.printf("Compiled in %d ms.\n", System.currentTimeMillis()-t);
+			if(code==null) {
+				System.err.println("Compiled with errors.");
+				return null;
+			}
+		} catch(IOException e) {
+			System.err.println(e.getMessage());
+			return null;
+		}
+		return code;
+	}
+	
 	public static void main(String[] args) {
 		String in = null;
 		boolean help = false;
@@ -74,22 +97,11 @@ public class JPas extends Thread {
 		}
 		
 		JPasParser parser = new JPasParser();
-		Statement code = null;
-		try {
-			long t = System.currentTimeMillis();
-			code = parser.parse(new File(in));
-			if(timing)
-				System.err.printf("Compiled in %d ms.\n", System.currentTimeMillis()-t);
-			if(code==null) {
-				System.err.println("Compiled with errors.");
-				System.exit(1);
-			}
-		} catch(IOException e) {
-			System.err.println(e.getMessage());
+		Statement code = compile(parser, new File(in));
+		if(code!=null)
+			new JPas(code).start();
+		else
 			System.exit(1);
-		}
-		
-		new JPas(code).start();
 	}
 
 }

@@ -55,6 +55,11 @@ public abstract class Function implements ScopeEntry {
 	public EntryType getScopeEntryType() {
 		return EntryType.function;
 	}
+
+	@Override
+	public boolean checkImpl() {
+		return true;
+	}
 	
 	public boolean isVarArgs() {
 		return false;

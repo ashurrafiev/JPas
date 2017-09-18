@@ -1,6 +1,5 @@
 package com.xrbpowered.jpas.ast.data;
 
-import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.mem.Pointer;
@@ -59,12 +58,7 @@ public class Type implements ScopeEntry {
 		}
 		@Override
 		public Object unord(int i) {
-			if(i==0)
-				return new Boolean(false);
-			else if(i==1)
-				return new Boolean(true);
-			else
-				throw new JPasError("Out of range.");
+			return new Boolean(i%2==1);
 		}
 	});
 	
@@ -130,6 +124,11 @@ public class Type implements ScopeEntry {
 		return EntryType.type;
 	}
 	
+	@Override
+	public boolean checkImpl() {
+		return true;
+	}
+	
 	public Object init(Object v) {
 		return v==null ? defValue : v;
 	}
@@ -140,10 +139,17 @@ public class Type implements ScopeEntry {
 	public void assign(Pointer ptr, Object v) {
 		ptr.write(v);
 	}
+
+	// MAYBE: type cast
 	
 	@Override
 	public boolean equals(Object obj) {
+		// make type check depend on anonymity?
 		return this==obj;
+	}
+	
+	public static boolean checkEqual(Type tx, Type ty) {
+		return tx==ty || tx!=null && ty!=null && tx.equals(ty);
 	}
 	
 }

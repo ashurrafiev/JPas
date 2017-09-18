@@ -16,7 +16,7 @@ public class IdMap<T> {
 		}
 	}
 	
-	private HashMap<String, IdEntry> map = new HashMap<>(); 
+	public HashMap<String, IdEntry> map = new HashMap<>(); 
 	
 	public IdEntry get(String name) {
 		return map.get(name);

@@ -2,6 +2,7 @@
 *.jar
 *.pdf
 test.pas
+testunit.pas
 
 .metadata
 bin/

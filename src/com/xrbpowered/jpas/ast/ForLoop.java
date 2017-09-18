@@ -1,32 +1,11 @@
 package com.xrbpowered.jpas.ast;
 
-import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.data.Type.Ordinator;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.LValue;
 
 public class ForLoop extends Statement {
 
-	private static class Int extends ForLoop {
-		public Int(int dir, LValue var, Expression start, Expression end, Statement s) {
-			super(dir, var, start, end, s);
-		}
-			
-		@Override
-		public void execute() {
-			var.assign(start.evaluate());
-			int d = dir==0 ? 1 : -1;
-			for(;;) {
-				int i = (Integer) var.evaluate();
-				int endi = (Integer) end.evaluate();
-				if(dir==0 && i>endi || dir!=0 && i<endi)
-					return;
-				s.execute();
-				var.assign((Integer) var.evaluate() + d);
-			}
-		}
-	}
-	
 	protected int dir;
 	protected LValue var; 
 	protected final Expression start, end;
@@ -46,26 +25,22 @@ public class ForLoop extends Statement {
 		var.assign(start.evaluate());
 		int i = ord.ord(var.evaluate());
 		int endi = ord.ord(end.evaluate());
-		if(dir==0 && i>endi || dir!=0 && i<endi)
+		if(i*dir>endi*dir)
 			return;
 		for(;;) {
 			s.execute();
 			
-			i = ord.ord(var.evaluate());
-			endi = ord.ord(end.evaluate());
-			
-			// pred/succ may throw range error, need to check condition prior that
-			if(dir==0 && i>=endi || dir!=0 && i<=endi)
+			// pred/succ may overflow the range, need to check condition prior that
+			i = ord.ord(var.evaluate()) + dir;
+			if(i*dir>endi*dir)
 				return;
-			var.assign(dir==0 ? ord.succ(var.evaluate()) : ord.pred(var.evaluate()));
+			var.assign(ord.unord(i));
 		}
 	}
 	
 	public static ForLoop make(int dir, LValue var, Expression start, Expression end, Statement s) {
-		if(var.getType()==Type.integer)
-			return new Int(dir, var, start, end, s);
-		else
-			return new ForLoop(dir, var, start, end, s);
+		dir = dir==0 ? 1 : -1;
+		return new ForLoop(dir, var, start, end, s);
 	}
 
 }
