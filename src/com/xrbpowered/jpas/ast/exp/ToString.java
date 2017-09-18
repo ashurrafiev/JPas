@@ -29,6 +29,7 @@ public class ToString extends Expression {
 		Type xt = x.getType();
 		if(xt==Type.string)
 			return x;
+		else if(xt==Type.character)
 			return new ToString(x);
 		else
 			return null;
