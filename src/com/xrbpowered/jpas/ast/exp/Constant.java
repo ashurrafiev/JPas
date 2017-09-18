@@ -37,7 +37,21 @@ public class Constant extends Expression implements ScopeEntry {
 	
 	public static Constant parseNumber(String s) {
 		try {
-			return new Constant(Type.integer, Integer.parseInt(s));
+			int v;
+			boolean ch = false;
+			if(s.charAt(0)=='#') {
+				ch = true;
+				s = s.substring(1);
+			}
+			if(s.charAt(0)=='$') {
+				v = Integer.parseInt(s.substring(1), 16);
+			}
+			else
+				v = Integer.parseInt(s);
+			if(ch)
+				return new Constant(Type.real, new Character((char) v));
+			else
+				return new Constant(Type.integer, v);
 		}
 		catch(NumberFormatException ei) {
 			try {

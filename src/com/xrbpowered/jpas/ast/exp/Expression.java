@@ -27,7 +27,7 @@ public abstract class Expression {
 		if(dt.equals(st))
 			return src;
 		else if(dt==Type.string)
-			return ToString.make(src); // TODO remove implicit cast to String
+			return ToString.make(src);
 		else if(dt==Type.real && st==Type.integer)
 			return IntAsReal.make(src);
 		else

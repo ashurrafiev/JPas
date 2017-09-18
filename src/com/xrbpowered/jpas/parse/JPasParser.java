@@ -6,6 +6,7 @@ import java.util.List;
 import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Assignment;
 import com.xrbpowered.jpas.ast.BlockStatement;
+import com.xrbpowered.jpas.ast.CaseStatement;
 import com.xrbpowered.jpas.ast.ForLoop;
 import com.xrbpowered.jpas.ast.IfStatement;
 import com.xrbpowered.jpas.ast.Range;
@@ -740,6 +741,66 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		return Statement.nop;
 	}
 	
+	private List<Object> switchList(Scope scope, Type type) {
+		ArrayList<Object> list = new ArrayList<>();
+		for(;;) {
+			Expression x = expression(scope);
+			if(x==null)
+				return null;
+			if(!x.isConst())
+				throw new JPasError("Expression is not constant.");
+			x = Expression.implicitCast(type, x);
+			if(x==null)
+				throw new JPasError("Type mismatch");
+			list.add(x.evaluate());
+			if(new JPasToken(':').equals(token)) {
+				next();
+				return list;
+			}
+			else if(new JPasToken(',').equals(token)) {
+				next();
+			}
+			else
+				return null;
+		}
+	}
+	
+	private Statement caseList(Scope scope, Type type, CaseStatement cs) {
+		for(;;) {
+			if(JPasToken.keyword("else").equals(token)) {
+				next();
+				Statement sf = checkedStatement(scope);
+				if(sf==null)
+					return null;
+				cs.addElse(sf);
+				if(accept(new JPasToken(';')) && accept(JPasToken.keyword("end")))
+					return cs;
+				else
+					return null;
+			}
+			else {
+				List<Object> switches = switchList(scope, type);
+				if(switches==null)
+					return null;
+				Statement s = checkedStatement(scope);
+				if(s==null)
+					return null;
+				for(Object val : switches)
+					cs.addSwitch(val, s);
+			}
+			
+			if(JPasToken.keyword("end").equals(token)) {
+				next();
+				return cs;
+			}
+			else if(new JPasToken(';').equals(token)) {
+				next();
+			}
+			else
+				return null;
+		}
+	}
+	
 	private Statement statement(Scope scope) {
 		
 		if(new JPasToken(';').equals(token)) {
@@ -804,6 +865,20 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			}
 			else
 				return null;
+		}
+		
+		else if(JPasToken.keyword("case").equals(token)) {
+			next();
+			Expression ex = expression(scope);
+			if(ex==null)
+				return null;
+			Type type = ex.getType();
+			if(type!=Type.string && type.getOrdinator()==null)
+				throw new JPasError("Invalid expression type");
+			if(!accept(JPasToken.keyword("of")))
+				return null;
+			CaseStatement cs = new CaseStatement(ex);
+			return caseList(scope, type, cs);
 		}
 		
 		// TODO case <ord> of <val> [..<val>] :  statement; ... end 
