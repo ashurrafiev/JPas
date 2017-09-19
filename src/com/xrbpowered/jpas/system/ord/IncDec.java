@@ -6,35 +6,41 @@ import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.data.Type.Ordinator;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
+import com.xrbpowered.jpas.ast.exp.LValue;
 import com.xrbpowered.jpas.mem.Pointer;
 
 public class IncDec extends Function {
 
-	private static class IntIncDec extends IncDec {
-		protected IntIncDec(Type type, boolean inc) {
-			super(type, inc);
+	public static class Call extends Function.Call {
+
+		public Call(Function f, Expression[] args) {
+			super(f, args);
 		}
+		
 		@Override
-		public Object call(Object[] args) {
-			Pointer ptr = (Pointer) args[0];
-			int v = (Integer) ptr.read() + (inc ? 1: -1);
-			ptr.write(new Integer(v));
+		public Object evaluate() {
+			((IncDec) f).call(args[0].getType(), ((LValue) args[0]).getPointer());
 			return null;
-		};
+		}
 	}
 	
-	private static IncDec intInc = new IntIncDec(Type.integer, true);
-	private static IncDec intDec = new IntIncDec(Type.integer, false);
+	private static class IntIncDec extends IncDec {
+		protected IntIncDec(boolean inc) {
+			super(inc);
+		}
+		
+		public void call(Type type, Pointer ptr) {
+			int v = (Integer) ptr.read() + (inc ? 1: -1);
+			ptr.write(new Integer(v));
+		}
+	}
+	
+	private static IncDec intInc = new IntIncDec(true);
+	private static IncDec intDec = new IntIncDec(false);
 
-	private final Type type;
 	protected final boolean inc;
 	
 	public IncDec(boolean inc) {
-		this(null, inc);
-	}
-
-	protected IncDec(Type type, boolean inc) {
-		this.type = type;
 		this.inc = inc;
 	}
 
@@ -45,7 +51,7 @@ public class IncDec extends Function {
 	
 	@Override
 	public Type getType() {
-		return type;
+		return null;
 	}
 
 	@Override
@@ -63,22 +69,25 @@ public class IncDec extends Function {
 		return true;
 	}
 
-	@Override
-	public Object call(Object[] args) {
-		Pointer ptr = (Pointer) args[0];
+	public void call(Type type, Pointer ptr) {
 		Ordinator ord = type.getOrdinator();
 		Object v = inc ? ord.succ(ptr.read()) : ord.pred(ptr.read());
 		ptr.write(v);
+	}
+	
+	@Override
+	public Object call(Object[] args) {
 		return null;
 	}
 
 	public Function.Call makeCall(Expression[] args) {
-		testArgNumber(1, args);
+		testArgNumber(getArgNum(), args);
 		checkLValue(0, args[0]);
-		if(args[0].getType()==Type.integer)
-			return new Function.Call(inc ? intInc : intDec, args);
-		else if(args[0].getType().getOrdinator()!=null)
-			return new Function.Call(this, args);
+		Type type = args[0].getType();
+		if(type==Type.integer)
+			return new IncDec.Call(inc ? intInc : intDec, args);
+		if(type.getOrdinator()!=null)
+			return new IncDec.Call(this, args);
 		else
 			throw new JPasError("Argument type mismatch");
 	}

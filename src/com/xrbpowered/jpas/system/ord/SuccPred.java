@@ -1,16 +1,12 @@
-package com.xrbpowered.jpas.system;
+package com.xrbpowered.jpas.system.ord;
 
 import com.xrbpowered.jpas.JPasError;
-import com.xrbpowered.jpas.ast.Scope.EntryType;
-import com.xrbpowered.jpas.ast.data.PointerType;
 import com.xrbpowered.jpas.ast.data.Type;
+import com.xrbpowered.jpas.ast.data.Type.Ordinator;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
-import com.xrbpowered.jpas.ast.exp.LValue;
-import com.xrbpowered.jpas.mem.FreePointer;
-import com.xrbpowered.jpas.mem.Pointer;
 
-public class NewPtr extends Function {
+public class SuccPred extends Function {
 
 	public static class Call extends Function.Call {
 
@@ -19,30 +15,30 @@ public class NewPtr extends Function {
 		}
 		
 		@Override
+		public Type getType() {
+			return args[0].getType();
+		}
+		
+		@Override
 		public Object evaluate() {
-			((NewPtr) f).call((PointerType) args[0].getType(), ((LValue) args[0]).getPointer());
-			return null;
+			return ((SuccPred) f).call(args[0].getType(), args[0].evaluate());
 		}
 	}
 	
-	@Override
-	public EntryType getScopeEntryType() {
-		return EntryType.procedure;
-	}
+	protected final boolean inc;
 	
+	public SuccPred(boolean inc) {
+		this.inc = inc;
+	}
+
 	@Override
 	public Type getType() {
 		return null;
 	}
-	
+
 	@Override
 	public int getArgNum() {
 		return 1;
-	}
-	
-	@Override
-	public boolean isLValue(int argIndex) {
-		return true;
 	}
 	
 	@Override
@@ -50,23 +46,22 @@ public class NewPtr extends Function {
 		return null;
 	}
 	
-	public void call(PointerType type, Pointer ptr) {
-		ptr.write(new FreePointer(type.type));
+	public Object call(Type type, Object v) {
+		Ordinator ord = type.getOrdinator();
+		return inc ? ord.succ(v) : ord.pred(v);
 	}
 	
 	@Override
 	public Object call(Object[] args) {
 		return null;
 	}
-	
+
 	public Function.Call makeCall(Expression[] args) {
 		testArgNumber(getArgNum(), args);
-		checkLValue(0, args[0]);
 		Type type = args[0].getType();
-		if(type instanceof PointerType)
-			return new NewPtr.Call(this, args);
+		if(type.getOrdinator()!=null)
+			return new SuccPred.Call(this, args);
 		else
 			throw new JPasError("Argument type mismatch");
 	}
-	
 }

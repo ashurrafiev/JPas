@@ -24,16 +24,6 @@ public class Range {
 		public Object indexFor(int i) {
 			return type.getOrdinator().unord(i+min);
 		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if(obj instanceof Fixed) {
-				Fixed f = (Fixed) obj;
-				return type.equals(f.type) && min==f.min && max==f.max;
-			}
-			else
-				return false;
-		}
 	}
 	
 	private final Expression min, max;
@@ -71,4 +61,14 @@ public class Range {
 		return new Range(min, max);
 	}
 	
+	public static boolean checkEqual(Fixed rx, Fixed ry) {
+		Type tx = rx==null ? Type.integer : rx.type;
+		Type ty = ry==null ? Type.integer : ry.type;
+		if(!tx.equals(ty))
+			return false;
+		if(rx!=null && ry!=null)
+			return rx.min==ry.min && rx.max==ry.max;
+		else
+			return true;
+	}
 }

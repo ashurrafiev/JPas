@@ -58,7 +58,7 @@ public class Type implements ScopeEntry {
 		}
 		@Override
 		public Object unord(int i) {
-			return new Boolean(i%2==1);
+			return new Boolean(i%2!=0);
 		}
 	});
 	

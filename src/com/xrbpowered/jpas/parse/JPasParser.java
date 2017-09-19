@@ -387,16 +387,14 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			throw new JPasError(e.getMessage() + " in call to "+name);
 		}
 	}
-	
-	private Statement block(Scope scope) {
+
+	private List<Statement> blockStatements(Scope inner, JPasToken end) {
 		List<Statement> block = new ArrayList<>();
 		boolean sep = true;
-		Scope inner = new Scope(scope);
 		for(;;) {
-			if(JPasToken.keyword("end").equals(token)) {
+			if(end.equals(token)) {
 				next();
-				inner.checkDefs();
-				return new BlockStatement(block, inner.stackFrame);
+				return block;
 			}
 			else if(new JPasToken(';').equals(token)) {
 				sep = true;
@@ -405,6 +403,9 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			else {
 				if(!sep)
 					throw new JPasError("Expected ;");
+				
+				// TODO labels and exit
+				
 				Statement s = checkedStatement(inner);
 				if(token==null)
 					return null;
@@ -419,41 +420,30 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 	}
 
-	private Statement repeatUntil(Scope scope) {
-		List<Statement> block = new ArrayList<>();
-		boolean sep = true;
+	private Statement block(Scope scope) {
 		Scope inner = new Scope(scope);
-		for(;;) {
-			if(JPasToken.keyword("until").equals(token)) {
-				next();
-				inner.checkDefs();
-				Expression ex = expression(inner);
-				if(ex==null)
-					return null;
-				ex = Expression.implicitCast(Type.bool, ex);
-				if(ex==null)
-					throw new JPasError("Condition must be boolean.");
-				return new RepeatUntil(block, inner.stackFrame, ex);
-			}
-			else if(new JPasToken(';').equals(token)) {
-				sep = true;
-				next();
-			}
-			else {
-				if(!sep)
-					throw new JPasError("Expected ;");
-				Statement s = checkedStatement(inner);
-				if(token==null)
-					return null;
-				if(s!=null) {
-					if(s!=Statement.nop)
-						block.add(s);
-					sep = false;
-				}
-				else
-					next();
-			}
-		}
+		List<Statement> block = blockStatements(inner, JPasToken.keyword("end"));
+		if(block==null)
+			return null;
+		inner.checkDefs();
+		
+		return new BlockStatement(block, inner.stackFrame);
+	}
+
+	private Statement repeatUntil(Scope scope) {
+		Scope inner = new Scope(scope);
+		List<Statement> block = blockStatements(inner, JPasToken.keyword("until"));
+		if(block==null)
+			return null;
+		inner.checkDefs();
+		
+		Expression ex = expression(inner);
+		if(ex==null)
+			return null;
+		ex = Expression.implicitCast(Type.bool, ex);
+		if(ex==null)
+			throw new JPasError("Condition must be boolean.");
+		return new RepeatUntil(block, inner.stackFrame, ex);
 	}
 	
 	private Range range(Scope scope) {
@@ -831,15 +821,13 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 					cs.addSwitch(val, s);
 			}
 			
+			if(!accept(new JPasToken(';')))
+				return null;
+			
 			if(JPasToken.keyword("end").equals(token)) {
 				next();
 				return cs;
 			}
-			else if(new JPasToken(';').equals(token)) {
-				next();
-			}
-			else
-				return null;
 		}
 	}
 	
@@ -874,11 +862,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			next();
 			if(scope.isUnitLoaded(name))
 				return Statement.nop;
-			Statement s = Scope.getStandardUnit(name.toLowerCase());
-			if(s==null)
-				return null;
 			scope.add(name, new UnitRef());
-			return s;
+			return Scope.getStandardUnit(name.toLowerCase());
 		}
 		else if(TokenType.string.token.equals(token)) {
 			String name = (String) token.value;
@@ -886,11 +871,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			if(scope.isUnitLoaded(name))
 				return Statement.nop;
 			File file = new File(workingDir, name);
-			Statement s = JPas.compile(new JPasParser(scope), file);
-			if(s==null)
-				return null;
 			scope.add(file.getAbsolutePath(), new UnitRef());
-			return s;
+			return JPas.compile(new JPasParser(scope), file);
 		}
 		else {
 			expectedToken = TokenType.identifier.token;

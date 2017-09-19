@@ -12,21 +12,21 @@ repeat
 	Write('pop, push or exit? ');
 	ReadLn(Cmd);
 	
-	if Cmd='pop' then
-		begin
-			if CanPop then
-				WriteLn('Popped ''', Pop, '''.')
-			else
-				WriteLn('Stack is empty.');
-		end
-	else if Cmd='push' then
-		begin
-			var Val: String;
-			WriteLn('Enter new string value:');
-			ReadLn(Val);
-			Push(Val);
-			WriteLn('Pushed ''', Val, '''.');
-		end;
+	case Cmd of
+		'pop': begin
+				if CanPop then
+					WriteLn('Popped ''', Pop, '''.')
+				else
+					WriteLn('Stack is empty.');
+			end;
+		'push': begin
+				var Val: String;
+				WriteLn('Enter new string value:');
+				ReadLn(Val);
+				Push(Val);
+				WriteLn('Pushed ''', Val, '''.');
+			end;
+	end;
 
 until Cmd='exit';
 

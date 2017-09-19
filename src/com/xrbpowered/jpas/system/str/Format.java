@@ -1,4 +1,4 @@
-package com.xrbpowered.jpas.system;
+package com.xrbpowered.jpas.system.str;
 
 import java.util.IllegalFormatException;
 

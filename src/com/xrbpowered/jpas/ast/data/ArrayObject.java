@@ -11,6 +11,8 @@ public class ArrayObject {
 	private Object[] values;
 	
 	public ArrayObject(Range.Fixed range, Type type) {
+		if(range==null)
+			throw new JPasError("Unknown range, cannot create array.");
 		this.range = range;
 		this.values = new Object[range.length()];
 		for(int i=0; i<values.length; i++)
@@ -27,7 +29,7 @@ public class ArrayObject {
 	}
 	
 	private int calcIndex(Object index) {
-		int i = range.type.getOrdinator().ord(index) - range.min;
+		int i = range==null ? (Integer) index : (range.type.getOrdinator().ord(index) - range.min);
 		if(i<0 || i>=values.length)
 			throw new JPasError("Range check error.");
 		return i;
@@ -66,7 +68,7 @@ public class ArrayObject {
 		}
 		else {
 			for(int i=0; i<dst.values.length; i++)
-				type.type.assign(new ArrayItemPointer(dst, type.range.indexFor(i)), src.values[i]);
+				type.type.assign(new ArrayItemPointer(dst, type.range==null ? i : type.range.indexFor(i)), src.values[i]);
 		}
 	}
 	

@@ -1,26 +1,35 @@
 package com.xrbpowered.jpas.system;
 
+import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Function;
 
-public class Length extends Function {
+public class Halt extends Function {
+
+	@Override
+	public EntryType getScopeEntryType() {
+		return EntryType.procedure;
+	}
 
 	@Override
 	public Type getType() {
-		return Type.integer;
+		return null;
 	}
 
 	@Override
 	public int getArgNum() {
-		return 1;
+		return 0;
 	}
-	
+
 	@Override
 	public Type getArgType(int argIndex) {
-		return Type.string;
+		return null;
 	}
+
 	@Override
 	public Object call(Object[] args) {
-		return new Integer(((String) args[0]).length());
+		System.exit(0);
+		return null;
 	}
+
 }

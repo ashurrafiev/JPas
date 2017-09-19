@@ -18,9 +18,7 @@ repeat
 	for i:=1 to n-1 do
 		if X[i-1]>X[i] then
 			begin
-				var y: Integer = X[i-1];
-				X[i-1] := X[i];
-				X[i] := y;
+				Swap(X[i-1], X[i]);
 				swapped := True;
 			end;
 until not swapped;

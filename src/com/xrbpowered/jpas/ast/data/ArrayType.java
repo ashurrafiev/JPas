@@ -2,7 +2,6 @@ package com.xrbpowered.jpas.ast.data;
 
 import java.util.List;
 
-import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.mem.Pointer;
 
@@ -19,7 +18,7 @@ public class ArrayType extends IndexableType {
 	
 	@Override
 	public Type indexType() {
-		return range.type;
+		return range==null ? Type.integer : range.type;
 	}
 	
 	@Override
@@ -45,7 +44,7 @@ public class ArrayType extends IndexableType {
 		if(!super.equals(obj)) {
 			if(obj instanceof ArrayType) {
 				ArrayType at = (ArrayType) obj;
-				return type.equals(at.type) && range.equals(at.range);
+				return type.equals(at.type) && Range.checkEqual(range, at.range);
 			}
 			return false;
 		}
@@ -55,7 +54,8 @@ public class ArrayType extends IndexableType {
 	
 	public static Type make(List<Range> r, Type type) {
 		if(r==null)
-			throw new JPasError("Undefined range."); // MAYBE: abstracted array types
+			return new ArrayType(null, type);
+			// throw new JPasError("Undefined range."); // TODO: abstracted array types
 		else {
 			Type t = type;
 			for(int i=r.size()-1; i>=0; i--)

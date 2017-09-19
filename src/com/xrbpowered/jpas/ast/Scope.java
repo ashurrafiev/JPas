@@ -4,10 +4,11 @@ import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.exp.Constant;
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 import com.xrbpowered.jpas.system.Delay;
-import com.xrbpowered.jpas.system.Format;
-import com.xrbpowered.jpas.system.Length;
+import com.xrbpowered.jpas.system.Halt;
 import com.xrbpowered.jpas.system.NewPtr;
 import com.xrbpowered.jpas.system.Read;
+import com.xrbpowered.jpas.system.RunError;
+import com.xrbpowered.jpas.system.Swap;
 import com.xrbpowered.jpas.system.Write;
 import com.xrbpowered.jpas.system.math.Abs;
 import com.xrbpowered.jpas.system.math.IntMath;
@@ -19,6 +20,20 @@ import com.xrbpowered.jpas.system.math.Randomize;
 import com.xrbpowered.jpas.system.math.RealMath;
 import com.xrbpowered.jpas.system.math.Sqr;
 import com.xrbpowered.jpas.system.ord.IncDec;
+import com.xrbpowered.jpas.system.ord.Ord;
+import com.xrbpowered.jpas.system.ord.SuccPred;
+import com.xrbpowered.jpas.system.str.Chr;
+import com.xrbpowered.jpas.system.str.Concat;
+import com.xrbpowered.jpas.system.str.Copy;
+import com.xrbpowered.jpas.system.str.Delete;
+import com.xrbpowered.jpas.system.str.Format;
+import com.xrbpowered.jpas.system.str.Insert;
+import com.xrbpowered.jpas.system.str.Length;
+import com.xrbpowered.jpas.system.str.LowCase;
+import com.xrbpowered.jpas.system.str.Pos;
+import com.xrbpowered.jpas.system.str.Str;
+import com.xrbpowered.jpas.system.str.UpCase;
+import com.xrbpowered.jpas.system.str.Val;
 
 public class Scope {
 
@@ -88,6 +103,9 @@ public class Scope {
 	public static Scope global() {
 		Scope global = new Scope(null);
 
+		global.add("Halt", new Halt());
+		global.add("RunError", new RunError());
+
 		global.add("New", new NewPtr());
 
 		global.add("Write", new Write(false));
@@ -104,27 +122,30 @@ public class Scope {
 		global.add("Max", new Max());
 		global.add("Odd", new Odd());
 		
-		// TODO ord functions
 		global.add("Inc", new IncDec(true));
 		global.add("Dec", new IncDec(false));
-		// Pred(Ord): Ord;
-		// Succ(Ord): Ord;
-		// Ord(Ord): Integer;
+		global.add("Succ", new SuccPred(true));
+		global.add("Pred", new SuccPred(false));
+		global.add("Ord", new Ord());
+		// TODO unord function
 		
-		// TODO string functions
-		global.add("Length", new Length());
+		global.add("Chr", new Chr());
+		global.add("UpCase", new UpCase());
+		global.add("LowCase", new LowCase());
 		global.add("Format", new Format());
-		// Delete(var St: String; Pos, Num: Integer);
-		// Insert(St: String; var Target: String; Pos: Integer);
-		// Str(Val): String;
-		// Val(S: String; Base: Integer): Integer; 
-		// Val(S: String): Real; 
-		// Copy(St, Pos, Num): String;
-		// Concat(S, ...): String;
-		// Pos(Obj, Target): Integer; // 1-based
+		global.add("Str", new Str());
+		global.add("Val", new Val());
+		global.add("Length", new Length());
+		global.add("Copy", new Copy());
+		global.add("Pos", new Pos());
+		global.add("Concat", new Concat());
+		global.add("Delete", new Delete());
+		global.add("Insert", new Insert());
 
 		global.add("Randomize", new Randomize());
 		global.add("Random", new Rand());
+		global.add("Swap", new Swap());
+		// TODO Fill(Array of T, T);
 
 		return global;
 	}
