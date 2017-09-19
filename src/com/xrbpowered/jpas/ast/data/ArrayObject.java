@@ -62,6 +62,8 @@ public class ArrayObject {
 	}
 
 	public static void copy(ArrayType type, ArrayObject dst, ArrayObject src) {
+		dst.check();
+		src.check();
 		if(type.type instanceof ArrayType) {
 			for(int i=0; i<dst.values.length; i++)
 				copy((ArrayType) type.type, (ArrayObject) dst.values[i], (ArrayObject) src.values[i]);
@@ -69,6 +71,18 @@ public class ArrayObject {
 		else {
 			for(int i=0; i<dst.values.length; i++)
 				type.type.assign(new ArrayItemPointer(dst, type.range==null ? i : type.range.indexFor(i)), src.values[i]);
+		}
+	}
+	
+	public static void fill(ArrayType type, ArrayObject dst, Object v, int depth) {
+		dst.check();
+		if(depth>0) {
+			for(int i=0; i<dst.values.length; i++)
+				fill((ArrayType) type.type, (ArrayObject) dst.values[i], v, depth-1);
+		}
+		else {
+			for(int i=0; i<dst.values.length; i++)
+				type.type.assign(new ArrayItemPointer(dst, type.range==null ? i : type.range.indexFor(i)), v);
 		}
 	}
 	

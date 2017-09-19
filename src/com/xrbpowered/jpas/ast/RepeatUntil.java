@@ -9,18 +9,22 @@ public class RepeatUntil extends BlockStatement {
 
 	private final Expression cond;
 	
-	public RepeatUntil(List<Statement> statements, StackFrameDesc sf, Expression cond) {
-		super(statements, sf);
+	public RepeatUntil(String label, List<Statement> statements, StackFrameDesc sf, Expression cond) {
+		super(label, statements, sf);
 		this.cond = cond;
 	}
 	
 	@Override
-	public void execute() {
+	public String execute() {
+		String exit = null;
 		enter();
 		do {
-			executeBody();
+			exit = executeBody();
+			if(exit!=null)
+				break;
 		} while(!((Boolean) cond.evaluate()));
 		leave();
+		return pass(exit);
 	}
 
 }

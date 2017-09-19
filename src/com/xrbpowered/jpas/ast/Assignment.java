@@ -14,7 +14,8 @@ public class Assignment extends Statement {
 	}
 	
 	@Override
-	public void execute() {
+	public String execute() {
 		target.assign(ex.evaluate());
+		return null;
 	}
 }

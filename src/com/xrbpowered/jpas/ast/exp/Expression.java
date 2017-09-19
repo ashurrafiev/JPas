@@ -13,8 +13,9 @@ public abstract class Expression {
 		}
 		
 		@Override
-		public void execute() {
+		public String execute() {
 			ex.evaluate();
+			return null;
 		}
 	}
 	

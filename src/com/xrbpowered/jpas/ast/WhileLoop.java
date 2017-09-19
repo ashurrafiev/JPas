@@ -2,20 +2,26 @@ package com.xrbpowered.jpas.ast;
 
 import com.xrbpowered.jpas.ast.exp.Expression;
 
-public class WhileLoop extends Statement {
+public class WhileLoop extends LabelledStatement {
 
 	private final Expression cond;
 	private final Statement s;
 	
-	public WhileLoop(Expression cond, Statement s) {
+	public WhileLoop(String label, Expression cond, Statement s) {
+		super(label);
 		this.cond = cond;
 		this.s = s;
 	}
 	
 	@Override
-	public void execute() {
-		while((Boolean) cond.evaluate())
-			s.execute();
+	public String execute() {
+		String exit = null;
+		while((Boolean) cond.evaluate()) {
+			exit = s.execute();
+			if(exit!=null)
+				break;
+		}
+		return pass(exit);
 	}
 
 }

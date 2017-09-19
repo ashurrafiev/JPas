@@ -55,7 +55,6 @@ public class ArrayType extends IndexableType {
 	public static Type make(List<Range> r, Type type) {
 		if(r==null)
 			return new ArrayType(null, type);
-			// throw new JPasError("Undefined range."); // TODO: abstracted array types
 		else {
 			Type t = type;
 			for(int i=r.size()-1; i>=0; i--)

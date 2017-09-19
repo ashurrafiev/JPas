@@ -41,18 +41,18 @@ public class CaseStatement extends Statement {
 	}
 	
 	@Override
-	public void execute() {
+	public String execute() {
 		Object v = test.evaluate();
 		if(v!=null) {
 			for(Switch sw : switches) {
-				if(sw.val.equals(v)) {
-					sw.s.execute();
-					return;
-				}
+				if(sw.val.equals(v))
+					return sw.s.execute();
 			}
 		}
 		if(def!=null)
-			def.execute();
+			return def.execute();
+		else
+			return null;
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.xrbpowered.jpas.parse;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.xrbpowered.jpas.JPas;
@@ -9,8 +10,10 @@ import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Assignment;
 import com.xrbpowered.jpas.ast.BlockStatement;
 import com.xrbpowered.jpas.ast.CaseStatement;
+import com.xrbpowered.jpas.ast.ExitStatement;
 import com.xrbpowered.jpas.ast.ForLoop;
 import com.xrbpowered.jpas.ast.IfStatement;
+import com.xrbpowered.jpas.ast.LabelledStatement;
 import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.ast.RepeatUntil;
 import com.xrbpowered.jpas.ast.Scope;
@@ -403,9 +406,6 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			else {
 				if(!sep)
 					throw new JPasError("Expected ;");
-				
-				// TODO labels and exit
-				
 				Statement s = checkedStatement(inner);
 				if(token==null)
 					return null;
@@ -420,17 +420,17 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 	}
 
-	private Statement block(Scope scope) {
+	private Statement block(String label, Scope scope) {
 		Scope inner = new Scope(scope);
 		List<Statement> block = blockStatements(inner, JPasToken.keyword("end"));
 		if(block==null)
 			return null;
 		inner.checkDefs();
 		
-		return new BlockStatement(block, inner.stackFrame);
+		return new BlockStatement(label, block, inner.stackFrame);
 	}
 
-	private Statement repeatUntil(Scope scope) {
+	private Statement repeatUntil(String label, Scope scope) {
 		Scope inner = new Scope(scope);
 		List<Statement> block = blockStatements(inner, JPasToken.keyword("until"));
 		if(block==null)
@@ -443,7 +443,33 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		ex = Expression.implicitCast(Type.bool, ex);
 		if(ex==null)
 			throw new JPasError("Condition must be boolean.");
-		return new RepeatUntil(block, inner.stackFrame, ex);
+		return new RepeatUntil(label, block, inner.stackFrame, ex);
+	}
+	
+	private Statement exit(Scope scope) {
+		String label;
+		if(new JPasToken(';').equals(token)) {
+			label = "";
+		}
+		else {
+			JPasToken t = token;
+			int ch = choice(TokenType.number.token, TokenType.identifier.token);
+			if(ch==0) {
+				try {
+					Integer.parseInt((String) t.value);
+				}
+				catch(NumberFormatException e) {
+					ch = -1;
+				}
+			}
+			if(ch<0)
+				return null;
+			label = (String) t.value;
+		}
+		if(label.isEmpty() || scope.labels.contains(label.toLowerCase()))
+			return new ExitStatement(label);
+		else
+			throw new JPasError("Unknown label "+label);
 	}
 	
 	private Range range(Scope scope) {
@@ -516,6 +542,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	}
 	
 	private Type type(Scope scope, String selfName, Type selfType) {
+		// TODO enum and range types
+		
 		if(JPasToken.keyword("integer").equals(token)) {
 			next();
 			return Type.integer;
@@ -751,6 +779,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				if(f.forwardScope!=scope.forwardScope)
 					throw new JPasError("Implementation must be in the same scope.");
 				Scope inner = f.createScope(scope);
+				inner.breakLabels();
 				Statement st = checkedStatement(inner);
 				if(st==null)
 					return null;
@@ -872,7 +901,11 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return Statement.nop;
 			File file = new File(workingDir, name);
 			scope.add(file.getAbsolutePath(), new UnitRef());
-			return JPas.compile(new JPasParser(scope), file);
+			LinkedList<String> labels = scope.labels;
+			scope.breakLabels();
+			Statement s = JPas.compile(new JPasParser(scope), file);
+			scope.restoreLabels(labels);
+			return s;
 		}
 		else {
 			expectedToken = TokenType.identifier.token;
@@ -965,10 +998,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 					next();
 			}
 		}
-		return new BlockStatement(block, null);
+		return new BlockStatement(null, block, null);
 	}
 	
-	private Statement statement(Scope scope) {
+	private Statement statement(String label, Scope scope) {
 		
 		if(new JPasToken(';').equals(token)) {
 			return Statement.nop;
@@ -976,12 +1009,17 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		
 		else if(JPasToken.keyword("begin").equals(token)) {
 			next();
-			return block(scope);
+			return block(label, scope);
 		}
 
 		else if(JPasToken.keyword("repeat").equals(token)) {
 			next();
-			return repeatUntil(scope);
+			return repeatUntil(label, scope);
+		}
+		
+		else if(JPasToken.keyword("exit").equals(token)) {
+			next();
+			return exit(scope);
 		}
 		
 		else if(JPasToken.keyword("interface").equals(token)) {
@@ -1092,7 +1130,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return null;
 			Statement s = checkedStatement(scope);
 			if(s!=null) {
-				return new WhileLoop(ex, s);
+				return new WhileLoop(label, ex, s);
 			}
 			else
 				return null;
@@ -1131,7 +1169,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return null;
 			Statement s = checkedStatement(scope);
 			if(s!=null) {
-				return ForLoop.make(dir, dst, start, end, s);
+				return ForLoop.make(label, dir, dst, start, end, s);
 			}
 			else
 				return null;
@@ -1173,32 +1211,77 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 	}
 
+	private String label() {
+		next();
+		JPasToken t = token;
+		int ch = choice(TokenType.number.token, TokenType.identifier.token);
+		if(ch==0) {
+			try {
+				Integer.parseInt((String) t.value);
+			}
+			catch(NumberFormatException e) {
+				ch = -1;
+			}
+		}
+		if(ch<0)
+			return null;
+		String label = (String) t.value;
+		if(accept(new JPasToken(':')))
+			return label;
+		else
+			return null;
+	}
+	
 	private Statement checkedStatement(Scope scope) {
 		return checkedStatement(scope, false);
 	}
 	
 	private Statement checkedStatement(Scope scope, boolean decl) {
 		try {
-			Statement s = decl ? declaration(scope) : statement(scope);
-			if(s==null) {
-				hasErrors = true;
-				if(token==null)
-					error("Unexpected end of file.");
-				else if(expectedToken==null)
-					error("Syntax error: "+token);
-				else
-					error("Unexpected "+token+", missed "+expectedToken);
+			String label = null;
+			int labelLine = 0;
+			if(JPasToken.keyword("label").equals(token)) {
+				labelLine = tokeniser.getLineIndex();
+				label = label();
+				if(label==null) {
+					showError();
+					throw new JPasError(null);
+				}
 			}
+			
+			if(label!=null)
+				scope.labels.add(label.toLowerCase());
+			Statement s = decl ? declaration(scope) : statement(label, scope);
+			if(label!=null)
+				scope.labels.removeLast();
+			if(label!=null && (!(s instanceof LabelledStatement) || ((LabelledStatement) s).label!=label)) {
+				System.err.println("Line "+labelLine+": Wrong label placement.");
+				throw new JPasError(null);
+			}
+			if(s==null)
+				showError();
 			else
 				return s;
 		}
 		catch(JPasError err) {
 			hasErrors = true;
-			error(err.getMessage());
+			String msg = err.getMessage();
+			if(msg!=null)
+				error(msg);
 		}
 		while(!(token==null || new JPasToken(';').equals(token) || JPasToken.keyword("end").equals(token)))
 			next();
 		return null;
+	}
+	
+	private void showError() {
+		hasErrors = true;
+		if(token==null)
+			error("Unexpected end of file.");
+		else if(expectedToken==null)
+			error("Syntax error: "+token);
+		else
+			error("Unexpected "+token+", missed "+expectedToken);
 	}
 	
 	@Override

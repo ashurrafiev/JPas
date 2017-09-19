@@ -8,7 +8,7 @@ import com.xrbpowered.utils.parser.Tokeniser;
 public class JPasTokeniser extends Tokeniser<JPasToken> {
 
 	public static final String[] KEYWORDS = {
-			"begin", "end", "interface", "implementation",
+			"begin", "end", "interface", "implementation", "label", "exit",
 			"var", "const", "type", "function", "procedure", "forward", "uses",
 			"if", "then", "else", "while", "do", "repeat", "until", "for", "to", "downto", "case", "with",
 			"integer", "real", "boolean", "char", "string", "array", "of", "record",

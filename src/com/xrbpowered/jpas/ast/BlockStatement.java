@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 
-public class BlockStatement extends Statement {
+public class BlockStatement extends LabelledStatement {
 
 	protected final StackFrameDesc sf;
 	protected final List<Statement> statements;
 	
-	public BlockStatement(List<Statement> statements, StackFrameDesc sf) {
+	public BlockStatement(String label, List<Statement> statements, StackFrameDesc sf) {
+		super(label);
 		this.statements = statements;
 		this.sf = sf==null || sf.size()==0 ? null : sf;
 	}
@@ -19,9 +20,14 @@ public class BlockStatement extends Statement {
 			sf.alloc();
 	}
 	
-	protected void executeBody() {
-		for(Statement s : statements)
-			s.execute();
+	protected String executeBody() {
+		String exit = null;
+		for(Statement s : statements) {
+			exit = s.execute();
+			if(exit!=null)
+				break;
+		}
+		return exit;
 	}
 	
 	protected void leave() {
@@ -30,9 +36,10 @@ public class BlockStatement extends Statement {
 	}
 	
 	@Override
-	public void execute() {
+	public String execute() {
 		enter();
-		executeBody();
+		String exit = executeBody();
 		leave();
+		return pass(exit);
 	}
 }

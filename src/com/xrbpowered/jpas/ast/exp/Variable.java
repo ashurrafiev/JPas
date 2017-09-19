@@ -20,10 +20,11 @@ public class Variable extends LValue implements ScopeEntry, StackFrameObject {
 		}
 		
 		@Override
-		public void execute() {
+		public String execute() {
 			Object defv = def==null ? null : def.evaluate(); 
 			for(Variable v : vars)
 				v.init(defv);
+			return null;
 		};
 	}
 	

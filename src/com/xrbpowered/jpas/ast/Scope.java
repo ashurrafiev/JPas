@@ -1,9 +1,12 @@
 package com.xrbpowered.jpas.ast;
 
+import java.util.LinkedList;
+
 import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.exp.Constant;
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 import com.xrbpowered.jpas.system.Delay;
+import com.xrbpowered.jpas.system.Fill;
 import com.xrbpowered.jpas.system.Halt;
 import com.xrbpowered.jpas.system.NewPtr;
 import com.xrbpowered.jpas.system.Read;
@@ -51,12 +54,18 @@ public class Scope {
 	public final Scope forwardScope;
 	private IdMap<ScopeEntry> idMap = new IdMap<>();
 	
+	public LinkedList<String> labels;
+	
 	public Scope(Scope parent) {
 		this(parent, false);
 	}
 	
 	public Scope(Scope parent, boolean expand) {
 		this.parent = parent;
+		if(parent==null)
+			labels = new LinkedList<>();
+		else
+			labels = parent.labels;
 		if(expand) {
 			this.forwardScope = parent.forwardScope;
 			this.stackFrame = parent.stackFrame;
@@ -65,6 +74,14 @@ public class Scope {
 			this.forwardScope = this;
 			this.stackFrame = new StackFrameDesc();
 		}
+	}
+	
+	public void breakLabels() {
+		this.labels = new LinkedList<>();
+	}
+	
+	public void restoreLabels(LinkedList<String> labels) {
+		this.labels = labels;
 	}
 	
 	public void checkDefs() {
@@ -135,17 +152,18 @@ public class Scope {
 		global.add("Format", new Format());
 		global.add("Str", new Str());
 		global.add("Val", new Val());
-		global.add("Length", new Length());
 		global.add("Copy", new Copy());
+		global.add("Length", new Length());
 		global.add("Pos", new Pos());
 		global.add("Concat", new Concat());
 		global.add("Delete", new Delete());
 		global.add("Insert", new Insert());
+		// MAYBE: same functions for arrays
+		global.add("Fill", new Fill());
 
 		global.add("Randomize", new Randomize());
 		global.add("Random", new Rand());
 		global.add("Swap", new Swap());
-		// TODO Fill(Array of T, T);
 
 		return global;
 	}

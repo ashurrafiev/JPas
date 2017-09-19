@@ -14,11 +14,13 @@ public class IfStatement extends Statement {
 	}
 	
 	@Override
-	public void execute() {
+	public String execute() {
 		if((Boolean) cond.evaluate())
-			st.execute();
+			return st.execute();
 		else if(sf!=null)
-			sf.execute();
+			return sf.execute();
+		else
+			return null;
 	}
 
 }
