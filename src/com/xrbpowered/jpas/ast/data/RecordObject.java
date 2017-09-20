@@ -15,6 +15,19 @@ public class RecordObject {
 		for(int i=0; i<values.length; i++)
 			values[i] = members.get(i).init(null);
 	}
+	
+	public RecordObject(List<Type> members, RecordObject v) {
+		this.values = new Object[members.size()];
+		for(int i=0; i<values.length; i++)
+			values[i] = members.get(i).init(v.values[i]);
+	}
+	
+	public RecordObject(List<Type> members, Object[] v) {
+		this.values = v;
+		for(int i=0; i<values.length; i++)
+			if(values[i]==null)
+				values[i] = members.get(i).init(null);
+	}
 
 	public void free() {
 		this.values = null;
@@ -23,6 +36,10 @@ public class RecordObject {
 	private void check() {
 		if(values==null)
 			throw new JPasError("Access violation.");
+	}
+	
+	public Object get(int index) {
+		return values[index];
 	}
 	
 	public Object read(int index) {

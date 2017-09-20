@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.ast.data;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.xrbpowered.jpas.ast.IdMap;
@@ -11,11 +12,13 @@ import com.xrbpowered.jpas.mem.Pointer;
 
 public class RecordType extends Type {
 
+	private final boolean fluid;
 	private IdMap<Integer> idMap = new IdMap<>();
 	private List<Type> members = new ArrayList<>();
 	
-	public RecordType() {
+	public RecordType(boolean fluid) {
 		super(false, null);
+		this.fluid = fluid;
 	}
 	
 	public void add(String name, Type type) {
@@ -32,12 +35,27 @@ public class RecordType extends Type {
 		return members.get(index);
 	}
 	
+	public List<Type> memberTypes() {
+		return members;
+	}
+	
+	public Collection<String> fieldNames() {
+		return idMap.map.keySet();
+	}
+	
+	@Override
+	public boolean isFluid() {
+		return fluid;
+	}
+	
 	@Override
 	public Object init(Object v) {
-		RecordObject rec = new RecordObject(members);
-		if(v!=null)
-			RecordObject.copy(this, rec, (RecordObject) v);
-		return rec;
+		if(v==null)
+			return new RecordObject(members);
+		else
+			return new RecordObject(members, (RecordObject) v);
+//			RecordObject.copy(this, rec, (RecordObject) v);
+//		return rec;
 	}
 	
 	@Override

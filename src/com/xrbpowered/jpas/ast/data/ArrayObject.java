@@ -9,7 +9,7 @@ public class ArrayObject {
 
 	public final Range.Fixed range;
 	private Object[] values;
-	
+
 	public ArrayObject(Range.Fixed range, Type type) {
 		if(range==null)
 			throw new JPasError("Unknown range, cannot create array.");
@@ -19,6 +19,20 @@ public class ArrayObject {
 			values[i] = type.init(null);
 	}
 
+	public ArrayObject(Range.Fixed range, Type type, ArrayObject v) {
+		if(range==null)
+			throw new JPasError("Unknown range, cannot create array.");
+		this.range = range;
+		this.values = new Object[range.length()];
+		for(int i=0; i<values.length; i++)
+			values[i] = type.init(v.values[i]);
+	}
+
+	public ArrayObject(Range.Fixed range, Object[] v) {
+		this.range = range;
+		this.values = v;
+	}
+	
 	public void free() {
 		this.values = null;
 	}
@@ -33,6 +47,10 @@ public class ArrayObject {
 		if(i<0 || i>=values.length)
 			throw new JPasError("Range check error.");
 		return i;
+	}
+	
+	public Object get(int index) {
+		return values[index];
 	}
 	
 	public Object read(Object index) {

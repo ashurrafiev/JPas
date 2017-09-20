@@ -17,16 +17,24 @@ public class ArrayType extends IndexableType {
 	}
 	
 	@Override
+	public boolean isFluid() {
+		return range!=null && range.type==null;
+	}
+	
+	@Override
 	public Type indexType() {
 		return range==null ? Type.integer : range.type;
 	}
 	
 	@Override
 	public Object init(Object v) {
-		ArrayObject ar = new ArrayObject(range, type);
-		if(v!=null)
-			ArrayObject.copy(this, ar, (ArrayObject) v);
-		return ar;
+		Range.Fixed r = range;
+		if(r==null && v!=null)
+			r = ((ArrayObject) v).range;
+		if(v==null)
+			return new ArrayObject(r, type);
+		else
+			return new ArrayObject(r, type, (ArrayObject) v);
 	}
 	
 	@Override

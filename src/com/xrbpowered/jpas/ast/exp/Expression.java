@@ -25,7 +25,9 @@ public abstract class Expression {
 	
 	public static Expression implicitCast(Type dt, Expression src) {
 		Type st = src.getType();
-		if(dt.equals(st))
+		if(st.isFluid())
+			return ((FluidTypeExpression) src).backPropagateType(dt);
+		else if(dt.equals(st))
 			return src;
 		else if(dt==Type.string)
 			return ToString.make(src);

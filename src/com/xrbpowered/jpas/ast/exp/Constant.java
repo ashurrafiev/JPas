@@ -1,11 +1,19 @@
 package com.xrbpowered.jpas.ast.exp;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
+import com.xrbpowered.jpas.ast.data.ArrayObject;
+import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.PointerType;
+import com.xrbpowered.jpas.ast.data.RecordObject;
+import com.xrbpowered.jpas.ast.data.RecordType;
 import com.xrbpowered.jpas.ast.data.Type;
 
-public class Constant extends Expression implements ScopeEntry {
+public class Constant extends FluidTypeExpression implements ScopeEntry {
 
 	private final Object val;
 	private final Type type;
@@ -38,6 +46,54 @@ public class Constant extends Expression implements ScopeEntry {
 	@Override
 	public boolean isConst() {
 		return true;
+	}
+	
+	@Override
+	public Expression backPropagateType(Type t) {
+		if(type instanceof ArrayType) {
+			ArrayType at = (ArrayType) type;
+			if(!(t instanceof ArrayType))
+				return null;
+			ArrayType tt = (ArrayType) t;
+			ArrayObject ar = (ArrayObject) val;
+			List<Expression> expressions = new ArrayList<>();
+			for(int i=0; i<at.range.length(); i++) {
+				Expression ex = new Constant(at.type, ar.get(i));
+				ex = Expression.implicitCast(tt.type, ex);
+				if(ex==null || !ex.isConst())
+					return null;
+				expressions.add(ex);
+			}
+			at = new ArrayType(new Range.Fixed(tt.range==null ? Type.integer : tt.range.type, at.range.min, at.range.max), tt.type);
+			ArrayLiteral obj = new ArrayLiteral(at, expressions);
+			return new Constant(at, obj.evaluate());
+		}
+		else if(type instanceof RecordType) {
+			RecordType rt = (RecordType) type;
+			if(!(t instanceof RecordType))
+				return null;
+			RecordType tt = (RecordType) t;
+			RecordObject rec = (RecordObject) val;
+			int num = tt.memberTypes().size();
+			List<Expression> expressions = new ArrayList<>(num);
+			for(int i=0; i<num; i++)
+				expressions.add(null);
+			for(String name : rt.fieldNames()) {
+				int index = tt.find(name);
+				if(index<0)
+					return null;
+				int i = rt.find(name);
+				Expression ex = new Constant(rt.getType(i), rec.get(i));
+				ex = Expression.implicitCast(tt.getType(index), ex);
+				if(ex==null || !ex.isConst())
+					return null;
+				expressions.set(index, ex);
+			}
+			RecordLiteral obj = new RecordLiteral(tt, expressions);
+			return new Constant(tt, obj.evaluate());
+		}
+		else
+			return null;
 	}
 	
 	public static Constant parseNumber(String s) {

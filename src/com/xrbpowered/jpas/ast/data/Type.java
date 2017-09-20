@@ -118,6 +118,10 @@ public class Type implements ScopeEntry {
 	public Ordinator getOrdinator() {
 		return ordinator;
 	}
+	
+	public boolean isFluid() {
+		return false;
+	}
 
 	@Override
 	public EntryType getScopeEntryType() {

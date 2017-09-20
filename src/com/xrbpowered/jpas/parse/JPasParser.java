@@ -28,6 +28,7 @@ import com.xrbpowered.jpas.ast.data.PointerType;
 import com.xrbpowered.jpas.ast.data.RecordType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.ArrayItem;
+import com.xrbpowered.jpas.ast.exp.ArrayLiteral;
 import com.xrbpowered.jpas.ast.exp.BinaryOp;
 import com.xrbpowered.jpas.ast.exp.CharOfString;
 import com.xrbpowered.jpas.ast.exp.Constant;
@@ -40,6 +41,7 @@ import com.xrbpowered.jpas.ast.exp.LValue;
 import com.xrbpowered.jpas.ast.exp.LValueArrayItem;
 import com.xrbpowered.jpas.ast.exp.LValueRecordItem;
 import com.xrbpowered.jpas.ast.exp.RecordItem;
+import com.xrbpowered.jpas.ast.exp.RecordLiteral;
 import com.xrbpowered.jpas.ast.exp.UnaryOp;
 import com.xrbpowered.jpas.ast.exp.Variable;
 import com.xrbpowered.jpas.parse.JPasToken.TokenType;
@@ -61,7 +63,85 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	
 	private boolean hasErrors = false;
 
-
+	private Expression recordLiteral(Scope scope) {
+		List<String> names = new ArrayList<>();
+		List<Expression> list = new ArrayList<>();
+		boolean sep = true;
+		for(;;) {
+			if(new JPasToken(']').equals(token)) {
+				next();
+				return RecordLiteral.make(names, list);
+			}
+			else if(new JPasToken(';').equals(token)) {
+				if(sep)
+					return null;
+				next();
+				sep = true;
+			}
+			else {
+				if(!sep)
+					throw new JPasError("Expected ;");
+				
+				JPasToken t = token;
+				if(!accept(TokenType.identifier.token))
+					return null;
+				names.add((String) t.value);
+				
+				if(!accept(new JPasToken(':')))
+					return null;
+				
+				Expression ex = expression(scope);
+				if(ex==null)
+					return null;
+				list.add(ex);
+				sep = false;
+			}
+		}
+	}
+	
+	private Expression arrayLiteral(Scope scope) {
+		List<Expression> list = new ArrayList<>();
+		Type type = null;
+		boolean sep = true;
+		for(;;) {
+			if(new JPasToken(']').equals(token)) {
+				next();
+				if(list.size()==0)
+					throw new JPasError("Array literal is empty.");
+				return ArrayLiteral.make(type, list);
+			}
+			else if(new JPasToken(',').equals(token)) {
+				if(sep)
+					return null;
+				next();
+				sep = true;
+			}
+			else {
+				if(!sep)
+					throw new JPasError("Expected ,");
+				Expression ex = expression(scope);
+				if(ex==null)
+					return null;
+				if(type!=null) {
+					Expression ext = Expression.implicitCast(type, ex);
+					if(ext==null) {
+						type = ex.getType();
+						for(int i=0; i<list.size(); i++) {
+							Expression prev = Expression.implicitCast(type, list.get(i));
+							if(prev==null)
+								throw new JPasError("Element type mismatch.");
+						}
+					}
+					else
+						ex = ext;
+				}
+				type = ex.getType();
+				list.add(ex);
+				sep = false;
+			}
+		}
+	}
+	
 	private Expression expressionLit(Scope scope) {
 		if(TokenType.number.token.equals(token)) {
 			String s = (String) token.value;
@@ -109,6 +189,15 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			else
 				throw new JPasError("Expected LValue.");
 		}
+		else if(new JPasToken('[').equals(token)) {
+			int index = tokeniser.getIndex();
+			next();
+			boolean rec = accept(TokenType.identifier.token) && accept(new JPasToken(':'));
+			tokeniser.rollBackTo(index);
+			expectedToken = null;
+			next();
+			return rec ? recordLiteral(scope) : arrayLiteral(scope);
+		}
 		else if(new JPasToken('(').equals(token)) {
 			next();
 			Expression x = expression(scope);
@@ -130,8 +219,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return list;
 			}
 			else if(new JPasToken(',').equals(token)) {
-				sep = true;
+				if(sep)
+					return null;
 				next();
+				sep = true;
 			}
 			else {
 				if(!sep)
@@ -149,7 +240,11 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		Type type = x.getType();
 		if(!(type instanceof IndexableType))
 			throw new JPasError("Indexing error.");
-		Expression ex = Expression.implicitCast(((IndexableType) type).indexType(), indices.get(dim));
+		Type itype = ((IndexableType) type).indexType();
+		if(itype==null) {
+			throw new JPasError("Indexing error.");
+		}
+		Expression ex = Expression.implicitCast(itype, indices.get(dim));
 		if(ex==null)
 			throw new JPasError("Index type mismatch");
 		
@@ -158,7 +253,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			res = new CharOfString(x, ex);
 		else if(type instanceof ArrayType) {
 			if(x instanceof LValue)
-				res = new LValueArrayItem((LValue) x, ex); // TODO array literals
+				res = new LValueArrayItem((LValue) x, ex);
 			else
 				res = new ArrayItem(x, ex);
 		}
@@ -196,7 +291,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				if(index<0)
 					throw new JPasError("No such member.");
 				if(x instanceof LValue)
-					x = new LValueRecordItem((LValue) x, index); // TODO record literals
+					x = new LValueRecordItem((LValue) x, index);
 				else
 					x = new RecordItem(x, index);
 			}
@@ -219,7 +314,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return null;
 		Expression out = UnaryOp.make(op, x);
 		if(out==null)
-			throw new JPasError("\'"+t+"\' operand type mismatch.");
+			throw new JPasError(t+" operand type mismatch.");
 		return out;
 	}
 	
@@ -353,8 +448,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return args;
 			}
 			else if(new JPasToken(',').equals(token)) {
-				sep = true;
+				if(sep)
+					return null;
 				next();
+				sep = true;
 			}
 			else {
 				if(!sep)
@@ -493,8 +590,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return ranges;
 			}
 			else if(new JPasToken(',').equals(token)) {
-				sep = true;
+				if(sep)
+					return null;
 				next();
+				sep = true;
 			}
 			else {
 				if(!sep)
@@ -516,8 +615,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return true;
 			}
 			else if(new JPasToken(';').equals(token)) {
-				sep = true;
+				if(sep)
+					return false;
 				next();
+				sep = true;
 			}
 			else {
 				if(!sep)
@@ -586,7 +687,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 		else if(JPasToken.keyword("record").equals(token)) {
 			next();
-			RecordType rec = new RecordType();
+			RecordType rec = new RecordType(false);
 			if(!recordMembers(scope, rec, selfName, selfType==null ? rec : selfType))
 				return null;
 			return rec;
@@ -700,8 +801,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return list;
 			}
 			else if(new JPasToken(';').equals(token)) {
-				sep = true;
+				if(sep)
+					return null;
 				next();
+				sep = true;
 			}
 			else {
 				if(!sep)
@@ -798,6 +901,9 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		if(!accept(new JPasToken(TokenType.operator, "=")))
 			return null;
 		Type type = type(scope, name, null); // MAYBE: dynamic types
+		if(type==null)
+			return null;
+		type.init(null);
 		scope.add(name, type);
 		return Statement.nop;
 	}
