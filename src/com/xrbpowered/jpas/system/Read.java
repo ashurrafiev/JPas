@@ -73,7 +73,7 @@ public class Read extends Function {
 			console = new Scanner(System.in);
 		for(;;) {
 			try {
-				String line = console.nextLine();
+				String line = console.nextLine(); // FIXME empty line
 				if(types!=null && ptrs!=null) {
 					Scanner in = new Scanner(line);
 					for(int i=0; i<types.length; i++) {

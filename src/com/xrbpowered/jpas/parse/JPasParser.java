@@ -1333,7 +1333,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return null;
 		String label = (String) t.value;
 		if(accept(new JPasToken(':')))
-			return label;
+			return label.toLowerCase();
 		else
 			return null;
 	}
@@ -1356,7 +1356,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			}
 			
 			if(label!=null)
-				scope.labels.add(label.toLowerCase());
+				scope.labels.add(label);
 			Statement s = decl ? declaration(scope) : statement(label, scope);
 			if(label!=null)
 				scope.labels.removeLast();

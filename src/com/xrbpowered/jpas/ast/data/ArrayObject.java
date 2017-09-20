@@ -24,8 +24,10 @@ public class ArrayObject {
 			throw new JPasError("Unknown range, cannot create array.");
 		this.range = range;
 		this.values = new Object[range.length()];
+		if(values.length<v.values.length)
+			throw new JPasError("Range check error.");
 		for(int i=0; i<values.length; i++)
-			values[i] = type.init(v.values[i]);
+			values[i] = i>=v.values.length ? type.init(null) : type.init(v.values[i]);
 	}
 
 	public ArrayObject(Range.Fixed range, Object[] v) {
@@ -82,12 +84,14 @@ public class ArrayObject {
 	public static void copy(ArrayType type, ArrayObject dst, ArrayObject src) {
 		dst.check();
 		src.check();
+		if(dst.values.length<src.values.length)
+			throw new JPasError("Range check error.");
 		if(type.type instanceof ArrayType) {
 			for(int i=0; i<dst.values.length; i++)
 				copy((ArrayType) type.type, (ArrayObject) dst.values[i], (ArrayObject) src.values[i]);
 		}
 		else {
-			for(int i=0; i<dst.values.length; i++)
+			for(int i=0; i<src.values.length; i++)
 				type.type.assign(new ArrayItemPointer(dst, type.range==null ? i : type.range.indexFor(i)), src.values[i]);
 		}
 	}
