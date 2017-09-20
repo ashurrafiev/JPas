@@ -17,6 +17,14 @@ public class JPas extends Thread {
 		this.code = code;
 	}
 	
+	private void showError(Exception e, String message) {
+		if(verboseErrors)
+			e.printStackTrace();
+		else
+			System.err.println("Runtime error: "+message);
+		System.exit(1);
+	}
+	
 	@Override
 	public void run() {
 		try {
@@ -26,12 +34,11 @@ public class JPas extends Thread {
 				System.err.printf("Finished in %d ms.\n", System.currentTimeMillis()-t);
 			System.exit(0);
 		}
+		catch(JPasError e) {
+			showError(e, e.getMessage());
+		}
 		catch(Exception e) {
-			if(verboseErrors)
-				e.printStackTrace();
-			else
-				System.err.println("Runtime error: "+e.getMessage());
-			System.exit(1);
+			showError(e, "Internal system error, use -verr for details.");
 		}
 	}
 	

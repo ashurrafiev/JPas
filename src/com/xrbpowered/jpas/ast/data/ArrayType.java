@@ -2,15 +2,14 @@ package com.xrbpowered.jpas.ast.data;
 
 import java.util.List;
 
-import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.mem.Pointer;
 
 public class ArrayType extends IndexableType {
 
-	public final Range.Fixed range;
+	public final Range range;
 	public final Type type;
 	
-	public ArrayType(Range.Fixed range, Type t) {
+	public ArrayType(Range range, Type t) {
 		super(false, null);
 		this.range = range;
 		this.type = t;
@@ -28,7 +27,7 @@ public class ArrayType extends IndexableType {
 	
 	@Override
 	public Object init(Object v) {
-		Range.Fixed r = range;
+		Range r = range;
 		if(r==null && v!=null)
 			r = ((ArrayObject) v).range;
 		if(v==null)
@@ -66,7 +65,7 @@ public class ArrayType extends IndexableType {
 		else {
 			Type t = type;
 			for(int i=r.size()-1; i>=0; i--)
-				t = new ArrayType(r.get(i).fix(), t);
+				t = new ArrayType(r.get(i), t);
 			return t;
 		}
 	}

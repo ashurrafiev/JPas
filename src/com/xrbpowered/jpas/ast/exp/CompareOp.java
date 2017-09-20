@@ -4,8 +4,8 @@ import com.xrbpowered.jpas.ast.data.Type;
 
 public abstract class CompareOp extends BinaryOp {
 
-	public CompareOp(Expression x, Expression y) {
-		super(x, y);
+	public CompareOp(Type type, Expression x, Expression y) {
+		super(type, x, y);
 	}
 	
 	@Override
@@ -20,33 +20,33 @@ public abstract class CompareOp extends BinaryOp {
 		return new Boolean(checkRes(x.getType().getComparator().compare(x.evaluate(), y.evaluate())));
 	}
 	
-	public static Expression make(Operation op, Expression x, Expression y) {
-		if(x.getType().getComparator()==null)
+	public static Expression make(Type type, Operation op, Expression x, Expression y) {
+		if(type.getComparator()==null)
 			return null;
 		switch(op) {
 			case gt:
-				return new CompareOp(x, y) {
+				return new CompareOp(type, x, y) {
 					@Override
 					protected boolean checkRes(int res) {
 						return res>0;
 					}
 				};
 			case lt:
-				return new CompareOp(x, y) {
+				return new CompareOp(type, x, y) {
 					@Override
 					protected boolean checkRes(int res) {
 						return res<0;
 					}
 				};
 			case ge:
-				return new CompareOp(x, y) {
+				return new CompareOp(type, x, y) {
 					@Override
 					protected boolean checkRes(int res) {
 						return res>=0;
 					}
 				};
 			case le:
-				return new CompareOp(x, y) {
+				return new CompareOp(type, x, y) {
 					@Override
 					protected boolean checkRes(int res) {
 						return res<=0;

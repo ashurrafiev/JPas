@@ -6,8 +6,8 @@ public class Equals extends BinaryOp {
 	
 	private final boolean neg;
 	
-	public Equals(Expression x, Expression y, boolean neg) {
-		super(x, y);
+	public Equals(Type type, Expression x, Expression y, boolean neg) {
+		super(type, x, y);
 		this.neg = neg;
 	}
 	

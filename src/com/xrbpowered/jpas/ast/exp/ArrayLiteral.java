@@ -3,9 +3,9 @@ package com.xrbpowered.jpas.ast.exp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
+import com.xrbpowered.jpas.ast.data.Range;
 import com.xrbpowered.jpas.ast.data.Type;
 
 public class ArrayLiteral extends FluidTypeExpression {
@@ -50,13 +50,13 @@ public class ArrayLiteral extends FluidTypeExpression {
 				return null;
 			expressions.add(ex);
 		}
-		at = new ArrayType(new Range.Fixed(tt.range==null ? Type.integer : tt.range.type, at.range.min, at.range.max), tt.type);
+		at = new ArrayType(new Range(tt.range==null ? Type.integer : tt.range.type, at.range.min, at.range.max), tt.type);
 		ArrayLiteral obj = new ArrayLiteral(at, expressions);
 		return obj;
 	}
 	
 	public static Expression make(Type type, List<Expression> expressions) {
-		ArrayType at = new ArrayType(new Range.Fixed(null, 0, expressions.size()-1), type);
+		ArrayType at = new ArrayType(new Range(null, 0, expressions.size()-1), type);
 		ArrayLiteral obj = new ArrayLiteral(at, expressions);
 		boolean c = true;
 		for(Expression ex : expressions) {

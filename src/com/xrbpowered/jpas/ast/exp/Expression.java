@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.ast.exp;
 
 import com.xrbpowered.jpas.ast.Statement;
+import com.xrbpowered.jpas.ast.data.RangeType;
 import com.xrbpowered.jpas.ast.data.Type;
 
 public abstract class Expression {
@@ -33,6 +34,20 @@ public abstract class Expression {
 			return ToString.make(src);
 		else if(dt==Type.real && st==Type.integer)
 			return IntAsReal.make(src);
+		else if(dt instanceof RangeType) {
+			RangeType rt = (RangeType) dt;
+			if(rt.getBaseType().equals(st))
+				return new RangeCheck(rt.range, src);
+			else
+				return null;
+		}
+		else if(st instanceof RangeType) {
+			RangeType rt = (RangeType) st;
+			if(dt.equals(rt.getBaseType()))
+				return src;
+			else
+				return null;
+		}
 		else
 			return null;
 	}

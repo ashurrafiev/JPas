@@ -14,7 +14,6 @@ import com.xrbpowered.jpas.ast.ExitStatement;
 import com.xrbpowered.jpas.ast.ForLoop;
 import com.xrbpowered.jpas.ast.IfStatement;
 import com.xrbpowered.jpas.ast.LabelledStatement;
-import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.ast.RepeatUntil;
 import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
@@ -23,8 +22,11 @@ import com.xrbpowered.jpas.ast.Statement;
 import com.xrbpowered.jpas.ast.UnitRef;
 import com.xrbpowered.jpas.ast.WhileLoop;
 import com.xrbpowered.jpas.ast.data.ArrayType;
+import com.xrbpowered.jpas.ast.data.EnumType;
 import com.xrbpowered.jpas.ast.data.IndexableType;
 import com.xrbpowered.jpas.ast.data.PointerType;
+import com.xrbpowered.jpas.ast.data.Range;
+import com.xrbpowered.jpas.ast.data.RangeType;
 import com.xrbpowered.jpas.ast.data.RecordType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.ArrayItem;
@@ -177,6 +179,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			else if(e.getScopeEntryType()==EntryType.variable) {
 				next();
 				return (Expression) e;
+			}
+			else if(e.getScopeEntryType()==EntryType.type && e instanceof EnumType) {
+				next();
+				return function(scope, scope.findTrueName(name), ((EnumType) e).converter);
 			}
 			else
 				return null;
@@ -569,13 +575,19 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			throw new JPasError("Unknown label "+label);
 	}
 	
-	private Range range(Scope scope) {
-		Expression min = expression(scope);
+	private Range range(Scope scope, ScopeEntry emin) {
+		Expression min;
+		if(emin==null)
+			min = Expression.precalc(expressionLit(scope));
+		else if(emin.getScopeEntryType()==EntryType.variable)
+			min = (Expression) emin;
+		else
+			return null;
 		if(min==null)
 			return null;
 		if(!accept(new JPasToken(TokenType.operator, "..")))
 			return null;
-		Expression max = expression(scope);
+		Expression max = Expression.precalc(expressionLit(scope));
 		if(max==null)
 			return null;
 		return Range.make(min, max);
@@ -598,10 +610,16 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			else {
 				if(!sep)
 					throw new JPasError("Expected ,");
-				Range r = range(scope);
-				if(r==null)
+				
+				Type rt = type(scope);
+				if(rt==null)
 					return null;
-				ranges.add(r);
+				if(rt instanceof RangeType)
+					ranges.add(((RangeType) rt).range);
+				else if(rt instanceof EnumType)
+					ranges.add(((EnumType) rt).getRange());
+				else
+					throw new JPasError("Range type error.");
 				sep = false;
 			}
 		}
@@ -638,13 +656,31 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 	}
 	
+	private boolean enumItems(Scope scope, EnumType type) {
+		for(;;) {
+			JPasToken t = token;
+			if(!accept(TokenType.identifier.token))
+				return false;
+			
+			scope.add((String) t.value, new Constant(type, type.addValue()));
+			
+			if(new JPasToken(']').equals(token)) {
+				next();
+				return true;
+			}
+			else if(new JPasToken(',').equals(token)) {
+				next();
+			}
+			else
+				return false;
+		}
+	}
+	
 	private Type type(Scope scope) {
 		return type(scope, null, null);
 	}
 	
 	private Type type(Scope scope, String selfName, Type selfType) {
-		// TODO enum and range types
-		
 		if(JPasToken.keyword("integer").equals(token)) {
 			next();
 			return Type.integer;
@@ -700,8 +736,13 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			ScopeEntry e = scope.find(name);
 			if(e==null)
 				throw new JPasError("Unknown identifier: "+name);
-			if(e.getScopeEntryType()!=EntryType.type)
-				throw new JPasError("Expected type.");
+			if(e.getScopeEntryType()!=EntryType.type) {
+				Range r = range(scope, e);
+				if(r==null)
+					throw new JPasError("Expected type.");
+				else
+					return new RangeType(r);
+			}
 			return (Type) e;
 		}
 		else if(new JPasToken('^').equals(token)) {
@@ -711,8 +752,20 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				return null;
 			return new PointerType(t);
 		}
-		else
-			return null;
+		else if(new JPasToken('[').equals(token)) {
+			next();
+			EnumType type = new EnumType();
+			if(enumItems(scope, type))
+				return type;
+			else
+				return null;
+		}
+		else {
+			Range r = range(scope, null);
+			if(r==null)
+				return null;
+			return new RangeType(r);
+		}
 	}
 
 	private List<String> varList() {

@@ -1,16 +1,15 @@
 package com.xrbpowered.jpas.ast.data;
 
 import com.xrbpowered.jpas.JPasError;
-import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.ast.exp.Equals;
 import com.xrbpowered.jpas.mem.ArrayItemPointer;
 
 public class ArrayObject {
 
-	public final Range.Fixed range;
+	public final Range range;
 	private Object[] values;
 
-	public ArrayObject(Range.Fixed range, Type type) {
+	public ArrayObject(Range range, Type type) {
 		if(range==null)
 			throw new JPasError("Unknown range, cannot create array.");
 		this.range = range;
@@ -19,7 +18,7 @@ public class ArrayObject {
 			values[i] = type.init(null);
 	}
 
-	public ArrayObject(Range.Fixed range, Type type, ArrayObject v) {
+	public ArrayObject(Range range, Type type, ArrayObject v) {
 		if(range==null)
 			throw new JPasError("Unknown range, cannot create array.");
 		this.range = range;
@@ -30,7 +29,7 @@ public class ArrayObject {
 			values[i] = i>=v.values.length ? type.init(null) : type.init(v.values[i]);
 	}
 
-	public ArrayObject(Range.Fixed range, Object[] v) {
+	public ArrayObject(Range range, Object[] v) {
 		this.range = range;
 		this.values = v;
 	}

@@ -12,7 +12,7 @@ public class Chr extends Function {
 
 	@Override
 	public int getArgNum() {
-		return 0;
+		return 1;
 	}
 
 	@Override

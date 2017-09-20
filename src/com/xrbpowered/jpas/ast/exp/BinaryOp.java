@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.ast.exp;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.data.RangeType;
 import com.xrbpowered.jpas.ast.data.Type;
 
 public abstract class BinaryOp extends Expression {
@@ -11,16 +12,22 @@ public abstract class BinaryOp extends Expression {
 		eq, neq, gt, lt, ge, le
 	}
 
-	protected Expression x, y;
-	
+	private final Type type;
+	protected final Expression x, y;
+
 	public BinaryOp(Expression x, Expression y) {
+		this(x.getType(), x, y);
+	}
+
+	public BinaryOp(Type type, Expression x, Expression y) {
+		this.type = type;
 		this.x = x;
 		this.y = y;
 	}
 	
 	@Override
 	public Type getType() {
-		return x.getType();
+		return type;
 	}
 	
 	@Override
@@ -31,6 +38,15 @@ public abstract class BinaryOp extends Expression {
 	public static Expression make(Operation op, Expression x, Expression y) {
 		Type xt = x.getType();
 		Type yt = y.getType();
+		Type type = xt;
+		
+		if(xt instanceof RangeType && yt instanceof RangeType && !xt.equals(yt))
+			return null;
+		if(yt instanceof RangeType)
+			type = yt = ((RangeType) yt).getBaseType();
+		if(xt instanceof RangeType)
+			type = xt = ((RangeType) xt).getBaseType();
+		
 		if(xt==Type.string || yt==Type.string) {
 			x = ToString.make(x);
 			if(x==null)
@@ -38,17 +54,19 @@ public abstract class BinaryOp extends Expression {
 			y = ToString.make(y);
 			if(y==null)
 				return null;
-			xt = yt = Type.string;
+			type = xt = yt = Type.string;
 		}
+		
 		if(!xt.equals(yt)) {
 			if(xt==Type.integer && yt==Type.real || yt==Type.integer && xt==Type.real) {
 				x = IntAsReal.make(x);
 				y = IntAsReal.make(y);
-				xt = yt = Type.real;
+				type = xt = yt = Type.real;
 			}
 			else
 				return null;
 		}
+		
 		switch(op) {
 			case add:
 				if(xt==Type.string)
@@ -59,7 +77,7 @@ public abstract class BinaryOp extends Expression {
 						}
 					};
 				else if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int + int
+					return new BinaryOp(type, x, y) { // int + int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() + (Integer) y.evaluate();
@@ -77,7 +95,7 @@ public abstract class BinaryOp extends Expression {
 				
 			case sub:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int - int
+					return new BinaryOp(type, x, y) { // int - int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() - (Integer) y.evaluate();
@@ -95,7 +113,7 @@ public abstract class BinaryOp extends Expression {
 
 			case mul:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int * int
+					return new BinaryOp(type, x, y) { // int * int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() * (Integer) y.evaluate();
@@ -113,7 +131,7 @@ public abstract class BinaryOp extends Expression {
 
 			case div:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int / int
+					return new BinaryOp(type, x, y) { // int / int
 						@Override
 						public Type getType() {
 							return Type.real;
@@ -135,7 +153,7 @@ public abstract class BinaryOp extends Expression {
 				
 			case idiv:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int div int
+					return new BinaryOp(type, x, y) { // int div int
 						@Override
 						public Object evaluate() {
 							int yv = (Integer) y.evaluate();
@@ -149,7 +167,7 @@ public abstract class BinaryOp extends Expression {
 
 			case mod:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int mod int
+					return new BinaryOp(type, x, y) { // int mod int
 						@Override
 						public Object evaluate() {
 							int yv = (Integer) y.evaluate();
@@ -163,7 +181,7 @@ public abstract class BinaryOp extends Expression {
 
 			case shl:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int shl int
+					return new BinaryOp(type, x, y) { // int shl int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() << (Integer) y.evaluate();
@@ -174,7 +192,7 @@ public abstract class BinaryOp extends Expression {
 
 			case shr:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int shr int
+					return new BinaryOp(type, x, y) { // int shr int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() >> (Integer) y.evaluate();
@@ -185,7 +203,7 @@ public abstract class BinaryOp extends Expression {
 
 			case and:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int and int
+					return new BinaryOp(type, x, y) { // int and int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() & (Integer) y.evaluate();
@@ -203,7 +221,7 @@ public abstract class BinaryOp extends Expression {
 
 			case or:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int or int
+					return new BinaryOp(type, x, y) { // int or int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() | (Integer) y.evaluate();
@@ -221,7 +239,7 @@ public abstract class BinaryOp extends Expression {
 
 			case xor:
 				if(xt==Type.integer)
-					return new BinaryOp(x, y) { // int xor int
+					return new BinaryOp(type, x, y) { // int xor int
 						@Override
 						public Object evaluate() {
 							return (Integer) x.evaluate() ^ (Integer) y.evaluate();
@@ -238,16 +256,16 @@ public abstract class BinaryOp extends Expression {
 					return null;
 
 			case eq:
-				return new Equals(x, y, false);
+				return new Equals(type, x, y, false);
 				
 			case neq:
-				return new Equals(x, y, true);
+				return new Equals(type, x, y, true);
 				
 			case gt:
 			case lt:
 			case ge:
 			case le:
-				return CompareOp.make(op, x, y);
+				return CompareOp.make(type, op, x, y);
 				
 			default:
 				return null;

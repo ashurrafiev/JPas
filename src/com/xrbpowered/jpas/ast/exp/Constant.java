@@ -3,12 +3,12 @@ package com.xrbpowered.jpas.ast.exp;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xrbpowered.jpas.ast.Range;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.PointerType;
+import com.xrbpowered.jpas.ast.data.Range;
 import com.xrbpowered.jpas.ast.data.RecordObject;
 import com.xrbpowered.jpas.ast.data.RecordType;
 import com.xrbpowered.jpas.ast.data.Type;
@@ -64,7 +64,7 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 					return null;
 				expressions.add(ex);
 			}
-			at = new ArrayType(new Range.Fixed(tt.range==null ? Type.integer : tt.range.type, at.range.min, at.range.max), tt.type);
+			at = new ArrayType(new Range(tt.range==null ? Type.integer : tt.range.type, at.range.min, at.range.max), tt.type);
 			ArrayLiteral obj = new ArrayLiteral(at, expressions);
 			return new Constant(at, obj.evaluate());
 		}

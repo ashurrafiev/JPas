@@ -12,15 +12,9 @@ public class Type implements ScopeEntry {
 	
 	public abstract static class Ordinator {
 		public abstract int ord(Object x);
-		public abstract Object unord(int i);
-		
-		public Object pred(Object x) {
-			return unord(ord(x)-1);
-		}
-		
-		public Object succ(Object x) {
-			return unord(ord(x)+1);
-		}
+		public abstract Object unord(int i);		
+		public abstract Object pred(Object x);
+		public abstract Object succ(Object x);
 	}
 	
 	public static final Type integer = new Type(true, 0).setComparator(new Comparator() {
@@ -36,6 +30,14 @@ public class Type implements ScopeEntry {
 		@Override
 		public Object unord(int i) {
 			return new Integer(i);
+		}
+		@Override
+		public Object pred(Object x) {
+			return (Integer) x-1;
+		}
+		@Override
+		public Object succ(Object x) {
+			return (Integer) x+1;
 		}
 	});
 	
@@ -58,7 +60,15 @@ public class Type implements ScopeEntry {
 		}
 		@Override
 		public Object unord(int i) {
-			return new Boolean(i%2!=0);
+			return new Boolean((i&1)!=0);
+		}
+		@Override
+		public Object pred(Object x) {
+			return !(Boolean) x;
+		}
+		@Override
+		public Object succ(Object x) {
+			return !(Boolean) x;
 		}
 	});
 	
@@ -76,6 +86,15 @@ public class Type implements ScopeEntry {
 		public Object unord(int i) {
 			return new Character((char) i);
 		}
+		@Override
+		public Object pred(Object x) {
+			return unord(ord(x)-1);
+		}
+		@Override
+		public Object succ(Object x) {
+			return unord(ord(x)+1);
+		}
+
 	});
 	
 	public static final Type string = new IndexableType(true, "") {
