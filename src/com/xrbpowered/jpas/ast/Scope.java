@@ -10,6 +10,7 @@ import com.xrbpowered.jpas.system.Fill;
 import com.xrbpowered.jpas.system.Halt;
 import com.xrbpowered.jpas.system.NewPtr;
 import com.xrbpowered.jpas.system.Read;
+import com.xrbpowered.jpas.system.ReadLn;
 import com.xrbpowered.jpas.system.RunError;
 import com.xrbpowered.jpas.system.Swap;
 import com.xrbpowered.jpas.system.Write;
@@ -127,7 +128,8 @@ public class Scope {
 
 		global.add("Write", new Write(false));
 		global.add("WriteLn", new Write(true));
-		global.add("ReadLn", new Read());
+		global.add("Read", new Read(false));
+		global.add("ReadLn", new ReadLn());
 		global.add("Delay", new Delay());
 		
 		global.add("Pi", Constant.constPi);
@@ -144,7 +146,6 @@ public class Scope {
 		global.add("Succ", new SuccPred(true));
 		global.add("Pred", new SuccPred(false));
 		global.add("Ord", new Ord());
-		// TODO unord function
 		
 		global.add("Chr", new Chr());
 		global.add("UpCase", new UpCase());
@@ -155,7 +156,7 @@ public class Scope {
 		global.add("Copy", new Copy());
 		global.add("Length", new Length());
 		global.add("Pos", new Pos());
-		global.add("Concat", new Concat());
+		global.add("Concat", new Concat()); // TODO make it a procedure
 		global.add("Delete", new Delete());
 		global.add("Insert", new Insert());
 		// MAYBE: same functions for arrays

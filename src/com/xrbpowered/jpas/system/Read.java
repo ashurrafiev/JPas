@@ -36,7 +36,20 @@ public class Read extends Function {
 		}
 	}
 	
+	public static final Read readLn = new Read(true);
 	private static Scanner console = null;
+	
+	public static Scanner getConsole() {
+		if(console==null)
+			console = new Scanner(System.in);
+		return console;
+	}
+	
+	private final boolean line;
+	
+	public Read(boolean line) {
+		this.line = line;
+	}
 	
 	@Override
 	public EntryType getScopeEntryType() {
@@ -55,7 +68,7 @@ public class Read extends Function {
 	
 	@Override
 	public int getArgNum() {
-		return 1;
+		return 2;
 	}
 	
 	@Override
@@ -69,43 +82,39 @@ public class Read extends Function {
 	}
 	
 	public void call(Type[] types, Pointer[] ptrs) {
-		if(console==null)
-			console = new Scanner(System.in);
-		for(;;) {
-			try {
-				String line = console.nextLine(); // FIXME empty line
-				if(types!=null && ptrs!=null) {
-					Scanner in = new Scanner(line);
-					for(int i=0; i<types.length; i++) {
-						Object value = null;
-						Type t = types[i];
-						
-						if(!in.hasNext())
+		Scanner in = getConsole();
+		try {
+			if(types!=null && ptrs!=null) {
+				for(int i=0; i<types.length; i++) {
+					Object value = null;
+					Type t = types[i];
+					
+					if(!in.hasNext())
+						throw new JPasError("No input.");
+					if(t==Type.integer)
+						value = in.nextInt();
+					else if(t==Type.real)
+						value = in.nextDouble();
+					else if(t==Type.bool)
+						value = in.nextBoolean();
+					else if(t==Type.character) {
+						String c = in.next();
+						if(c.length()!=1)
 							throw new InputMismatchException();
-						if(t==Type.integer)
-							value = in.nextInt();
-						else if(t==Type.real)
-							value = in.nextDouble();
-						else if(t==Type.bool)
-							value = in.nextBoolean();
-						else if(t==Type.character) {
-							String c = in.next();
-							if(c.length()!=1)
-								throw new InputMismatchException();
-							value = c.charAt(0);
-						}
-						else if(t==Type.string)
-							value = in.nextLine();
-						
-						ptrs[i].write(value);
+						value = c.charAt(0);
 					}
-					in.close();
+					else if(t==Type.string)
+						value = in.nextLine();
+					
+					ptrs[i].write(value);
 				}
-				return;
 			}
-			catch(InputMismatchException e) {
-				System.err.println("Input mismatch. Try again?");
-			}
+			if(line)
+				in.nextLine();
+			return;
+		}
+		catch(InputMismatchException e) {
+			throw new JPasError("Input format error.");
 		}
 	}
 

@@ -438,6 +438,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				x = makeBinaryOpSum(scope, BinaryOp.Operation.le, x);
 			else
 				return x;
+			
+			// TODO 'in' operator
 		}
 	}
 
@@ -840,7 +842,6 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return Statement.nop;
 		}
 		else {
-			// MAYBE: dynamic const 
 			throw new JPasError("Expression is not constant.");
 		}
 	}
@@ -953,7 +954,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		String name = (String) t.value;
 		if(!accept(new JPasToken(TokenType.operator, "=")))
 			return null;
-		Type type = type(scope, name, null); // MAYBE: dynamic types
+		Type type = type(scope, name, null);
 		if(type==null)
 			return null;
 		type.init(null);

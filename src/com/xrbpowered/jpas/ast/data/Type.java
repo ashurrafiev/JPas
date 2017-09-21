@@ -163,11 +163,8 @@ public class Type implements ScopeEntry {
 		ptr.write(v);
 	}
 
-	// MAYBE: type cast
-	
 	@Override
 	public boolean equals(Object obj) {
-		// make type check depend on anonymity?
 		return this==obj;
 	}
 	

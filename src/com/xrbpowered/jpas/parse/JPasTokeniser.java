@@ -21,7 +21,7 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 				Pattern.compile("\\s+", Pattern.MULTILINE+Pattern.DOTALL), // 0: whitespace
 				Pattern.compile("\\{.*?\\}", Pattern.MULTILINE+Pattern.DOTALL), // 1: comment
 				Pattern.compile("\\(\\*.*?\\*\\)", Pattern.MULTILINE+Pattern.DOTALL), // 2: comment
-				Pattern.compile("\\#?\\d+(\\.\\d+)?"), // 3: number
+				Pattern.compile("\\#?\\d+(\\.\\d+)?([Ee][\\+\\-]?\\d+)?"), // 3: number
 				Pattern.compile("\\#?\\$[0-9A-Fa-f]+"), // 4: hex number
 				Pattern.compile("\\\'.*?(\\\'\\\'.*?)*\\\'"), // 5: string
 				Pattern.compile("_*[A-Za-z][A-Za-z0-9_]*"), // 6: identifier

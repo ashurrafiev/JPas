@@ -37,7 +37,6 @@ public abstract class UnaryOp extends Expression {
 		if(xt instanceof RangeType)
 			type = xt = ((RangeType) xt).getBaseType();
 		
-		// TODO range basetype
 		switch(op) {
 			case pos:
 				if(xt==Type.integer || xt==Type.real)

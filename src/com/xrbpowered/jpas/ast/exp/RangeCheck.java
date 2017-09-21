@@ -19,8 +19,6 @@ public class RangeCheck extends Expression {
 		return ex.getType();
 	}
 
-	// MAYBE: 'in' operator to test if a value is within range or enum's ord range
-	
 	@Override
 	public Object evaluate() {
 		Object obj = ex.evaluate();
