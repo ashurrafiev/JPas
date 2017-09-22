@@ -16,7 +16,8 @@ public class InputManager {
 	public boolean mouseLeft = false;
 	public boolean mouseRight = false;
 	
-	private LinkedList<KeyEvent> keyEvents = new LinkedList<>();
+	private int bufferSize = 0;
+	private LinkedList<Character> keyBuffer = new LinkedList<>();
 	private HashSet<Integer> pressedKeys = new HashSet<>();
 	
 	public final MouseAdapter mouseListener = new MouseAdapter() {
@@ -49,12 +50,22 @@ public class InputManager {
 	public final KeyAdapter keyListener = new KeyAdapter() {
 		@Override
 		public void keyPressed(KeyEvent e) {
+			char ch = e.getKeyChar();
+			if(((int) ch)==0xffff) {
+				keyBuffer.add('\0');
+				keyBuffer.add((char) e.getKeyCode());
+				bufferSize += 2;
+			}
+			else {
+				keyBuffer.add(ch);
+				bufferSize++;
+			}
+			while(bufferSize>32) {
+				bufferSize--;
+				keyBuffer.removeFirst();
+			}
 			pressedKeys.add(e.getKeyCode());
 		}
-		@Override
-		public void keyTyped(KeyEvent e) {
-			keyEvents.add(e);
-		};
 		@Override
 		public void keyReleased(KeyEvent e) {
 			pressedKeys.remove(e.getKeyCode());
@@ -66,21 +77,16 @@ public class InputManager {
 	}
 	
 	public boolean hasEvents() {
-		return !keyEvents.isEmpty();
+		return !keyBuffer.isEmpty();
 	}
 	
-	public char getKeyChar() {
-		if(keyEvents.isEmpty())
+	public char getKey() {
+		if(keyBuffer.isEmpty())
 			return '\0';
-		else
-			return keyEvents.removeLast().getKeyChar();
-	}
-	
-	public int getKeyCode() {
-		if(keyEvents.isEmpty())
-			return 0;
-		else
-			return keyEvents.removeLast().getKeyCode();
+		else {
+			bufferSize--;
+			return keyBuffer.removeFirst();
+		}
 	}
 	
 	public static void register(Scope scope) {
@@ -90,8 +96,7 @@ public class InputManager {
 		scope.add("RightMouse", new MouseButtons(false));
 		scope.add("KeyDown", new KeyDown());
 		scope.add("KeyPressed", new KeyPressed());
-		scope.add("ReadKeyCode", new ReadKey(true));
-		scope.add("ReadKey", new ReadKey(false));
+		scope.add("ReadKey", new ReadKey());
 	}
 	
 }

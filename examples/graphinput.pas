@@ -30,11 +30,25 @@ PrevY := MouseY;
 
 while KeyPressed do
 	begin
-		var Symbol: String = ReadKey;
-		SetPaint($000000);
-		FillRect(ScreenWidth div 2 - 20, 90-20, 40, 30);
-		SetPen($FFFFFF, 1);
-		DrawText(ScreenWidth div 2 - TextWidth(Symbol) div 2, 90, Symbol);
+		var Symbol: Char = ReadKey;
+		var Code: Integer = Ord(Symbol);
+		if Code=0 then
+			begin
+				Code := Ord(ReadKey);
+				SetPaint($DDDDDD);
+				FillRect(ScreenWidth div 2 - 70, 90-25, 40, 35);
+			end
+		else
+			begin
+				SetPaint($000000);
+				FillRect(ScreenWidth div 2 - 70, 90-25, 40, 35);
+				SetPen($FFFFFF, 1);
+				DrawText(ScreenWidth div 2 -50 - TextWidth(Symbol) div 2, 90, Symbol);
+			end;
+		SetPaint($DDDDDD);
+		FillRect(ScreenWidth div 2 - 20, 90-25, 80, 35);
+		SetPen($777777, 1);
+		DrawText(ScreenWidth div 2 - 10, 90, Str(Code));
 	end;
 
 PresentScreen;

@@ -1,5 +1,6 @@
 package com.xrbpowered.jpas.units.graph2d;
 
+import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.Type;
@@ -18,15 +19,18 @@ public class FillPolygon extends StdProcedure {
 	public Object call(Object[] args) {
 		Target t = Graph2D.unit.getTarget();
 		t.gr.setColor(t.paintColor);
-		t.gr.fillPolygon(getIntValues((ArrayObject) args[1]), getIntValues((ArrayObject) args[2]), (Integer) args[0]);
+		int n = (Integer) args[0];
+		t.gr.fillPolygon(FillPolygon.getIntValues(n, (ArrayObject) args[1]), FillPolygon.getIntValues(n, (ArrayObject) args[2]), n);
 		return null;
 	}
 	
-	public static int[] getIntValues(ArrayObject ar) {
+	public static int[] getIntValues(int n, ArrayObject ar) {
 		// This is very slow and inefficient, but I don't know the way around it
 		Object[] values = ar.getValues();
-		int[] ints = new int[values.length];
-		for(int i=0; i<ints.length; i++)
+		if(n>values.length)
+			throw JPasError.rangeCheckError.get();
+		int[] ints = new int[n];
+		for(int i=0; i<n; i++)
 			ints[i] = (Integer) values[i];
 		return ints;
 	}

@@ -18,7 +18,8 @@ public class DrawPolyline extends StdProcedure {
 	public Object call(Object[] args) {
 		Target t = Graph2D.unit.getTarget();
 		t.gr.setColor(t.penColor);
-		t.gr.drawPolyline(FillPolygon.getIntValues((ArrayObject) args[1]), FillPolygon.getIntValues((ArrayObject) args[2]), (Integer) args[0]);
+		int n = (Integer) args[0];
+		t.gr.drawPolyline(FillPolygon.getIntValues(n, (ArrayObject) args[1]), FillPolygon.getIntValues(n, (ArrayObject) args[2]), n);
 		return null;
 	}
 	

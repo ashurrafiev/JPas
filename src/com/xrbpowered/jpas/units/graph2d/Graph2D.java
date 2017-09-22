@@ -23,6 +23,7 @@ public class Graph2D extends StandardUnit {
 		public WindowPane(int width, int height) {
 			setPreferredSize(new Dimension(width, height));
 			setFocusable(true);
+			setFocusTraversalKeysEnabled(false);
 			addMouseListener(input.mouseListener);
 			addMouseMotionListener(input.mouseListener);
 			addKeyListener(input.keyListener);
@@ -52,8 +53,10 @@ public class Graph2D extends StandardUnit {
 	private Target target = null;
 	
 	public void setWindow(String title, int width, int height, int pixelScale) {
+		if(width<1 || height<1)
+			throw JPasError.rangeCheckError.get();
 		if(window==null) {
-			window = new JFrame(title);
+			window = new JFrame(title.isEmpty() ? "JPas" : title);
 			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
 			presenter = new Runnable() {
@@ -134,7 +137,6 @@ public class Graph2D extends StandardUnit {
 		
 		InputManager.register(scope);
 
-		// TODO fonts
 		// TODO transforms
 		// TODO bitmaps
 		// TODO toggle fullscreen

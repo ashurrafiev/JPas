@@ -5,7 +5,7 @@ InitWindow('Graph2D Animation', 1280, 768, 1);
 SetBackground($F0F0F0);
 HighQuality;
 
-const Volume = 1000000.0;
+const Volume = 1.0E6;
 var T: Real = 0;
 
 repeat
