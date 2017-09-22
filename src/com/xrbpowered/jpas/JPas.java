@@ -11,6 +11,8 @@ public class JPas extends Thread {
 	private static boolean verboseErrors = false;
 	private static boolean timing = false;
 	
+	public static long execStarted = 0L; 
+	
 	private final Statement code;
 	
 	public JPas(Statement code) {
@@ -28,10 +30,10 @@ public class JPas extends Thread {
 	@Override
 	public void run() {
 		try {
-			long t = System.currentTimeMillis();
+			execStarted = System.currentTimeMillis();
 			code.execute();
 			if(timing)
-				System.err.printf("Finished in %d ms.\n", System.currentTimeMillis()-t);
+				System.err.printf("Finished in %d ms.\n", System.currentTimeMillis()-execStarted);
 			System.exit(0);
 		}
 		catch(JPasError e) {

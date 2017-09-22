@@ -18,7 +18,7 @@ public class FillPolygon extends StdProcedure {
 	@Override
 	public Object call(Object[] args) {
 		Target t = Graph2D.unit.getTarget();
-		t.gr.setColor(t.paintColor);
+		t.gr.setPaint(t.paint);
 		int n = (Integer) args[0];
 		t.gr.fillPolygon(FillPolygon.getIntValues(n, (ArrayObject) args[1]), FillPolygon.getIntValues(n, (ArrayObject) args[2]), n);
 		return null;

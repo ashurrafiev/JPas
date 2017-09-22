@@ -13,8 +13,16 @@ import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Statement;
 import com.xrbpowered.jpas.units.StandardUnit;
+import com.xrbpowered.jpas.units.graph2d.colors.BlendColors;
+import com.xrbpowered.jpas.units.graph2d.colors.GetAlpha;
+import com.xrbpowered.jpas.units.graph2d.colors.GetBlue;
+import com.xrbpowered.jpas.units.graph2d.colors.GetGreen;
+import com.xrbpowered.jpas.units.graph2d.colors.GetRed;
+import com.xrbpowered.jpas.units.graph2d.colors.Interpolate;
+import com.xrbpowered.jpas.units.graph2d.colors.MakeRGB;
 import com.xrbpowered.jpas.units.graph2d.fonts.SetTextFont;
 import com.xrbpowered.jpas.units.graph2d.fonts.SetTextSize;
+import com.xrbpowered.jpas.units.graph2d.fonts.TextWidth;
 import com.xrbpowered.jpas.units.graph2d.input.InputManager;
 
 public class Graph2D extends StandardUnit {
@@ -106,10 +114,13 @@ public class Graph2D extends StandardUnit {
 		scope.add("ScreenWidth", new ScreenSize(true));
 		scope.add("ScreenHeight", new ScreenSize(false));
 		scope.add("PresentScreen", new Present());
+		scope.add("FPSCount", new FPSCount());
 
 		scope.add("SetBackground", new SetBackground());
 		scope.add("SetPen", new SetPen());
 		scope.add("SetPaint", new SetPaint());
+		scope.add("GradientPaint", new GradientPaint());
+		scope.add("RadialPaint", new RadialPaint());
 		scope.add("HighQuality", new SetQuality(true));
 		scope.add("LowQuality", new SetQuality(false));
 		scope.add("TransparencyOn", new SetAlpha(true));
@@ -134,8 +145,16 @@ public class Graph2D extends StandardUnit {
 		scope.add("TextWidth", new TextWidth());
 		scope.add("SetTextFont", new SetTextFont());
 		scope.add("SetTextSize", new SetTextSize());
-		
+
 		InputManager.register(scope);
+
+		scope.add("GetAlpha", new GetAlpha());
+		scope.add("GetRed", new GetRed());
+		scope.add("GetGreen", new GetGreen());
+		scope.add("GetBlue", new GetBlue());
+		scope.add("MakeRGB", new MakeRGB());
+		scope.add("Interpolate", new Interpolate());
+		scope.add("BlendColors", new BlendColors());
 
 		// TODO transforms
 		// TODO bitmaps

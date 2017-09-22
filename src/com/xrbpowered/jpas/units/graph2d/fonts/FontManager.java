@@ -6,8 +6,8 @@ import java.util.HashMap;
 public class FontManager {
 
 	private static final String defFamily = "Tahoma";
-	private static final int defStyle = Font.BOLD;
-	private static final int defSize = 13;
+	private static final int defStyle = Font.PLAIN;
+	private static final int defSize = 14;
 	
 	private static FontManager instance = null;
 	

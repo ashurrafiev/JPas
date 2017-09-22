@@ -1,21 +1,28 @@
+{
+This programs renders texts in different fonts.
+}
 Begin
 uses Graph2D;
 
-InitWindow('Graph2D Input', 1280, 768, 1);
+{Initialise}
+InitWindow('Graph2D Fonts', 1280, 768, 1);
 SetBackground($F0F0F0);
 ClearScreen;
 HighQuality;
-SetTextSize(19);
+SetTextSize(20);
 
+{Draw welcome message}
 const Hint = 'Press any key to exit.';
 SetPen($000000, 1);
 DrawText(ScreenWidth div 2 - TextWidth(Hint) div 2, ScreenHeight - 40, Hint);
 
+{Draw page}
 SetPaint($FFFFFF);
 SetPen($999999, 1);
 FillRect(200, 50, ScreenWidth-400, ScreenHeight-150);
 DrawRect(200, 50, ScreenWidth-400, ScreenHeight-150);
 
+{Draw text}
 SetPen($000000, 1);
 
 SetTextFont('Times New Roman', False, False);
@@ -50,7 +57,9 @@ SetTextFont('Arial', True, True);
 SetTextSize(35);
 DrawText(650, 570, 'Arial, Bold Italic.');
 
+{End drawing, refresh screen}
 PresentScreen;
+{Wait for any key}
 repeat Delay(10) until KeyPressed;
 
 End.

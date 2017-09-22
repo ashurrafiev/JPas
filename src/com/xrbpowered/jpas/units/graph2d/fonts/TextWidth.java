@@ -1,9 +1,11 @@
-package com.xrbpowered.jpas.units.graph2d;
+package com.xrbpowered.jpas.units.graph2d.fonts;
 
 import java.awt.FontMetrics;
 
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.units.StdFunction;
+import com.xrbpowered.jpas.units.graph2d.Graph2D;
+import com.xrbpowered.jpas.units.graph2d.Target;
 
 public class TextWidth extends StdFunction {
 

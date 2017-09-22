@@ -12,7 +12,7 @@ public class SetPaint extends StdProcedure {
 	@Override
 	public Object call(Object[] args) {
 		Target t = Graph2D.unit.getTarget();
-		t.paintColor = t.makeColor(args[0]);
+		t.paint = t.makeColor(args[0]);
 		return null;
 	}
 

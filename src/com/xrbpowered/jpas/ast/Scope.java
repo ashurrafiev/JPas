@@ -6,6 +6,7 @@ import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.exp.Constant;
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 import com.xrbpowered.jpas.system.Delay;
+import com.xrbpowered.jpas.system.Elapsed;
 import com.xrbpowered.jpas.system.Fill;
 import com.xrbpowered.jpas.system.Halt;
 import com.xrbpowered.jpas.system.NewPtr;
@@ -13,6 +14,7 @@ import com.xrbpowered.jpas.system.Read;
 import com.xrbpowered.jpas.system.ReadLn;
 import com.xrbpowered.jpas.system.RunError;
 import com.xrbpowered.jpas.system.Swap;
+import com.xrbpowered.jpas.system.SysTime;
 import com.xrbpowered.jpas.system.Write;
 import com.xrbpowered.jpas.system.math.Abs;
 import com.xrbpowered.jpas.system.math.IntMath;
@@ -133,6 +135,8 @@ public class Scope {
 		global.add("Read", new Read(false));
 		global.add("ReadLn", new ReadLn());
 		global.add("Delay", new Delay());
+		global.add("SysTime", new SysTime());
+		global.add("Elapsed", new Elapsed());
 		
 		global.add("Pi", Constant.constPi);
 		RealMath.register(global);

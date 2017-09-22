@@ -12,7 +12,7 @@ public class FillRoundRect extends StdProcedure {
 	@Override
 	public Object call(Object[] args) {
 		Target t = Graph2D.unit.getTarget();
-		t.gr.setColor(t.paintColor);
+		t.gr.setPaint(t.paint);
 		t.gr.fillRoundRect((Integer) args[0], (Integer) args[1], (Integer) args[2], (Integer) args[3], (Integer) args[4], (Integer) args[4]);
 		return null;
 	}
