@@ -38,6 +38,8 @@ import com.xrbpowered.jpas.system.str.Pos;
 import com.xrbpowered.jpas.system.str.Str;
 import com.xrbpowered.jpas.system.str.UpCase;
 import com.xrbpowered.jpas.system.str.Val;
+import com.xrbpowered.jpas.units.StandardUnit;
+import com.xrbpowered.jpas.units.graph2d.Graph2D;
 
 public class Scope {
 
@@ -156,7 +158,7 @@ public class Scope {
 		global.add("Copy", new Copy());
 		global.add("Length", new Length());
 		global.add("Pos", new Pos());
-		global.add("Concat", new Concat()); // TODO make it a procedure
+		global.add("Concat", new Concat());
 		global.add("Delete", new Delete());
 		global.add("Insert", new Insert());
 		// MAYBE: same functions for arrays
@@ -169,8 +171,10 @@ public class Scope {
 		return global;
 	}
 	
-	public static Statement getStandardUnit(String name) {
-		// TODO standard units
+	public static StandardUnit getStandardUnit(String name) {
+		if(name.equalsIgnoreCase("Graph2D"))
+			return Graph2D.unit;
+
 		throw new JPasError("Unknown standard library unit.");
 	}
 	

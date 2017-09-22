@@ -3,6 +3,7 @@ package com.xrbpowered.jpas.ast.exp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
@@ -105,7 +106,7 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 				s = s.substring(1);
 			}
 			if(s.charAt(0)=='$') {
-				v = Integer.parseInt(s.substring(1), 16);
+				v = (int) Long.parseLong(s.substring(1), 16);
 			}
 			else
 				v = Integer.parseInt(s);
@@ -119,7 +120,7 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 				return new Constant(Type.real, Double.parseDouble(s));
 			}
 			catch(NumberFormatException ed) {
-				return null;
+				throw new JPasError("Number format error.");
 			}
 		}
 	}

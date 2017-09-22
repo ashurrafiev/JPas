@@ -47,6 +47,7 @@ import com.xrbpowered.jpas.ast.exp.RecordLiteral;
 import com.xrbpowered.jpas.ast.exp.UnaryOp;
 import com.xrbpowered.jpas.ast.exp.Variable;
 import com.xrbpowered.jpas.parse.JPasToken.TokenType;
+import com.xrbpowered.jpas.units.StandardUnit;
 import com.xrbpowered.utils.parser.RecursiveDescentParser;
 
 public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
@@ -1052,7 +1053,11 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			if(scope.isUnitLoaded(name))
 				return Statement.nop;
 			scope.add(name, new UnitRef());
-			return Scope.getStandardUnit(name.toLowerCase());
+			StandardUnit unit = Scope.getStandardUnit(name.toLowerCase());
+			if(unit!=null)
+				return unit.use(scope);
+			else
+				return null;
 		}
 		else if(TokenType.string.token.equals(token)) {
 			String name = (String) token.value;

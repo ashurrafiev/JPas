@@ -34,6 +34,11 @@ public class ArrayObject {
 		this.values = v;
 	}
 	
+	public Object[] getValues() {
+		check();
+		return values;
+	}
+	
 	public void free() {
 		this.values = null;
 	}
