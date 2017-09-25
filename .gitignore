@@ -3,6 +3,8 @@
 *.pdf
 test.pas
 testunit.pas
+tolatex.pas
+/docs/
 
 .metadata
 bin/

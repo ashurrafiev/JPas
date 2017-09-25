@@ -20,6 +20,11 @@ public class Elapsed extends Function {
 	public Type getArgType(int argIndex) {
 		return null;
 	}
+	
+	@Override
+	public boolean hasSideEffects() {
+		return true;
+	}
 
 	@Override
 	public Object call(Object[] args) {

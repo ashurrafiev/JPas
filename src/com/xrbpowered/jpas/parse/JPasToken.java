@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class JPasToken {
 
 	public static enum TokenType {
-		symbol, number, string, identifier, keyword, operator;
+		symbol, number, string, identifier, keyword, operator, whitespace, comment;
 		
 		public JPasToken token;
 		

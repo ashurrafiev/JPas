@@ -11,12 +11,23 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 			"begin", "end", "interface", "implementation", "label", "exit",
 			"var", "const", "type", "function", "procedure", "forward", "uses",
 			"if", "then", "else", "while", "do", "repeat", "until", "for", "to", "downto", "case", "with",
-			"integer", "real", "boolean", "char", "string", "array", "of", "record",
-			"not", "div", "mod", "and", "shl", "shr", "add", "sub", "or", "xor",
-			"true", "false", "nil",
+			"array", "of", "record", "in",
+			"not", "div", "mod", "and", "shl", "shr", "or", "xor",
+			"nil",
 		};
 	
+	public static final String[] RESIDS = {
+			"integer", "real", "boolean", "char", "string",
+			"true", "false", 
+		};
+	
+	private final boolean toLatex;
+
 	public JPasTokeniser() {
+		this(false);
+	}
+
+	public JPasTokeniser(boolean toLatex) {
 		super(new Pattern[] {
 				Pattern.compile("\\s+", Pattern.MULTILINE+Pattern.DOTALL), // 0: whitespace
 				Pattern.compile("\\{.*?\\}", Pattern.MULTILINE+Pattern.DOTALL), // 1: comment
@@ -24,21 +35,23 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 				Pattern.compile("\\#?\\d+(\\.\\d+)?([Ee][\\+\\-]?\\d+)?"), // 3: number
 				Pattern.compile("\\#?\\$[0-9A-Fa-f]+"), // 4: hex number
 				Pattern.compile("\\\'.*?(\\\'\\\'.*?)*\\\'"), // 5: string
-				Pattern.compile("_*[A-Za-z][A-Za-z0-9_]*"), // 6: identifier
+				Pattern.compile("[A-Za-z_][A-Za-z0-9_]*"), // 6: identifier
 				Pattern.compile("\\:\\="), // 7: operator
 				Pattern.compile("\\.\\."), // 8: operator
 				Pattern.compile("[\\<\\>\\=]+"), // 9: operator
 				Pattern.compile(".") // symbol
 		});
+		this.toLatex = toLatex;
 	}
 
 	@Override
 	protected JPasToken evaluateToken(int match, String raw) {
 		switch(match) {
 			case 0:
+				return toLatex ? new JPasToken(TokenType.whitespace, raw) : null;
 			case 1:
 			case 2:
-				return null;
+				return toLatex ? new JPasToken(TokenType.comment, raw.substring(1, raw.length()-1)) : null;
 			case 3:
 			case 4:
 				return new JPasToken(TokenType.number, raw);
@@ -47,7 +60,10 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 			case 6:
 				for(int i=0; i<KEYWORDS.length; i++)
 					if(KEYWORDS[i].equalsIgnoreCase(raw))
-						return JPasToken.keyword(KEYWORDS[i]);
+						return JPasToken.keyword(toLatex ? raw : KEYWORDS[i]);
+				for(int i=0; i<RESIDS.length; i++)
+					if(RESIDS[i].equalsIgnoreCase(raw))
+						return toLatex ? new JPasToken(TokenType.identifier, raw) : JPasToken.keyword(RESIDS[i]);
 				return new JPasToken(TokenType.identifier, raw);
 			case 7:
 			case 8:

@@ -949,6 +949,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	}
 	
 	private Statement typeDecl(Scope scope) {
+		// TODO forward type declarations (for pointers)
 		JPasToken t = token;
 		if(!accept(TokenType.identifier.token))
 			return null;

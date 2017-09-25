@@ -129,6 +129,7 @@ public class Scope {
 		global.add("RunError", new RunError());
 
 		global.add("New", new NewPtr());
+		// FIXME NewArray
 
 		global.add("Write", new Write(false));
 		global.add("WriteLn", new Write(true));

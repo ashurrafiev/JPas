@@ -21,6 +21,11 @@ public class SysTime extends Function {
 	}
 
 	@Override
+	public boolean hasSideEffects() {
+		return true;
+	}
+
+	@Override
 	public Object call(Object[] args) {
 		return new Integer((int)(System.currentTimeMillis() / 1000L));
 	}
