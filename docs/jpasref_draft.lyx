@@ -1,0 +1,6787 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{nameref}
+\usepackage{titlesec}
+\usepackage{framed}
+\usepackage{color}
+\usepackage{longtable}
+\usepackage{multicol}
+\usepackage{mathabx}
+
+\def\version{1.0~(Draft)}
+\def\license{MIT License}
+\def\licenseText{%
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the ``Software''), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+\itshape The software is provided ``as is'', without warranty of any kind, express or
+implied, including but not limited to the warranties of merchantability,
+fitness for a particular purpose and noninfringement. In no event shall the
+authors or copyright holders be liable for any claim, damages or other
+liability, whether in an action of contract, tort or otherwise, arising from,
+out of or in connection with the software or the use or other dealings in the
+Software.
+}
+\def\url{https://github.com/ashurrafiev/JPas}
+\date{}
+\author{Ashur Rafiev}
+
+\makeatletter
+\def\@maketitle{%
+\newpage
+\thispagestyle{empty}%
+\null
+\vfill%
+\begin{flushright}%
+{\fontsize{60}{70}\selectfont\bfseries \@title \par}%
+\vskip 0.5em
+\rule{\textwidth}{1pt}\par%
+{\Huge Reference Guide \par}%
+\vskip 5em
+{\Huge Version \version \par}%
+\vfill%
+\vfill%
+{\normalsize Copyright~\copyright~2017 \par}%
+{\@author \par}%
+\vskip 1em
+{Available under \license ~at:\par}%
+{\url \par}%
+\end{flushright}%
+\vskip 1.5em
+\newpage
+\thispagestyle{empty}%
+\null
+\vfill%
+{\noindent\normalsize Copyright~\copyright~2017 \@author \par}%
+\vskip 1.5em
+{\noindent\large\bfseries \license \par}%
+\vskip 0.5em
+{\noindent\small\licenseText \par}%
+\vskip 1.5em
+\newpage
+}
+\makeatother
+
+\renewcommand{\sectionmark}[1]{}
+\renewcommand{\subsectionmark}[1]{}
+
+\fancyhf{}
+\fancyhead[RO, LE]{\itshape\rightmark}
+\fancyhead[LE]{\bfseries JPas Reference Guide v\version}
+\fancyfoot[RO, LE]{\thepage}
+\renewcommand\headrulewidth{0.4pt}
+\renewcommand\footrulewidth{0pt}
+\pagestyle{fancy}
+
+\fancypagestyle{plain}{ %
+\fancyhf{} % remove everything
+\fancyfoot[RO, LE]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+
+\makeatletter
+\newcommand*{\justifyheading}{\raggedleft}
+\newcommand{\sectionbreak}{\cleardoublepage}
+\titleformat{\section}{\huge\bfseries\justifyheading}{\thesection.}{0.5em}
+{\thispagestyle{plain}\markright{\thesection.~\@currentlabelname}}
+[\vspace{-0.5ex}\rule{\textwidth}{1pt}]
+\titlespacing{\section}{0pt}{0pt}{5em}
+\makeatother
+
+\titlespacing{\subsection}{\parindent}{30pt plus 15pt}{15pt}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{0.5em}{}[]
+\titlespacing{\subsubsection}{\parindent}{10pt plus 10pt}{5pt}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{0.5em}{}[]
+
+\renewcommand\thetable{\thesection.\arabic{table}}
+
+\let\oitemize\itemize
+\renewcommand\itemize{\oitemize\setlength{\itemsep}{0pt}}
+\renewcommand{\labelitemi}{$\blackdiamond$}
+
+\newcommand{\kw}[1]{\textbf{#1}}
+\newcommand{\comm}[1]{{\itshape \{#1\}}}
+\newcommand{\code}[1]{{\normalfont\sffamily #1}}
+
+\newcommand{\codebox}[1]{
+\null\vspace{-0.3em}%
+\setlength{\fboxsep}{8pt}%
+\colorbox[gray]{0.95}{\parbox{\dimexpr\linewidth-28pt}%
+{\noindent\sffamily #1}\par}%
+\vspace{0.7em}%
+}
+
+\newenvironment{note}[1][Note]{%
+\vspace{0.5em}%
+\begin{leftbar}%
+\noindent\textbf{#1:}\itshape%
+}{%
+\end{leftbar}%
+\vspace{0.5em}
+}
+
+\setlength\LTleft{\parindent}
+\setlength\LTright{0pt}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 134.65pt
+\topmargin 122.5pt
+\rightmargin 134.65pt
+\bottommargin 122.5pt
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+JPas
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{roman}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+maketitle
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tableofcontents
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+pagenumbering{arabic}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+JPas
+\emph default
+ is an interpreter of Pascal-like language, called 
+\emph on
+JPascal
+\emph default
+, running in Java Virtual Machine (JVM).
+ It supports a variety of features, including console input and output,
+ as well as graphical interface, mouse and keyboard events.
+\end_layout
+
+\begin_layout Subsubsection*
+Why?
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+To do:
+\emph default
+ invent a decent motivation.
+\end_layout
+
+\begin_layout Subsection
+About JPascal
+\end_layout
+
+\begin_layout Standard
+JPascal language draws its inspiration from early Turbo
+\begin_inset space ~
+\end_inset
+
+Pascal versions 3.0
+\begin_inset space ~
+\end_inset
+
+to
+\begin_inset space ~
+\end_inset
+
+5.0, before the object oriented programming was introduced.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}[Disclaimer]
+\end_layout
+
+\end_inset
+
+ Back in the days, Turbo
+\begin_inset space ~
+\end_inset
+
+Pascal was a registered trademark of Borland International,
+\begin_inset space ~
+\end_inset
+
+Inc., USA, and it is still a registered trademark owned by CodeGear
+\begin_inset space ~
+\end_inset
+
+LLC, USA.
+ Even though, to the author's knowledge, Turbo
+\begin_inset space ~
+\end_inset
+
+Pascal
+\begin_inset space ~
+\end_inset
+
+IDE has been released to public for free, it is important to emphasise that
+ JPascal does not copy Turbo
+\begin_inset space ~
+\end_inset
+
+Pascal version of Pascal programming language, as explained in this section
+ and with more details in Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Differences-from-Classic"
+
+\end_inset
+
+.
+ Turbo
+\begin_inset space ~
+\end_inset
+
+Pascal version
+\begin_inset space ~
+\end_inset
+
+5.0 is used in this manual only as a historical reference and a baseline
+ for feature comparison, and is further referred as 
+\emph on
+classic
+\begin_inset space ~
+\end_inset
+
+Pascal
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Differences from Classic Pascal
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Differences-from-Classic"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+JPascal adds new features and removes some from the classic Pascal.
+ Many of the changes are done because of JPas environment is running in
+ JVM.
+ JPascal is a higher level programming language than classic Pascal.
+ Most of the removed features are linked to a specific system architecture.
+\end_layout
+
+\begin_layout Standard
+Keywords that existed in classic Pascal, but have not been added to JPascal:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{4}
+\backslash
+code{
+\backslash
+bfseries
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent absolute
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+external
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+file
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+goto
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+inline
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+interrupt
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+packed
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+program
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+set
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+unit
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Program structure
+\end_layout
+
+\begin_layout Standard
+Program does not start with the keyword 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{Program}}
+\end_layout
+
+\end_inset
+
+, and units do not start with 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{Unit}}
+\end_layout
+
+\end_inset
+
+.
+ In fact, these are not keywords in JPascal.
+\end_layout
+
+\begin_layout Standard
+Minimal 
+\begin_inset Quotes eld
+\end_inset
+
+Hello world
+\begin_inset Quotes erd
+\end_inset
+
+ program in classic Pascal:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{Program} Hello;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{Begin}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad WriteLn(`Hello world!');
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{End}.%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In JPascal it becomes a one-liner:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+WriteLn(`Hello world!').%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Variable, type, and constant declarations
+\end_layout
+
+\begin_layout Standard
+There are no dedicated declaration blocks (apart from the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{interface}}
+\end_layout
+
+\end_inset
+
+ part in a unit), all declarations can be done in-place, anywhere in the
+ code.
+\end_layout
+
+\begin_layout Subsubsection
+Unit structure
+\end_layout
+
+\begin_layout Standard
+Interface/implementation structure is not limited to units, however it is
+ not very useful anywhere else.
+ The syntax is also different, as shown below.
+\end_layout
+
+\begin_layout Standard
+In classic Pascal:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{Unit} UnitName;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{interface}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Public declarations.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{implementation}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Implementation and private declarations.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{Begin}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Unit initialisaton code.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{End}.%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In JPascal:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{interface}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Public declarations.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{implementation}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Unit initialisaton code with implementation.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{end}.%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Basic data types
+\end_layout
+
+\begin_layout Standard
+Integer numbers are represented only with 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+ type, which represents 32-bit signed integer numbers.
+ There are no 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Byte}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Word}
+\end_layout
+
+\end_inset
+
+, or 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{LongInteger}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Real}
+\end_layout
+
+\end_inset
+
+ is implemented using double precision floating point numbers (64-bit).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{String}
+\end_layout
+
+\end_inset
+
+ type does not take size as a parameter.
+ The strings have variable length realised by Java strings.
+\end_layout
+
+\begin_layout Standard
+No 
+\emph on
+packed
+\emph default
+ data types; 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{packed}}
+\end_layout
+
+\end_inset
+
+ is not a reserved keyword.
+\end_layout
+
+\begin_layout Subsubsection
+Enumerated types
+\end_layout
+
+\begin_layout Standard
+Enumerated types are defined using square brackets 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{[}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+and
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{]}
+\end_layout
+
+\end_inset
+
+ instead of parentheses 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{(}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+and
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{)}
+\end_layout
+
+\end_inset
+
+.
+ This is done for consistency with array and record literals, see
+\begin_inset space ~
+\end_inset
+
+Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Array-and-Record-Literals"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Records
+\end_layout
+
+\begin_layout Standard
+Variant records and tag fields are not possible.
+\end_layout
+
+\begin_layout Standard
+It is not allowed to declare a pointer of type 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+^{}T}
+\end_layout
+
+\end_inset
+
+ before 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{T}
+\end_layout
+
+\end_inset
+
+ is declared.
+ For example, the following code is valid in classic Pascal, but will give
+ a compilation error in JPas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Classic Pascal only!}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad PersonPtr = 
+\backslash
+^{}Person;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Person = 
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Name: String;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Age: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Next : PersonPtr;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{end};%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}{
+\backslash
+linewidth}
+\end_layout
+
+\end_inset
+
+However, you can still use 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+^{}T}
+\end_layout
+
+\end_inset
+
+ within the declaration of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{T}
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{In JPascal:}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} Person = 
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Name: String;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Age: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Next : 
+\backslash
+^{}Person;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{end};%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Array and record literals
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Array-and-Record-Literals"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Array and record literals are defined using square brackets 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{[}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+and
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{]}
+\end_layout
+
+\end_inset
+
+ (unlike regular parentheses 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{(}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+and
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{)}
+\end_layout
+
+\end_inset
+
+ in classic Pascal.
+ Because of this, you can use array and record literals anywhere in the
+ code.
+ Regular parentheses would make no distinction between single-value array
+ and a parenthetic expression.
+\end_layout
+
+\begin_layout Subsubsection
+Sets
+\end_layout
+
+\begin_layout Standard
+Sets are not added in this version of JPas, and probably will not be added
+ any time soon.
+ Even though it is a nice feature, it has a very limited application, so
+ may not worth time investment.
+ In the current implementation of JPas, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{set}}
+\end_layout
+
+\end_inset
+
+ is not a reserved keyword
+\end_layout
+
+\begin_layout Subsubsection
+Files
+\end_layout
+
+\begin_layout Standard
+Version
+\begin_inset space ~
+\end_inset
+
+1.0 of JPas does not support working with files, however this functionality
+ may be added later in one way or another.
+ At the moment, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{file}}
+\end_layout
+
+\end_inset
+
+ is not a keyword, and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Text}
+\end_layout
+
+\end_inset
+
+ is not a reserved identifier.
+\end_layout
+
+\begin_layout Subsubsection
+For loops
+\end_layout
+
+\begin_layout Standard
+Counter may be any L-value, not just a variable.
+ You are allowed to change the counter inside the loop body.
+ Starting and ending conditions are still evaluated only once, before the
+ loop starts.
+\end_layout
+
+\begin_layout Subsubsection
+Pointers and memory addressing
+\end_layout
+
+\begin_layout Standard
+JPas interpreter implements its own memory structure based on Java objects,
+ which is different from the classical DOS memory model.
+ It is not possible to get numerical addresses of memory items.
+ As the result, pointer arithmetic is not possible.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Mem}
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Port}
+\end_layout
+
+\end_inset
+
+ arrays, provided in classic Pascal, do not exist in JPas.
+ Almost all of the memory access functions and procedures are also removed.
+\end_layout
+
+\begin_layout Standard
+No 
+\emph on
+absolute
+\emph default
+ access; 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{absolute}}
+\end_layout
+
+\end_inset
+
+ is not a reserved keyword.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Overlays
+\emph default
+ are meaningless to modern systems, so they haven't been added to JPas.
+\end_layout
+
+\begin_layout Subsubsection
+Garbage collection
+\end_layout
+
+\begin_layout Standard
+On the bright side, the memory management became much easier thanks to JVM's
+ Garbage Collector (GC).
+\end_layout
+
+\begin_layout Standard
+In classic Pascal, it was mandatory to call either 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Dispose}
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Mark}
+\end_layout
+
+\end_inset
+
+/
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Release}
+\end_layout
+
+\end_inset
+
+ for every pointer allocated by the function 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{New}
+\end_layout
+
+\end_inset
+
+.
+ Failing to do so would lead to memory leaks.
+\end_layout
+
+\begin_layout Standard
+In JPas, disposing of unused memory is done by GC, and there are no such
+ functions as 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Dispose}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Mark}
+\end_layout
+
+\end_inset
+
+, and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Release}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} Q: 
+\backslash
+^{}Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{begin}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{var} P: 
+\backslash
+^{}Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad New(P); 
+\backslash
+comm{Allocate memory.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad P
+\backslash
+^{} := 8;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Q := P;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{end}; 
+\backslash
+comm{Variable P is destroyed.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{The memory is still referenced by Q.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WriteLn(Q
+\backslash
+^{}); 
+\backslash
+comm{Prints `8'.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Q := 
+\backslash
+kw{nil}; 
+\backslash
+comm{Clear the pointer.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Memory is automatically unallocated
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+because there are no pointers referencing it.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Functions and procedures
+\end_layout
+
+\begin_layout Standard
+No untyped arguments because absolute access is not allowed.
+\end_layout
+
+\begin_layout Standard
+No 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{external}}
+\end_layout
+
+\end_inset
+
+ , 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{inline}}
+\end_layout
+
+\end_inset
+
+, and other procedural modifiers.
+\end_layout
+
+\begin_layout Standard
+No procedural types or function pointers.
+\end_layout
+
+\begin_layout Standard
+Many standard functions and procedures are changed.
+ Please refer to Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Standard-Procedures"
+
+\end_inset
+
+ for the reference on the updated versions.
+\end_layout
+
+\begin_layout Subsubsection
+Labels, exit and goto
+\end_layout
+
+\begin_layout Standard
+Labels do not need an in-advance declaration.
+ In JPascal, a label marks a statement.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{goto}}
+\end_layout
+
+\end_inset
+
+ statement has been deprecated in many languages.
+ JPascal does not implement it.
+\end_layout
+
+\begin_layout Standard
+Most interesting behaviour can be realised using 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{exit} Label}
+\end_layout
+
+\end_inset
+
+ statements, which exits the statement marked with the label.
+ This always guarantees safe behaviour.
+ It is still possible to use 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{exit}}
+\end_layout
+
+\end_inset
+
+ without a label to exit a function, procedure, or the program, like in
+ classic Pascal.
+\end_layout
+
+\begin_layout Section
+Language Elements
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Whitespace and Comments
+\end_layout
+
+\begin_layout Standard
+Whitespace is any number of tabs, spaces and newline characters in any combinati
+on.
+ A comment is any text enclosed in curly braces 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+{}
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+}}
+\end_layout
+
+\end_inset
+
+, or between 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{(*}
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{*)}
+\end_layout
+
+\end_inset
+
+.
+ Whitespaces and comments are ignored by the parser.
+\end_layout
+
+\begin_layout Subsection
+Keywords and Identifiers
+\end_layout
+
+\begin_layout Standard
+The list of keywords:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{4}
+\backslash
+code{
+\backslash
+bfseries
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent and
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+array
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+begin
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+case
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+const
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+div
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+do
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+downto
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+else
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+exit$^{*}$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+for
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+forward
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+function
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+if
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+implementation
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+in$^{**}$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+interface
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+label
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+mod
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+nil
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+not
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+of
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+or
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+procedure
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+record
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+repeat
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+shl
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+shr
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+then
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+to
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+type
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+until
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+uses
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+var
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+while
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+with
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+xor
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$^{*}$
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{exit}}
+\end_layout
+
+\end_inset
+
+ was a function in classic Pascal, not a keyword.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$^{**}$
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+In the current version of JPas, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{in}}
+\end_layout
+
+\end_inset
+
+ is a registered keyword, but the operator is not yet implemented.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Identifier is a sequence of characters including Latin letters, numbers
+ and underscore.
+ It must contain at least one letter and cannot start with a number.
+ Identifiers can be used as names for variables, constants, types, functions,
+ procedures, etc.
+\end_layout
+
+\begin_layout Standard
+The list of registered identifiers:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{4}
+\backslash
+code{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent Boolean
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Char
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+False
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Integer
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Real
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+String$^{*}$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+True
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$^{*}$
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{String}
+\end_layout
+
+\end_inset
+
+ was a keyword in classic Pascal, now it is considered a registered identifier.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Identifiers and keywords are case-insensitive.
+ It is considered a good programming style to write keywords in lower case
+ and start identifiers in capital case.
+ The exceptions are the main 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{Begin}}
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{End}}
+\end_layout
+
+\end_inset
+
+ keywords of the program, which are usually capitalised, and local variables
+ with single-character names, e.g.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{x}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+or
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{y}
+\end_layout
+
+\end_inset
+
+, which can be lower case.
+\end_layout
+
+\begin_layout Subsection
+Constant Literals
+\end_layout
+
+\begin_layout Subsubsection
+Numeric literals
+\end_layout
+
+\begin_layout Standard
+Any sequence of digits 0–9 form a decimal integer number.
+ Unary `minus' operator 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{--}
+\end_layout
+
+\end_inset
+
+ creates a negative number.
+ Unary `plus' operator 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{+}
+\end_layout
+
+\end_inset
+
+ can be optionally used to emphasise positive numbers.
+ In JPascal, integer numbers are 32-bit, hence specifying numbers larger
+ than 
+\begin_inset Formula $\left(2^{31}-1\right)$
+\end_inset
+
+ or smaller than 
+\begin_inset Formula $\left(-2^{31}\right)$
+\end_inset
+
+ will produce a compilation error.
+\end_layout
+
+\begin_layout Standard
+Hexadecimal integer literals are preceded with 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+$}
+\end_layout
+
+\end_inset
+
+ symbol.
+ It is possible to specify larger numbers in hexadecimal format, but they
+ will be cropped to 32-bit with overflow.
+ For instance, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+$FFFFFFFF}
+\end_layout
+
+\end_inset
+
+ will produce decimal 
+\begin_inset Formula $\left(-1\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Integer numbers:}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+123 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+--8 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
++8 
+\backslash
+comm{Same as 8} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+00025 
+\backslash
+comm{Same as 25} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+$FF 
+\backslash
+comm{Decimal 255} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+$FFFFFFFF 
+\backslash
+comm{Decimal --1 (overflow).}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Real numbers have integer and fractional parts separated by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{.}
+\end_layout
+
+\end_inset
+
+ (period).
+ Scientific notation is also allowed.
+ Examples are shown below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Real numbers:}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+0.01 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+3.141592 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+2.5E-6 
+\backslash
+comm{Same as 0.000025} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+2.5E+6 
+\backslash
+comm{Same as 250000} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+1E9 
+\backslash
+comm{1000000000.0 -- one billion as a real number.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+ Scientific notation always produces real numbers, so they need to be explicitly
+ converted to integer.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+Int(1E9) 
+\backslash
+comm{Now it is an integer number.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There is an implicit cast from 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Real}
+\end_layout
+
+\end_inset
+
+ type.
+\end_layout
+
+\begin_layout Subsubsection
+Character and string literals
+\end_layout
+
+\begin_layout Standard
+Strings of characters enclosed in single quotes 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{'}
+\end_layout
+
+\end_inset
+
+ produce string or character literals.
+ Character literals contain exactly one character.
+ JPascal supports Unicode managed by Java.
+ All characters are 16-bit.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+`Hello, I am a string.'
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+`A' 
+\backslash
+comm{...and this is a character.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is also possible to create single character constants from their ANSI/Unicode
+ values by preceding a decimal or hexadecimal numeric literal with a hash
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+#}
+\end_layout
+
+\end_inset
+
+ symbol.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Characters from ANSI/Unicode values:}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+#48 
+\backslash
+comm{Same as `0' (zero)}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+#65 
+\backslash
+comm{Same as `A' (Latin A)}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+#
+\backslash
+$41 
+\backslash
+comm{Also `A' (Latin A)}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+#
+\backslash
+$03A9 
+\backslash
+comm{Capital Greek Omega $
+\backslash
+Omega$}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There is an implicit cast from 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Char}
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Sting}
+\end_layout
+
+\end_inset
+
+ type.
+\end_layout
+
+\begin_layout Subsubsection
+Built-in constants
+\end_layout
+
+\begin_layout Standard
+Boolean constants 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{True}
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{False}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Null-pointer constant 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{nil}}
+\end_layout
+
+\end_inset
+
+ is a keyword.
+\end_layout
+
+\begin_layout Subsection
+Operator symbols
+\end_layout
+
+\begin_layout Standard
+Operator symbols recognised by JPascal are:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{4}
+\backslash
+code{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+noindent ; 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+, 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+: 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+:= 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
++ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+-- 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{*} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+/ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{[} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{]} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+( 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+) 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+= 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<> 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+> 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+< 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+>= 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+<= 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+^{} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+.
+ 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+..
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Program Structure
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+JPascal program is a single statement ending with 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{.}
+\end_layout
+
+\end_inset
+
+ (period) symbol.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Hello world
+\begin_inset Quotes erd
+\end_inset
+
+ program in JPascal looks like this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+WriteLn(`Hello world!').%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{WriteLn}
+\end_layout
+
+\end_inset
+
+ outputs information to system console, which in this case is the string
+ literal `Hello world!'.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Statement
+\emph default
+ is defined as an executable action.
+ Statements can be compound, internally executing more statements.
+ For example, a block statement 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{begin} ...
+ 
+\backslash
+kw{end}}
+\end_layout
+
+\end_inset
+
+ is used to combine a sequence of multiple statements into one.
+ Statements within a block statement are separated using semicolons.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{Begin}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad WriteLn(`Hello world!');
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad WriteLn(`JPascal is here.');
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad WriteLn(`Bye!')
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{End}.%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Types of statements
+\end_layout
+
+\begin_layout Standard
+This sections gives a brief overview of statements and program structuring.
+ A detailed reference on statements can be found in the Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Statements"
+
+\end_inset
+
+ of this guide.
+\end_layout
+
+\begin_layout Standard
+Statements can be one of the following types:
+\end_layout
+
+\begin_layout Itemize
+Empty statement.
+\end_layout
+
+\begin_layout Itemize
+Declaration statements include variable, constant, type, function, and procedure
+ declarations.
+\end_layout
+
+\begin_layout Itemize
+Inclusion statement 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{uses}}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Interface statement 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{interface} ...
+ 
+\backslash
+kw{implementation} ...
+ 
+\backslash
+kw{end}}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Block statement.
+\end_layout
+
+\begin_layout Itemize
+Control statements include exit, branching and loop statements.
+\end_layout
+
+\begin_layout Itemize
+Assignment.
+\end_layout
+
+\begin_layout Itemize
+Procedure call or expression statements.
+\end_layout
+
+\begin_layout Itemize
+Scope statements include only 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{with}}
+\end_layout
+
+\end_inset
+
+ statement.
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Scope
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Memory and Stack
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Section
+Variables and Constants
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Section
+Types
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Simple Types
+\end_layout
+
+\begin_layout Subsection
+Enumerated and Subrange Types
+\end_layout
+
+\begin_layout Subsection
+Array Types
+\end_layout
+
+\begin_layout Subsection
+Record Types
+\end_layout
+
+\begin_layout Subsection
+Pointers
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Section
+Expressions
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Section
+Statements
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Statements"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Block Statements
+\end_layout
+
+\begin_layout Subsection
+Declaration Statements
+\end_layout
+
+\begin_layout Standard
+...and other.
+\end_layout
+
+\begin_layout Section
+Procedures and Functions
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Section
+Units
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Section
+Standard Procedures and Functions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Standard-Procedures"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+Unlike user-defined procedures, the standard procedures and functions are
+ processed by the pre-compiler in a special way, which opens the following
+ advantages:
+\end_layout
+
+\begin_layout Itemize
+The same function or procedure name can be used by different functions.
+ The choice of the actual function depends on the types of the arguments
+ (this is called 
+\emph on
+overloading
+\emph default
+).
+ The most notable example of overloading is type of the result being dependent
+ on the type of the argument, like in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Min}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Max}
+\end_layout
+
+\end_inset
+
+, or 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Abs}
+\end_layout
+
+\end_inset
+
+ functions.
+\end_layout
+
+\begin_layout Itemize
+Variable number of arguments, denoted as 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{(X, ...
+ )}
+\end_layout
+
+\end_inset
+
+, means 0 or more arguments like 
+\emph on
+X
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+Functions and procedures may take arguments of unspecified types or multiple
+ specific types.
+ Because of this, the section uses 
+\begin_inset Quotes eld
+\end_inset
+
+invented
+\begin_inset Quotes erd
+\end_inset
+
+ types that are not a part of the language but clarify what types can be
+ accepted by the given procedure or function.
+ These identifiers are listed below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{longtable}{@{
+\backslash
+extracolsep{
+\backslash
+fill}}p{3cm}p{
+\backslash
+dimexpr
+\backslash
+linewidth-3cm-
+\backslash
+parindent-2
+\backslash
+tabcolsep}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SomeType} & 
+\end_layout
+
+\end_inset
+
+Any type is accepted.
+\begin_inset VSpace 0.7em
+\end_inset
+
+
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SimpleType} & 
+\end_layout
+
+\end_inset
+
+Only simple built-in types (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Real}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Boolean}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Char}
+\end_layout
+
+\end_inset
+
+, or 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{String}
+\end_layout
+
+\end_inset
+
+) are accepted.
+\begin_inset VSpace 0.7em
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Ordinal} & 
+\end_layout
+
+\end_inset
+
+Only ordinal types are accepted.
+ Ordinal types are 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Boolean}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Char}
+\end_layout
+
+\end_inset
+
+, enumerated, and subrange types.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{longtable}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Execution Control
+\end_layout
+
+\begin_layout Subsubsection
+Halt
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Halt;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Stop the program execution end exit JPas with exit code 0 (no error).
+ This is the same as calling 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{exit}}
+\end_layout
+
+\end_inset
+
+ statement from the main block of the program; however, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Halt}
+\end_layout
+
+\end_inset
+
+ can be called from anywhere in the code.
+\end_layout
+
+\begin_layout Subsubsection
+RunError
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} RunError(Msg: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Stop the program execution with the runtime error and the specified message
+ 
+\emph on
+Msg
+\emph default
+.
+ JPas exits with the code 1 (error).
+\end_layout
+
+\begin_layout Subsection
+Pointers
+\end_layout
+
+\begin_layout Subsubsection
+New
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} New(
+\backslash
+kw{var} Ptr: 
+\backslash
+^{}SomeType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Console Input and Output
+\end_layout
+
+\begin_layout Subsubsection
+Write and WriteLn
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Write(Value, ...
+ : SimpleType);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} WriteLn(Value, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Read and ReadLn
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Read(
+\backslash
+kw{var} Target, ...
+ : SimpleType);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn(
+\backslash
+kw{var} Target, ...
+ : SimpleType);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn(
+\backslash
+kw{var} Line: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Time
+\end_layout
+
+\begin_layout Subsubsection
+Delay
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Delay(Milliseconds: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Puts the execution into sleep for the specified number of 
+\emph on
+Milliseconds
+\emph default
+.
+ The exact timing is not guaranteed and the accuracy is determined by the
+ operating system.
+\end_layout
+
+\begin_layout Subsubsection
+SysTime
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} SysTime: Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns system time: the number of seconds passed since 1
+\begin_inset space ~
+\end_inset
+
+January
+\begin_inset space ~
+\end_inset
+
+1970.
+\end_layout
+
+\begin_layout Subsubsection
+Elapsed
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Elapsed: Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the number of milliseconds passed since the start of the program
+ execution.
+\end_layout
+
+\begin_layout Subsection
+Mathematical Functions
+\end_layout
+
+\begin_layout Subsubsection
+Int
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Int(X: Real): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the integer part of the real number 
+\emph on
+X
+\emph default
+.
+ This function can be used to convert 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Real}
+\end_layout
+
+\end_inset
+
+ type values to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Frac
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Frac(X: Real): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the fractional part of the real number 
+\emph on
+X
+\emph default
+.
+ The result is always a positive number.
+\end_layout
+
+\begin_layout Subsubsection
+Round
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Round(X: Real): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Rounds the real number 
+\emph on
+X
+\emph default
+ to a closest integer.
+ This function can be used to convert 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Real}
+\end_layout
+
+\end_inset
+
+ type values to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Sqrt
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Sqrt(X: Real): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns square root of 
+\emph on
+X
+\emph default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Pi
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Pi: Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns constant
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\pi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}
+\end_layout
+
+\end_inset
+
+ During pre-compilation, this function is always optimised to a constant
+ value.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+ArcTan
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} ArcTan(X: Real): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns arctangent of 
+\emph on
+X
+\emph default
+ in radians.
+\end_layout
+
+\begin_layout Subsubsection
+Sin and Cos
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Sin(X: Real): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Cos(X: Real): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the sine (or cosine) value of the angle 
+\emph on
+X
+\emph default
+, where 
+\emph on
+X
+\emph default
+ is in radians.
+\end_layout
+
+\begin_layout Subsubsection
+Exp
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Exp(X: Real): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Ln
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Ln(X: Real): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Abs
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Abs(X: Real): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Abs(X: Integer): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the absolute value of 
+\emph on
+X
+\emph default
+.
+ 
+\emph on
+X
+\emph default
+ can be integer or real, the result of the function will be of the same
+ type as the argument.
+\end_layout
+
+\begin_layout Subsubsection
+Sqr
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Sqr(X: Real): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Sqr(X: Integer): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the square of 
+\emph on
+X
+\emph default
+, i.e.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{(X*X)}
+\end_layout
+
+\end_inset
+
+.
+ 
+\emph on
+X
+\emph default
+ can be integer or real, the result of the function will be of the same
+ type as the argument.
+\end_layout
+
+\begin_layout Subsubsection
+Min and Max
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Min(X, Y: Real): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Min(X, Y: Integer): Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Max(X, Y: Real): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Max(X, Y: Integer): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the minimum (or maximum) of 
+\emph on
+X
+\emph default
+ and 
+\emph on
+Y
+\emph default
+.
+ 
+\emph on
+X
+\emph default
+ and 
+\emph on
+Y
+\emph default
+ can be integer or real, the result of the function will be of the same
+ type as the arguments, or 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Real}
+\end_layout
+
+\end_inset
+
+ if their types differ.
+\end_layout
+
+\begin_layout Subsubsection
+Odd
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Odd(X: Integer): Boolean;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{True}
+\end_layout
+
+\end_inset
+
+ if the argument is an odd number, i.e.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{(X 
+\backslash
+kw{mod} 2)<>0}
+\end_layout
+
+\end_inset
+
+.
+ Only works for integer numbers.
+\end_layout
+
+\begin_layout Subsection
+Ordinal Functions
+\end_layout
+
+\begin_layout Subsubsection
+Succ
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Succ(N: Ordinal): Odrinal;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the next ordinal value for 
+\emph on
+N
+\emph default
+.
+ This function never goes out of range, but may overflow, as shown in the
+ example below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} Sides = [North, East, South, West];
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} N: Sides = Succ(West);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WriteLn(N=North); 
+\backslash
+comm{Prints `true'}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Pred
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Pred(N: Ordinal): Odrinal;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the previous ordinal value for 
+\emph on
+N
+\emph default
+.
+ This function never goes out of range, but may overflow (see
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Succ}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+function).
+\end_layout
+
+\begin_layout Subsubsection
+Inc
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Inc(
+\backslash
+kw{var} N: Ordinal);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Change the value of the variable 
+\emph on
+N
+\emph default
+ to its next ordinal value.
+ This is the same as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+N := Succ(N);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Dec
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Inc(
+\backslash
+kw{var} N: Ordinal);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Change the value of the variable 
+\emph on
+N
+\emph default
+ to its previous ordinal value.
+ This is the same as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+N := Pred(N);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Ord
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Ord(Ordinal): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the integer index for the ordinal 
+\emph on
+N
+\emph default
+ in relation to its range, starting with 0.
+ If 
+\emph on
+N
+\emph default
+ is a character, the function returns its Unicode value.
+ Integer 
+\emph on
+N
+\emph default
+ returns itself.
+\end_layout
+
+\begin_layout Subsection
+Strings and Characters
+\end_layout
+
+\begin_layout Subsubsection
+Chr
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Chr(Code: Integer): Char;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns a character for the given Unicode value.
+\end_layout
+
+\begin_layout Subsubsection
+UpCase and LowCase
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} UpCase(C: Char): Char;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} UpCase(S: String): String;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} LowCase(C: Char): Char;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} LowCase(S: String): String;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns an uppercase (or lowercase) value for the given character or string
+ of characters.
+ The type of the function is determined by the type of its argument.
+\end_layout
+
+\begin_layout Subsubsection
+Format
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Format(Fmt: String; Value, ...
+ : SimpleType): String;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+To do:
+\emph default
+ Java's String.format.
+\end_layout
+
+\begin_layout Subsubsection
+Str
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Str(Value: SimpleType): String;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Converts a value of simple type (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Boolean}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+, or 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Real}
+\end_layout
+
+\end_inset
+
+) to a string using some default formatting.
+ For more control, use 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Format}
+\end_layout
+
+\end_inset
+
+ function.
+\end_layout
+
+\begin_layout Subsubsection
+Val
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Val(S: String; 
+\backslash
+kw{var} Target: Integer; 
+\backslash
+kw{var} Code: Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Val(S: String; 
+\backslash
+kw{var} Target: Real; 
+\backslash
+kw{var} Code: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Attempts to parse a numeric value from the given string 
+\emph on
+S
+\emph default
+ assuming the radix in 
+\emph on
+Code
+\emph default
+.
+ Real numbers only accept radix
+\begin_inset space ~
+\end_inset
+
+10 (decimal).
+ On success, the result is put in the variable 
+\emph on
+Target
+\emph default
+.
+ On failure, the 
+\emph on
+Code
+\emph default
+ is reset to
+\begin_inset space ~
+\end_inset
+
+0.
+\end_layout
+
+\begin_layout Subsubsection
+Copy
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Copy(S: String; StartPos, EndPos: Integer): String;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns a substring of 
+\emph on
+S
+\emph default
+ from 
+\emph on
+StartPos
+\emph default
+ to 
+\emph on
+EndPos
+\emph default
+ (inclusive).
+ Positions are numbered starting from
+\begin_inset space ~
+\end_inset
+
+1.
+\end_layout
+
+\begin_layout Subsubsection
+Length
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Length(S: String): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the number of characters in a string.
+\end_layout
+
+\begin_layout Subsubsection
+Pos
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Pos(S, Target: String): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the position of the first occurrence of substring 
+\emph on
+S
+\emph default
+ in the string 
+\emph on
+Target
+\emph default
+.
+ Positions are starting from
+\begin_inset space ~
+\end_inset
+
+1.
+ If 
+\emph on
+S
+\emph default
+ is not found, the function returns
+\begin_inset space ~
+\end_inset
+
+0.
+\end_layout
+
+\begin_layout Subsubsection
+Concat
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Concat(
+\backslash
+kw{var} Target: String; S, ...
+ : String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The procedure concatenates a number of strings to the string variable 
+\emph on
+Target
+\emph default
+.
+ This is the same as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+Target := Target + S + ...
+ ;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Delete
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Delete(
+\backslash
+kw{var} Target: String; StartPos, EndPos: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Deletes a portion from a string.
+ Positions are starting from
+\begin_inset space ~
+\end_inset
+
+1.
+\end_layout
+
+\begin_layout Subsubsection
+Insert
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Insert(
+\backslash
+kw{var} Target; S: String; StartPos: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Inserts a string into another at a given position.
+ Positions are starting from
+\begin_inset space ~
+\end_inset
+
+1.
+\end_layout
+
+\begin_layout Subsection
+Arrays and Memory
+\end_layout
+
+\begin_layout Subsubsection
+Fill
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Fill(
+\backslash
+kw{var} Target: 
+\backslash
+kw{Array} 
+\backslash
+kw{of} SomeType; Value: SomeType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fills the array 
+\emph on
+Target
+\emph default
+ with value 
+\emph on
+Value
+\emph default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Swap
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Swap(
+\backslash
+kw{var} X, Y: SomeType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Swaps the values of two variables.
+\end_layout
+
+\begin_layout Subsection
+Random Number Generator (RNG)
+\end_layout
+
+\begin_layout Subsubsection
+Randomize
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Randomize;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Randomize(Seed: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set the seed for RNG to a specific (if given) or random (default) value.
+\end_layout
+
+\begin_layout Subsubsection
+Random
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Random: Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Random(N: Integer): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Generate a random value.
+ Without a parameter, the function generates a real value in the range
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\left[0,1\right)$
+\end_inset
+
+.
+ For the given integer argument 
+\emph on
+N
+\emph default
+, the function generates an integer value in the range
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\left[0,N\right)$
+\end_inset
+
+.
+ 
+\emph on
+N
+\emph default
+ must be positive.
+\end_layout
+
+\begin_layout Section
+Graph2D Unit
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Section*
+Index
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\end_body
+\end_document

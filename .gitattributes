@@ -2,3 +2,5 @@
 * text=auto
 
 *.java diff=java
+
+*.pdf -text

@@ -4,7 +4,9 @@
 test.pas
 testunit.pas
 tolatex.pas
-/docs/
+/docs/*
+!/docs/jpasref_draft.lyx
+!/docs/jpasref_draft.pdf
 
 .metadata
 bin/
