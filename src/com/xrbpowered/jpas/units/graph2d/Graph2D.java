@@ -3,6 +3,7 @@ package com.xrbpowered.jpas.units.graph2d;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -28,8 +29,7 @@ import com.xrbpowered.jpas.units.graph2d.input.InputManager;
 public class Graph2D extends StandardUnit {
 
 	private class WindowPane extends JPanel {
-		public WindowPane(int width, int height) {
-			setPreferredSize(new Dimension(width, height));
+		public WindowPane() {
 			setFocusable(true);
 			setFocusTraversalKeysEnabled(false);
 			addMouseListener(input.mouseListener);
@@ -52,8 +52,10 @@ public class Graph2D extends StandardUnit {
 	}
 	
 	private JFrame window = null;
+	private WindowPane windowPane = null;
 	private Runnable presenter = null;
-	private int pixelScale;
+	private int pixelScale, windowedPixelScale, maxPixelScale;
+	private boolean fullscreen = false;
 	
 	public final InputManager input = new InputManager();
 	
@@ -63,29 +65,95 @@ public class Graph2D extends StandardUnit {
 	public void setWindow(String title, int width, int height, int pixelScale) {
 		if(width<1 || height<1)
 			throw JPasError.rangeCheckError.get();
-		if(window==null) {
-			window = new JFrame(title.isEmpty() ? "JPas" : title);
-			window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
-			presenter = new Runnable() {
-				@Override
-				public void run() {
-					window.repaint();
-				}
-			};
-			
+		if(target==null) {
 			screenBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			target = new Target(screenBuffer);
-			this.pixelScale = pixelScale>0 ? pixelScale : 1;
-			
-			window.setContentPane(new WindowPane(width*pixelScale, height*pixelScale));
+			windowedPixelScale = 0;
+		}
+		else {
+			throw new JPasError("Graphics already initialized.");
+		}
+		resetWindow(title, pixelScale);
+	}
+	
+	protected void resetWindow(String title, int pixelScale) {
+		if(window!=null) {
+			presenter = null;
+			window.dispose();
+		}
+		maxPixelScale = findMaxPixelScale();
+		
+		window = new JFrame(title.isEmpty() ? "JPas" : title);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		presenter = new Runnable() {
+			@Override
+			public void run() {
+				window.repaint();
+			}
+		};
+		
+		windowPane = new WindowPane();
+		window.setContentPane(windowPane);
+		
+		fullscreen = pixelScale<=0;
+		if(fullscreen) {
+			this.pixelScale = maxPixelScale;
+			if(windowedPixelScale==0)
+				windowedPixelScale = maxPixelScale;
+			window.setUndecorated(true);
 			window.setResizable(false);
-			window.pack();
-			window.setLocationRelativeTo(null);
+			updateWindowPaneSize();
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			window.setBounds(0, 0, screenSize.width, screenSize.height);
 			window.setVisible(true);
 		}
-		else
-			throw new JPasError("Graphics already initialized.");
+		else {
+			this.pixelScale = pixelScale;
+			window.setResizable(false);
+			updateWindowPaneSize();
+			window.setVisible(true);
+			window.pack();
+			window.setLocationRelativeTo(null);
+		}
+	}
+	
+	private void updateWindowPaneSize() {
+		windowPane.setPreferredSize(new Dimension(
+				screenBuffer.getWidth()*pixelScale,
+				screenBuffer.getHeight()*pixelScale));
+	}
+	
+	public void zoom(int d) {
+		int newScale = pixelScale+d;
+		if(newScale>=1 && newScale<=maxPixelScale) {
+			pixelScale = newScale;
+			if(fullscreen)
+				window.repaint();
+			else {
+				updateWindowPaneSize();
+				window.pack();
+			}
+		}
+	}
+	
+	public void toggleFullscreen() {
+		if(window==null)
+			return;
+		if(fullscreen) {
+			resetWindow(window.getTitle(), windowedPixelScale);
+		}
+		else {
+			windowedPixelScale = pixelScale;
+			resetWindow(window.getTitle(), 0);
+		}
+	}
+	
+	private int findMaxPixelScale() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int xscale = screenSize.width / screenBuffer.getWidth();
+		int yscale = screenSize.height / screenBuffer.getHeight();
+		return Math.min(xscale, yscale);
 	}
 	
 	public void check() {
@@ -101,7 +169,8 @@ public class Graph2D extends StandardUnit {
 	public void present() {
 		check();
 		try {
-			SwingUtilities.invokeAndWait(presenter);
+			if(presenter!=null)
+				SwingUtilities.invokeAndWait(presenter);
 		}
 		catch(Exception e) {			
 		}
@@ -158,7 +227,6 @@ public class Graph2D extends StandardUnit {
 
 		// TODO transforms
 		// TODO bitmaps
-		// TODO toggle fullscreen
 		
 		return Statement.nop;
 	}

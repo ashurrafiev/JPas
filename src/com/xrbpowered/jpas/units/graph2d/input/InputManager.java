@@ -5,19 +5,31 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.xrbpowered.jpas.ast.Scope;
+import com.xrbpowered.jpas.units.graph2d.Graph2D;
 
 public class InputManager {
 
+	private class CharEvent {
+		public final char ch;
+		public final long time;
+		
+		public CharEvent(char ch, long time) {
+			this.ch = ch;
+			this.time = time;
+		}
+	}
+	
 	public int mouseX = 0;
 	public int mouseY = 0;
 	public boolean mouseLeft = false;
 	public boolean mouseRight = false;
 	
 	private int bufferSize = 0;
-	private LinkedList<Character> keyBuffer = new LinkedList<>();
+	private LinkedList<CharEvent> keyBuffer = new LinkedList<>();
 	private HashSet<Integer> pressedKeys = new HashSet<>();
 	
 	public final MouseAdapter mouseListener = new MouseAdapter() {
@@ -50,20 +62,35 @@ public class InputManager {
 	public final KeyAdapter keyListener = new KeyAdapter() {
 		@Override
 		public void keyPressed(KeyEvent e) {
+			if(e.isAltDown()) {
+				if(e.getKeyCode()==KeyEvent.VK_MINUS) {
+					Graph2D.unit.zoom(-1);
+					return;
+				}
+				else if(e.getKeyCode()==KeyEvent.VK_EQUALS || e.getKeyCode()==KeyEvent.VK_PLUS) {
+					Graph2D.unit.zoom(1);
+					return;
+				}
+				else if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					Graph2D.unit.toggleFullscreen();
+					return;
+				}
+			}
+			if(e.getKeyCode()==KeyEvent.VK_ALT || e.getKeyCode()==KeyEvent.VK_ALT_GRAPH)
+				return;
+			
 			char ch = e.getKeyChar();
+			long t = e.getWhen();
 			if(((int) ch)==0xffff) {
-				keyBuffer.add('\0');
-				keyBuffer.add((char) e.getKeyCode());
+				keyBuffer.add(new CharEvent('\0', t));
+				keyBuffer.add(new CharEvent((char) e.getKeyCode(), t));
 				bufferSize += 2;
 			}
 			else {
-				keyBuffer.add(ch);
+				keyBuffer.add(new CharEvent(ch, t));
 				bufferSize++;
 			}
-			while(bufferSize>32) {
-				bufferSize--;
-				keyBuffer.removeFirst();
-			}
+			checkBufferSize();
 			pressedKeys.add(e.getKeyCode());
 		}
 		@Override
@@ -76,16 +103,38 @@ public class InputManager {
 		return pressedKeys.contains(code);
 	}
 	
+	private void checkBufferSize() {
+		while(bufferSize>32) {
+			bufferSize--;
+			if(keyBuffer.removeFirst().ch=='\0') {
+				bufferSize--;
+				keyBuffer.removeFirst();
+			};
+		}
+	}
+	
+	private void removeOldEvents() {
+		long t = System.currentTimeMillis() - 1000L;
+		for(Iterator<CharEvent> i = keyBuffer.iterator(); i.hasNext();) {
+			CharEvent e = i.next();
+			if(e.time>t)
+				return;
+			i.remove();
+		}
+	}
+	
 	public boolean hasEvents() {
+		removeOldEvents();
 		return !keyBuffer.isEmpty();
 	}
 	
 	public char getKey() {
+		removeOldEvents();
 		if(keyBuffer.isEmpty())
 			return '\0';
 		else {
 			bufferSize--;
-			return keyBuffer.removeFirst();
+			return keyBuffer.removeFirst().ch;
 		}
 	}
 	
