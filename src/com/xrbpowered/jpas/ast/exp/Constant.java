@@ -111,7 +111,7 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 			else
 				v = Integer.parseInt(s);
 			if(ch)
-				return new Constant(Type.real, new Character((char) v));
+				return new Constant(Type.character, new Character((char) v));
 			else
 				return new Constant(Type.integer, v);
 		}
