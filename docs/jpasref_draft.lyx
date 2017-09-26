@@ -118,7 +118,9 @@ Software.
 
 \newcommand{\kw}[1]{\textbf{#1}}
 \newcommand{\comm}[1]{{\itshape \{#1\}}}
-\newcommand{\code}[1]{{\normalfont\sffamily #1}}
+\newcommand{\code}[1]{{\begin{hyphenrules}{nohyphenation}%
+\normalfont\sffamily #1%
+\end{hyphenrules}}}
 
 \newcommand{\codebox}[1]{
 \null\vspace{-0.3em}%
@@ -139,6 +141,8 @@ Software.
 
 \setlength\LTleft{\parindent}
 \setlength\LTright{0pt}
+\let\myIndex\theindex\renewcommand{\theindex}%
+{\cleardoublepage\myIndex\addcontentsline{toc}{section}{\indexname}}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -1110,6 +1114,33 @@ reference "subsec:Array-and-Record-Literals"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsubsection
+Arrays
+\end_layout
+
+\begin_layout Standard
+In JPascal, array sizes are not enforced, and it is possible to write 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{array of} SomeType}
+\end_layout
+
+\end_inset
+
+ without the range.
+ This is called abstracted array types, and they can be used in function
+ and procedure argument types or within pointer types.
+ It is not possible, however, to initialise an actual array object of this
+ type, hence it cannot be used for variables.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2193,7 +2224,17 @@ Keywords and Identifiers
 \end_layout
 
 \begin_layout Standard
-The list of keywords:
+The list of keywords
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Keywords
+\end_layout
+
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Standard
@@ -2637,15 +2678,34 @@ kw{in}}
 \end_layout
 
 \begin_layout Standard
-Identifier is a sequence of characters including Latin letters, numbers
- and underscore.
+Identifier
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Identifiers
+\end_layout
+
+\end_inset
+
+ is a sequence of characters including Latin letters, numbers and underscore.
  It must contain at least one letter and cannot start with a number.
  Identifiers can be used as names for variables, constants, types, functions,
  procedures, etc.
 \end_layout
 
 \begin_layout Standard
-The list of registered identifiers:
+The list of reserved identifiers
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Identifiers!reserved
+\end_layout
+
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Standard
@@ -2852,6 +2912,16 @@ Constant Literals
 
 \begin_layout Subsubsection
 Numeric literals
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Literals!numeric
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3221,7 +3291,27 @@ code{Real}
 \end_layout
 
 \begin_layout Subsubsection
-Character and string literals
+Character
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Literals!character
+\end_layout
+
+\end_inset
+
+ and string literals
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Literals!string
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3436,6 +3526,16 @@ code{True}
 
 \end_inset
 
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+True
+\end_layout
+
+\end_inset
+
  and 
 \begin_inset ERT
 status open
@@ -3445,6 +3545,16 @@ status open
 
 \backslash
 code{False}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+False
 \end_layout
 
 \end_inset
@@ -4445,6 +4555,16 @@ Execution Control
 
 \begin_layout Subsubsection
 Halt
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Halt
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4510,6 +4630,16 @@ code{Halt}
 
 \begin_layout Subsubsection
 RunError
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+RunError
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4556,6 +4686,16 @@ Pointers
 
 \begin_layout Subsubsection
 New
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+New
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4595,7 +4735,27 @@ Console Input and Output
 \end_layout
 
 \begin_layout Subsubsection
-Write and WriteLn
+Write
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Write
+\end_layout
+
+\end_inset
+
+ and WriteLn
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+WriteLn
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4640,7 +4800,27 @@ kw{procedure} WriteLn(Value, ...
 \end_layout
 
 \begin_layout Subsubsection
-Read and ReadLn
+Read
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Read
+\end_layout
+
+\end_inset
+
+ and ReadLn
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ReadLn
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4707,6 +4887,16 @@ Time
 
 \begin_layout Subsubsection
 Delay
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Delay
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4749,6 +4939,16 @@ Milliseconds
 
 \begin_layout Subsubsection
 SysTime
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+SysTime
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4793,6 +4993,16 @@ January
 
 \begin_layout Subsubsection
 Elapsed
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Elapsed
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4834,6 +5044,16 @@ Mathematical Functions
 
 \begin_layout Subsubsection
 Int
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Int
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4901,6 +5121,16 @@ code{Integer}
 
 \begin_layout Subsubsection
 Frac
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Frac
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4942,6 +5172,16 @@ X
 
 \begin_layout Subsubsection
 Round
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Round
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5009,6 +5249,16 @@ code{Integer}
 
 \begin_layout Subsubsection
 Sqrt
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Sqrt
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5049,6 +5299,16 @@ X
 
 \begin_layout Subsubsection
 Pi
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Pi
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5126,6 +5386,16 @@ end{note}
 
 \begin_layout Subsubsection
 ArcTan
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ArcTan
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5165,7 +5435,27 @@ X
 \end_layout
 
 \begin_layout Subsubsection
-Sin and Cos
+Sin
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Sin
+\end_layout
+
+\end_inset
+
+ and Cos
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Cos
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5221,6 +5511,16 @@ X
 
 \begin_layout Subsubsection
 Exp
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Exp
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5253,6 +5553,16 @@ kw{function} Exp(X: Real): Real;%
 
 \begin_layout Subsubsection
 Ln
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Ln
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5285,6 +5595,16 @@ kw{function} Ln(X: Real): Real;%
 
 \begin_layout Subsubsection
 Abs
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Abs
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5342,6 +5662,16 @@ X
 
 \begin_layout Subsubsection
 Sqr
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Sqr
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5412,7 +5742,27 @@ X
 \end_layout
 
 \begin_layout Subsubsection
-Min and Max
+Min
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Min
+\end_layout
+
+\end_inset
+
+ and Max
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Max
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5513,6 +5863,16 @@ code{Real}
 
 \begin_layout Subsubsection
 Odd
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Odd
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5583,6 +5943,16 @@ Ordinal Functions
 
 \begin_layout Subsubsection
 Succ
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Succ
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5675,6 +6045,16 @@ comm{Prints `true'}%
 
 \begin_layout Subsubsection
 Pred
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Pred
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5737,6 +6117,16 @@ function).
 
 \begin_layout Subsubsection
 Inc
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Inc
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5806,6 +6196,16 @@ N := Succ(N);%
 
 \begin_layout Subsubsection
 Dec
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Dec
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5875,6 +6275,16 @@ N := Pred(N);%
 
 \begin_layout Subsubsection
 Ord
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Ord
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5929,6 +6339,16 @@ Strings and Characters
 
 \begin_layout Subsubsection
 Chr
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Chr
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5964,7 +6384,27 @@ Returns a character for the given Unicode value.
 \end_layout
 
 \begin_layout Subsubsection
-UpCase and LowCase
+UpCase
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+UpCase
+\end_layout
+
+\end_inset
+
+ and LowCase
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+LowCase
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6036,6 +6476,16 @@ Returns an uppercase (or lowercase) value for the given character or string
 
 \begin_layout Subsubsection
 Format
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Format
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6077,6 +6527,16 @@ To do:
 
 \begin_layout Subsubsection
 Str
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Str
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6166,6 +6626,16 @@ code{Format}
 
 \begin_layout Subsubsection
 Val
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Val
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6248,6 +6718,16 @@ Code
 
 \begin_layout Subsubsection
 Copy
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Copy
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6301,6 +6781,16 @@ EndPos
 
 \begin_layout Subsubsection
 Length
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Length
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6337,6 +6827,16 @@ Returns the number of characters in a string.
 
 \begin_layout Subsubsection
 Pos
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Pos
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6395,6 +6895,16 @@ S
 
 \begin_layout Subsubsection
 Concat
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Concat
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6466,6 +6976,16 @@ Target := Target + S + ...
 
 \begin_layout Subsubsection
 Delete
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Delete
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6509,6 +7029,16 @@ Deletes a portion from a string.
 
 \begin_layout Subsubsection
 Insert
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Insert
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6556,6 +7086,16 @@ Arrays and Memory
 
 \begin_layout Subsubsection
 Fill
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Fill
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6606,6 +7146,16 @@ Value
 
 \begin_layout Subsubsection
 Swap
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Swap
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6648,6 +7198,16 @@ Random Number Generator (RNG)
 
 \begin_layout Subsubsection
 Randomize
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Randomize
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6695,6 +7255,16 @@ Set the seed for RNG to a specific (if given) or random (default) value.
 
 \begin_layout Subsubsection
 Random
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Random
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6775,12 +7345,2836 @@ Graph2D Unit
 ...
 \end_layout
 
-\begin_layout Section*
-Index
+\begin_layout Standard
+Graph2D window supports the following built-in control keys:
 \end_layout
 
 \begin_layout Standard
-...
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{longtable}{@{
+\backslash
+extracolsep{
+\backslash
+fill}}p{3cm}p{
+\backslash
+dimexpr
+\backslash
+linewidth-3cm-
+\backslash
+parindent-2
+\backslash
+tabcolsep}}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{Alt}~-~
+\backslash
+kw{+}} & 
+\end_layout
+
+\end_inset
+
+Zoom in by increasing pixel scale.
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+
+\series default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{Alt}~-~
+\backslash
+kw{--}} & 
+\end_layout
+
+\end_inset
+
+Zoom out by decreasing pixel scale.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{Alt}~-~
+\backslash
+kw{Enter}} & 
+\end_layout
+
+\end_inset
+
+Toggle fullscreen mode.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{longtable}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Closing the Graph2D window will immediately terminate the application as
+ if calling 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Halt}
+\end_layout
+
+\end_inset
+
+ procedure.
+\end_layout
+
+\begin_layout Subsection
+Colours
+\end_layout
+
+\begin_layout Standard
+Graph2D uses 32-bit colours: 8-bit per red, green, and blue channels, and
+ also 8-bit transparency.
+\end_layout
+
+\begin_layout Subsection
+Window Management
+\end_layout
+
+\begin_layout Subsubsection
+InitWindow
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+InitWindow
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} InitWindow(Title: String; Width, Height, PixelScale: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Creates and shows Graph2D window with specified 
+\emph on
+Title
+\emph default
+, screen buffer 
+\emph on
+Width
+\emph default
+ and 
+\emph on
+Height
+\emph default
+, and 
+\emph on
+PixelScale
+\emph default
+.
+ Pixel scale of 0 triggers fullscreen mode.
+\end_layout
+
+\begin_layout Subsubsection
+ClearScreen
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ClearScreen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ClearScreen;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Clears the screen buffer with background color, previously set by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SetBackground}
+\end_layout
+
+\end_inset
+
+.
+ Default color is black.
+\end_layout
+
+\begin_layout Subsubsection
+ScreenWidth
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ScreenWidth
+\end_layout
+
+\end_inset
+
+ and ScreenHeight
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ScreenHeight
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} ScreenWidth: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} ScreenHeight: Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Get screen buffer width or height.
+ These values are set by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{InitWindow}
+\end_layout
+
+\end_inset
+
+ procedure.
+\end_layout
+
+\begin_layout Subsubsection
+PresentScreen
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+PresentScreen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} PresentScreen;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Requests Graph2D window to display screen buffer.
+\end_layout
+
+\begin_layout Subsection
+Mouse and Keyboard Input
+\end_layout
+
+\begin_layout Subsubsection
+MouseX
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+MouseX
+\end_layout
+
+\end_inset
+
+ and MouseY
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+MouseY
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} MouseX: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} MouseY: Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns current mouse coordinates (X or Y).
+\end_layout
+
+\begin_layout Subsubsection
+LeftMouse
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+LeftMouse
+\end_layout
+
+\end_inset
+
+ and RightMouse
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+RightMouse
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} LeftMouse: Boolean;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} RightMouse: Boolean;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the current state of mouse buttons (left or right).
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{True}
+\end_layout
+
+\end_inset
+
+ means the button is pressed.
+\end_layout
+
+\begin_layout Subsubsection
+KeyDown
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+KeyDown
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} KeyDown(ScanCode: Integer): Boolean;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test the current state of a specific key.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{True}
+\end_layout
+
+\end_inset
+
+ means the key is pressed.
+\end_layout
+
+\begin_layout Subsubsection
+KeyPressed
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+KeyPressed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} KeyPressed: Boolean;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test if the keyboard event buffer is not empty.
+ See 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{ReadKey}
+\end_layout
+
+\end_inset
+
+ for more details.
+\end_layout
+
+\begin_layout Subsubsection
+ReadKey
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ReadKey
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} ReadKey: Char;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Retrieve and remove next event from the keyboard event buffer.
+ The buffer logs typed keys and pressed control keys.
+ If the returned value is zero character 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+#0}
+\end_layout
+
+\end_inset
+
+ then the event represents a control key; call 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{ReadKey}
+\end_layout
+
+\end_inset
+
+ again to receive the scan code of this key.
+\end_layout
+
+\begin_layout Standard
+Keyboard event buffer can store up to 32 events and does not keep events
+ older than 1 second.
+ If the buffer is empty, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{ReadKey}
+\end_layout
+
+\end_inset
+
+ will keep returning 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+#0}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Graphic Settings
+\end_layout
+
+\begin_layout Subsubsection
+HighQuality
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+HighQuality
+\end_layout
+
+\end_inset
+
+ and LowQuality
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+LowQuality
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} HighQuality;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} LowQuality;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sets graphics quality for the subsequent drawing operations.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+hspace*{-1
+\backslash
+parindent}
+\end_layout
+
+\end_inset
+
+In high quality:
+\end_layout
+
+\begin_layout Itemize
+Antialiasing is on: lines and shapes have smooth non-pixelated edges.
+\end_layout
+
+\begin_layout Itemize
+Stroke control is set to 
+\begin_inset Quotes eld
+\end_inset
+
+pure
+\begin_inset Quotes erd
+\end_inset
+
+: coordinates are not normalised to integer values during transforms.
+\end_layout
+
+\begin_layout Itemize
+Bitmaps use bilinear filtering.
+\end_layout
+
+\begin_layout Itemize
+Text antialiasing and fractional metrics are on.
+\end_layout
+
+\begin_layout Standard
+In low quality:
+\end_layout
+
+\begin_layout Itemize
+Antialiasing is off, no sub-pixel rendering.
+\end_layout
+
+\begin_layout Itemize
+Stroke control is set to 
+\begin_inset Quotes eld
+\end_inset
+
+normalize
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Bitmaps use nearest neighbour filtering.
+\end_layout
+
+\begin_layout Itemize
+Text antialiasing and fractional metrics are off.
+\end_layout
+
+\begin_layout Subsubsection
+TransparencyOn
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+TransparencyOn
+\end_layout
+
+\end_inset
+
+ and TransparencyOff
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+TransparencyOff
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} TransparencyOn;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} TransparencyOff;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Change the transparency mode.
+ If transparency is on, subsequent colour setting operations 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SetBackground}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SetPen}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SetPaint}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{GradientPaint}
+\end_layout
+
+\end_inset
+
+, and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{RadialPaint}
+\end_layout
+
+\end_inset
+
+ will use higher 8 bits of the colour as alpha channel (transparency).
+ If transparency is off, these bits will be ignored.
+ Transparency mode does not affect previous colour settings.
+\end_layout
+
+\begin_layout Subsubsection
+SetBackground
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+SetBackground
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} SetBackground(Color: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set active background colour.
+ Background colour is used only in 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{ClearScreen}
+\end_layout
+
+\end_inset
+
+ procedure.
+\end_layout
+
+\begin_layout Subsubsection
+SetPen
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+SetPen
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} SetPen(Color :Integer; PenWidth: Real);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set pen colour and width.
+ Pen is used in line and contour drawing procedures, and for rendering text.
+\end_layout
+
+\begin_layout Subsubsection
+SetPaint
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+SetPaint
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} SetPaint(Color: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set flat colour paint.
+ The paint is used for filled shape drawing.
+\end_layout
+
+\begin_layout Subsubsection
+GradientPaint
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+GradientPaint
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} GradientPaint(X1, Y1, X2, Y2, Color1, Color2: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set linear gradient paint stretching from point 
+\begin_inset Formula $\left(\mathit{X1},\mathit{Y1}\right)$
+\end_inset
+
+ having 
+\emph on
+Color1
+\emph default
+ to point 
+\begin_inset Formula $\left(\mathit{X2},\mathit{Y2}\right)$
+\end_inset
+
+ having 
+\emph on
+Color2
+\emph default
+.
+ The paint is used for filled shape drawing.
+\end_layout
+
+\begin_layout Subsubsection
+RadialPaint
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+RadialPaint
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} RadialPaint(X, Y, R, Color1, Color2: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set radial gradient paint stretching from centre 
+\begin_inset Formula $\left(\mathit{X},\mathit{Y}\right)$
+\end_inset
+
+ having 
+\emph on
+Color1
+\emph default
+ to the radius 
+\emph on
+R
+\emph default
+ having 
+\emph on
+Color2
+\emph default
+.
+ The paint is used for filled shape drawing.
+\end_layout
+
+\begin_layout Subsubsection
+SetClip
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+SetClip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} SetClip(X, Y, Width, Height: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set the clipping area to the specified rectangle.
+ 
+\begin_inset Formula $\left(\mathit{X},\mathit{Y}\right)$
+\end_inset
+
+ is the top-left corner of the rectangle.
+ All subsequent drawing procedures will be limited to this area.
+ This restriction can be removed by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{ResetClip}
+\end_layout
+
+\end_inset
+
+ procedure.
+\end_layout
+
+\begin_layout Subsubsection
+ResetClip
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ResetClip
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ResetClip;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Reset the clipping area specified by 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SetClip}
+\end_layout
+
+\end_inset
+
+ procedure, so the drawing can be done on the entire screen.
+\end_layout
+
+\begin_layout Subsection
+Drawing
+\end_layout
+
+\begin_layout Subsubsection
+DrawLine
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawLine
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawLine(X1, Y1, X2, Y2: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Draws a line from point 
+\begin_inset Formula $\left(\mathit{X1},\mathit{Y1}\right)$
+\end_inset
+
+ to point 
+\begin_inset Formula $\left(\mathit{X2},\mathit{Y2}\right)$
+\end_inset
+
+ using the current pen.
+\end_layout
+
+\begin_layout Subsubsection
+DrawRect
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawRect
+\end_layout
+
+\end_inset
+
+ and FillRect
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FillRect
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawRect(X, Y, Width, Height: Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} FillRect(X, Y, Width, Height: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Draws a rectangle with the specified 
+\emph on
+Width
+\emph default
+ and 
+\emph on
+Height
+\emph default
+.
+ 
+\begin_inset Formula $\left(\mathit{X},\mathit{Y}\right)$
+\end_inset
+
+ is the top-left corner of the rectangle.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{DrawRect}
+\end_layout
+
+\end_inset
+
+ draws an outline with the current pen.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{FillRect}
+\end_layout
+
+\end_inset
+
+ draws an area filled with the current paint.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+DrawRoundRect
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawRoundRect
+\end_layout
+
+\end_inset
+
+ and FillRoundRect
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FillRoundRect
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawRoundRect(X, Y, Width, Height, R: Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} FillRoundRect(X, Y, Width, Height, R: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Draws a rounded rectangle with the specified 
+\emph on
+Width
+\emph default
+ and 
+\emph on
+Height,
+\emph default
+ and corner radius 
+\emph on
+R
+\emph default
+.
+ 
+\begin_inset Formula $\left(\mathit{X},\mathit{Y}\right)$
+\end_inset
+
+ is the top-left corner of the rectangle.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{DrawRoundRect}
+\end_layout
+
+\end_inset
+
+ draws an outline with the current pen.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{FillRoundRect}
+\end_layout
+
+\end_inset
+
+ draws an area filled with the current paint.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+DrawOval
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawOval
+\end_layout
+
+\end_inset
+
+ and FillOval
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FillOval
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawOval(X, Y, Width, Height: Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} FillOval(X, Y, Width, Height: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Draws an oval with the specified 
+\emph on
+Width
+\emph default
+ and 
+\emph on
+Height
+\emph default
+.
+ 
+\emph on
+X
+\emph default
+ is the leftmost coordinate of the oval, 
+\emph on
+Y
+\emph default
+ is the topmost coordinate.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{DrawOval}
+\end_layout
+
+\end_inset
+
+ draws an outline with the current pen.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{FillOval}
+\end_layout
+
+\end_inset
+
+ draws an area filled with the current paint.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+DrawArc
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawArc
+\end_layout
+
+\end_inset
+
+ and FillArc
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FillArc
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawArc(X, Y, Width, Height,
+\backslash
+
+\backslash
+ 
+\backslash
+null
+\backslash
+quad
+\backslash
+quad StartAngle, ArcAngle: Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} FillArc(X, Y, Width, Height,
+\backslash
+
+\backslash
+ 
+\backslash
+null
+\backslash
+quad
+\backslash
+quad StartAngle, ArcAngle: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Draws an arc of the oval with the specified 
+\emph on
+Width
+\emph default
+ and 
+\emph on
+Height
+\emph default
+.
+ 
+\emph on
+X
+\emph default
+ is the leftmost coordinate of the oval, 
+\emph on
+Y
+\emph default
+ is the topmost coordinate.
+ The arc starts at 
+\emph on
+StartAngle
+\emph default
+ degrees and spans 
+\emph on
+ArcAngle
+\emph default
+ degrees.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{DrawArc}
+\end_layout
+
+\end_inset
+
+ draws an outline with the current pen.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{FillArc}
+\end_layout
+
+\end_inset
+
+ draws filled sector of an oval.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+DrawPolyline
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawPolyline
+\end_layout
+
+\end_inset
+
+, DrawPolygon
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawPolygon
+\end_layout
+
+\end_inset
+
+, and FillPolygon
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FillPolygon
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawPolyline(NumPoints: Integer;
+\backslash
+
+\backslash
+ 
+\backslash
+null
+\backslash
+quad
+\backslash
+quad PointsX, PointsY: 
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawPolygon(NumPoints: Integer;
+\backslash
+
+\backslash
+ 
+\backslash
+null
+\backslash
+quad
+\backslash
+quad PointsX, PointsY: 
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} FillPolygon(NumPoints: Integer;
+\backslash
+
+\backslash
+ 
+\backslash
+null
+\backslash
+quad
+\backslash
+quad PointsX, PointsY: 
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Draws a polyline or a polygon using the specified points: array 
+\emph on
+PointsX
+\emph default
+ stores the 
+\emph on
+X
+\emph default
+ coordinates, array 
+\emph on
+PointsY
+\emph default
+ stores 
+\emph on
+Y
+\emph default
+ coordinates.
+ 
+\emph on
+NumPoints
+\emph default
+ is the number of points to draw; the arrays must have at least this number
+ of items each.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{DrawPolyline}
+\end_layout
+
+\end_inset
+
+ draws the line with the current pen.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{DrawPolyline}
+\end_layout
+
+\end_inset
+
+ draws the line with the current pen and connects the starting and ending
+ points.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{FillPolygon}
+\end_layout
+
+\end_inset
+
+ draws an area filled with the current paint.
+ 
+\end_layout
+
+\begin_layout Subsection
+Text and Fonts
+\end_layout
+
+\begin_layout Subsubsection
+SetTextFont
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+SetTextFont
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} SetTextFont(FontName: String; Bold, Italic: Boolean);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Load and set the font for rendering text.
+ Fonts are cached once loaded, hence the consequent calls with the same
+ 
+\emph on
+FontName
+\emph default
+ do not cause performance overhead.
+ 
+\emph on
+Bold
+\emph default
+ and 
+\emph on
+Italic
+\emph default
+ arguments can be used to modify the style of the font.
+\end_layout
+
+\begin_layout Subsubsection
+SetTextSize
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+SetTextSize
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} SetTextSize(Size: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Change the size of the currently selected font.
+ The 
+\emph on
+Size
+\emph default
+ is in pixels, but may slightly vary for some fonts.
+\end_layout
+
+\begin_layout Subsubsection
+DrawText
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DrawText
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} DrawText(X, Y: Integer; Text: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Render the line of text on the screen going to the left from 
+\emph on
+X
+\emph default
+.
+ 
+\emph on
+Y
+\emph default
+ is the coordinate of the baseline.
+ This procedure ignores newline characters and can output only a single
+ line of text.
+\end_layout
+
+\begin_layout Subsubsection
+TextWidth
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+TextWidth
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} TextWidth(Text: String): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The function calculates the width of the given text for the currently selected
+ font.
+\end_layout
+
+\begin_layout Subsection
+Colour Calculations
+\end_layout
+
+\begin_layout Subsubsection
+GetAlpha
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+GetAlpha
+\end_layout
+
+\end_inset
+
+, GetRed
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+GetRed
+\end_layout
+
+\end_inset
+
+, GetGreen
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+GetGreen
+\end_layout
+
+\end_inset
+
+, and GetBlue
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+GetBlue
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} GetAlpha(Color: Integer): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} GetRed(Color: Integer): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} GetGreen(Color: Integer): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} GetBlue(Color: Integer): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Get an individual component of the given colour: alpha (transparency), red,
+ green, or blue.
+ The value is returned as real number normalised to the range
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+MakeRGB
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+MakeRGB
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} MakeRGB(R, G, B, A: Real): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Create a colour value from its individual components: 
+\emph on
+R
+\emph default
+ for red, 
+\emph on
+G
+\emph default
+ for green, 
+\emph on
+B
+\emph default
+ for blue, and 
+\emph on
+A
+\emph default
+ for alpha (transparency).
+ The components are automatically clamped to the range
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+.
+ This function ignores transparency setting and always uses alpha component.
+\end_layout
+
+\begin_layout Subsubsection
+BlendColors
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+BlendColors
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} BlendColors(S: Real; Color1, Color2: Integer): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The function interpolates between 
+\emph on
+Color1
+\emph default
+ and 
+\emph on
+Color2
+\emph default
+ proportionally to the weight 
+\emph on
+S
+\emph default
+ in the range
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+.
+ The function returns 
+\emph on
+Color1
+\emph default
+ if 
+\emph on
+S
+\emph default
+ is 0, 
+\emph on
+Color2
+\emph default
+ if 
+\emph on
+S
+\emph default
+ is 1, and blended color if S is in between.
+\end_layout
+
+\begin_layout Subsection
+Miscellaneous
+\end_layout
+
+\begin_layout Subsubsection
+FPSCount
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FPSCount
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} FPSCount: Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Frames Per Second (FPS) counter is a popular profiling tool for animation
+ and games.
+ The function returns the current FPS count.
+ In order to get correct readings, this function must be called exactly
+ once per frame.
+\end_layout
+
+\begin_layout Subsubsection
+Interpolate
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Interpolate
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Interpolate(S, X1, X2: Real): Real;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is a helper function that calculates linear interpolation between two
+ values 
+\emph on
+X1
+\emph default
+ and 
+\emph on
+X2
+\emph default
+.
+ Weight 
+\emph on
+S
+\emph default
+ is automatically clamped to the range
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "idx"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
