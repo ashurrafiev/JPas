@@ -62,19 +62,16 @@ public class Scope {
 	
 	public LinkedList<String> labels;
 	
-	private Scope() {
-		this.parent = null;
-		labels = new LinkedList<>();
-		this.forwardScope = this;
-		this.stackFrame = null;
-	}
-	
 	public Scope(Scope parent) {
 		this(parent, false);
 	}
 	
 	public Scope(Scope parent, boolean expand) {
 		this.parent = parent;
+		if(parent==null)
+			labels = new LinkedList<>();
+		else
+			labels = parent.labels;
 		if(expand) {
 			this.forwardScope = parent.forwardScope;
 			this.stackFrame = parent.stackFrame;
@@ -127,7 +124,7 @@ public class Scope {
 	}
 
 	public static Scope global() {
-		Scope global = new Scope();
+		Scope global = new Scope(null);
 
 		global.add("Halt", new Halt());
 		global.add("RunError", new RunError());

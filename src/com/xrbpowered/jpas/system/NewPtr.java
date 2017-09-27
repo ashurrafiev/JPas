@@ -51,7 +51,7 @@ public class NewPtr extends Function {
 	}
 	
 	public void call(PointerType type, Pointer ptr) {
-		ptr.write(new FreePointer(type.type));
+		ptr.write(new FreePointer(type.getType()));
 	}
 	
 	@Override

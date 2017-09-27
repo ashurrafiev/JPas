@@ -81,7 +81,7 @@ public class NewPtrArray extends Function {
 	}
 	
 	public void call(PointerType type, Pointer ptr, int[] ranges) {
-		Type t = makeType(type.type, ranges, 0);
+		Type t = makeType(type.getType(), ranges, 0);
 		ptr.write(new FreePointer(t));
 	}
 	
@@ -110,7 +110,7 @@ public class NewPtrArray extends Function {
 		checkLValue(0, args[0]);
 		Type type = args[0].getType();
 		if(type instanceof PointerType) {
-			if(checkType(((PointerType) type).type, args.length-1))
+			if(checkType(((PointerType) type).getType(), args.length-1))
 				return new NewPtrArray.Call(this, args);
 		}
 		throw JPasError.argumentTypeError();

@@ -1156,37 +1156,9 @@ Variant records and tag fields are not possible.
 \end_layout
 
 \begin_layout Standard
-It is not allowed to declare a pointer of type 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{
-\backslash
-^{}T}
-\end_layout
-
-\end_inset
-
- before 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{T}
-\end_layout
-
-\end_inset
-
- is declared.
- For example, the following code is valid in classic Pascal, but will give
- a compilation error in JPas.
+Type-forwarding for pointers is even more permissive than in classic Pascal.
+ It is possible to make a pointer to a record type within this record type's
+ declaration:
 \end_layout
 
 \begin_layout Standard
@@ -1198,192 +1170,6 @@ status open
 
 \backslash
 codebox{%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-comm{Classic Pascal only!}
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-kw{type}
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-null
-\backslash
-quad PersonPtr = 
-\backslash
-^{}Person;
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-null
-\backslash
-quad Person = 
-\backslash
-kw{record}
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-null
-\backslash
-quad
-\backslash
-quad Name: String;
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-null
-\backslash
-quad
-\backslash
-quad Age: Integer;
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-null
-\backslash
-quad
-\backslash
-quad Next : PersonPtr;
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-null
-\backslash
-quad 
-\backslash
-kw{end};%
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{minipage}{
-\backslash
-linewidth}
-\end_layout
-
-\end_inset
-
-However, you can still use 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{
-\backslash
-^{}T}
-\end_layout
-
-\end_inset
-
- within the declaration of 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-code{T}
-\end_layout
-
-\end_inset
-
-:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-codebox{%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-comm{In JPascal:}
-\backslash
-
-\backslash
-
 \end_layout
 
 \begin_layout Plain Layout
@@ -1460,22 +1246,6 @@ kw{end};%
 \begin_layout Plain Layout
 
 }
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{minipage}
 \end_layout
 
 \end_inset
@@ -4973,6 +4743,10 @@ code{NewArray}
 
 \end_inset
 
+, which creates the range with integer indexing from 0 to 
+\begin_inset Formula $\left(\mathit{Size}-1\right)$
+\end_inset
+
 :
 \end_layout
 
@@ -5321,8 +5095,9 @@ kw{function} Elapsed: Real;%
 \end_layout
 
 \begin_layout Standard
-Returns the number of milliseconds passed since the start of the program
- execution.
+Returns the number of seconds passed since the start of the program execution.
+ The value is returned to millisecond precision, however the accuracy depends
+ on the operating system.
 \end_layout
 
 \begin_layout Subsection

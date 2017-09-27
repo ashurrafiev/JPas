@@ -2,11 +2,15 @@ package com.xrbpowered.jpas.ast.data;
 
 public class PointerType extends Type {
 
-	public final Type type;
+	protected Type type;
 	
 	public PointerType(Type t) {
 		super(false, null);
 		this.type = t;
+	}
+	
+	public Type getType() {
+		return type;
 	}
 
 	@Override

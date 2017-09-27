@@ -23,6 +23,7 @@ import com.xrbpowered.jpas.ast.UnitRef;
 import com.xrbpowered.jpas.ast.WhileLoop;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.EnumType;
+import com.xrbpowered.jpas.ast.data.ForwardPointerType;
 import com.xrbpowered.jpas.ast.data.IndexableType;
 import com.xrbpowered.jpas.ast.data.PointerType;
 import com.xrbpowered.jpas.ast.data.Range;
@@ -306,7 +307,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				next();
 				if(!(x.getType() instanceof PointerType))
 					throw new JPasError("Not a pointer.");
-				x = new DerefPointer(((PointerType) x.getType()).type, x);
+				x = new DerefPointer(((PointerType) x.getType()).getType(), x);
 			}
 			else
 				return x;
@@ -628,7 +629,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 	}
 	
-	private boolean recordMembers(Scope scope, RecordType rec, String selfName, Type selfType) {
+	private boolean recordMembers(Scope scope, RecordType rec) {
 		boolean sep = true;
 		for(;;) {
 			if(JPasToken.keyword("end").equals(token)) {
@@ -647,11 +648,9 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				List<String> names = varList();
 				if(names==null)
 					return false;
-				Type type = type(scope, selfName, selfType);
+				Type type = type(scope);
 				if(type==null)
 					return false;
-				if(type==selfType)
-					throw new JPasError("Circular type reference");
 				for(String name : names)
 					rec.add(name, type);
 				sep = false;
@@ -680,10 +679,6 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	}
 	
 	private Type type(Scope scope) {
-		return type(scope, null, null);
-	}
-	
-	private Type type(Scope scope, String selfName, Type selfType) {
 		if(JPasToken.keyword("integer").equals(token)) {
 			next();
 			return Type.integer;
@@ -717,25 +712,21 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			}
 			if(!accept(JPasToken.keyword("of")))
 				return null;
-			Type type = type(scope, selfName, selfType);
+			Type type = type(scope);
 			if(type==null)
 				return null;
-			if(type==selfType)
-				throw new JPasError("Circular type reference");
 			return ArrayType.make(r, type);
 		}
 		else if(JPasToken.keyword("record").equals(token)) {
 			next();
 			RecordType rec = new RecordType(false);
-			if(!recordMembers(scope, rec, selfName, selfType==null ? rec : selfType))
+			if(!recordMembers(scope, rec))
 				return null;
 			return rec;
 		}
 		else if(TokenType.identifier.token.equals(token)) {
 			String name = (String) token.value;
 			next();
-			if(selfName!=null && selfType!=null && name.equalsIgnoreCase(selfName))
-				return selfType;
 			ScopeEntry e = scope.find(name);
 			if(e==null)
 				throw new JPasError("Unknown identifier: "+name);
@@ -750,7 +741,15 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 		else if(new JPasToken('^').equals(token)) {
 			next();
-			Type t = type(scope, selfName, selfType);
+			if(TokenType.identifier.token.equals(token)) {
+				String name = (String) token.value;
+				ScopeEntry e = scope.find(name);
+				if(e==null) {
+					next();
+					return new ForwardPointerType(scope, name);
+				}
+			}
+			Type t = type(scope);
 			if(t==null)
 				return null;
 			return new PointerType(t);
@@ -949,14 +948,13 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	}
 	
 	private Statement typeDecl(Scope scope) {
-		// TODO forward type declarations (for pointers)
 		JPasToken t = token;
 		if(!accept(TokenType.identifier.token))
 			return null;
 		String name = (String) t.value;
 		if(!accept(new JPasToken(TokenType.operator, "=")))
 			return null;
-		Type type = type(scope, name, null);
+		Type type = type(scope);
 		if(type==null)
 			return null;
 		type.init(null);
@@ -1112,8 +1110,6 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	}
 
 	private Statement interfaceDecl(Scope scope) {
-		if(scope.stackFrame==null)
-			throw new JPasError("Top-level interface is not allowed.");
 		List<Statement> block = new ArrayList<>();
 		boolean sep = true;
 		for(;;) {
@@ -1460,6 +1456,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			Scope scope = Scope.global();
 			top = checkedStatement(scope);
 			scope.checkDefs();
+			if(scope.stackFrame!=null && scope.stackFrame.size()>0)
+				top = BlockStatement.wrap(top, scope.stackFrame);
 		}
 		else
 			top = checkedStatement(envScope);
