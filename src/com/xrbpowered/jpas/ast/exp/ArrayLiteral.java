@@ -42,6 +42,8 @@ public class ArrayLiteral extends FluidTypeExpression {
 
 	@Override
 	public Expression backPropagateType(Type t) {
+		if(!(t instanceof ArrayType))
+			return null;
 		ArrayType tt = (ArrayType) t;
 		List<Expression> expressions = new ArrayList<>();
 		for(int i=0; i<at.range.length(); i++) {

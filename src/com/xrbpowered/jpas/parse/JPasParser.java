@@ -40,9 +40,11 @@ import com.xrbpowered.jpas.ast.exp.DerefPointer;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
 import com.xrbpowered.jpas.ast.exp.GetPointer;
+import com.xrbpowered.jpas.ast.exp.InRangeOp;
 import com.xrbpowered.jpas.ast.exp.LValue;
 import com.xrbpowered.jpas.ast.exp.LValueArrayItem;
 import com.xrbpowered.jpas.ast.exp.LValueRecordItem;
+import com.xrbpowered.jpas.ast.exp.RangeCheck;
 import com.xrbpowered.jpas.ast.exp.RecordItem;
 import com.xrbpowered.jpas.ast.exp.RecordLiteral;
 import com.xrbpowered.jpas.ast.exp.UnaryOp;
@@ -438,10 +440,30 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				x = makeBinaryOpSum(scope, BinaryOp.Operation.ge, x);
 			else if(new JPasToken(TokenType.operator, "<=").equals(token))
 				x = makeBinaryOpSum(scope, BinaryOp.Operation.le, x);
+			else if(JPasToken.keyword("in").equals(token)) {
+				next();
+				Type type = type(scope);
+				if(type==null)
+					return null;
+				if(type instanceof RangeType) {
+					RangeType rt = (RangeType) type;
+					x = Expression.implicitCast(rt.getBaseType(), x);
+					if(x==null)
+						throw new JPasError("Type mismatch.");
+					x = new InRangeOp(rt.range, x);
+				}
+				else if(type instanceof EnumType) {
+					EnumType et = (EnumType) type;
+					x = Expression.implicitCast(Type.integer, x);
+					if(x==null)
+						throw new JPasError("Type mismatch.");
+					x = new InRangeOp(et.getRange(), x);
+				}
+				else
+					throw new JPasError("Unsupported type in 'in' operator");
+			}
 			else
 				return x;
-			
-			// TODO 'in' operator
 		}
 	}
 

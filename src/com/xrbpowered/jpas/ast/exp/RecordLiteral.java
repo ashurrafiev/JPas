@@ -39,6 +39,8 @@ public class RecordLiteral extends FluidTypeExpression {
 	
 	@Override
 	public Expression backPropagateType(Type t) {
+		if(!(t instanceof RecordType))
+			return null;
 		RecordType tt = (RecordType) t;
 		int num = tt.memberTypes().size();
 		List<Expression> expressions = new ArrayList<>(num);
