@@ -6,8 +6,10 @@ import java.util.List;
 
 import com.xrbpowered.jpas.ast.IdMap;
 import com.xrbpowered.jpas.ast.Scope;
+import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.LValue;
 import com.xrbpowered.jpas.ast.exp.LValueRecordItem;
+import com.xrbpowered.jpas.ast.exp.RecordItem;
 import com.xrbpowered.jpas.mem.Pointer;
 
 public class RecordType extends Type {
@@ -68,9 +70,15 @@ public class RecordType extends Type {
 		RecordObject.copy(this, (RecordObject) ptr.read(), (RecordObject) v);
 	}
 	
-	public void addTo(LValue rec, Scope scope) {
+	public void addLValueTo(LValue rec, Scope scope) {
 		for(IdMap<Integer>.IdEntry e : idMap.map.values()) {
 			scope.add(e.trueName, new LValueRecordItem(rec, e.e));
+		}
+	}
+	
+	public void addTo(Expression rec, Scope scope) {
+		for(IdMap<Integer>.IdEntry e : idMap.map.values()) {
+			scope.add(e.trueName, new RecordItem(rec, e.e));
 		}
 	}
 	

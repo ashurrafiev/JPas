@@ -54,7 +54,7 @@ public class CustomFunction extends Function {
 		Scope s = new Scope(parent);
 		sf = s.stackFrame;
 		if(type!=null)
-			result = (Variable) s.add("result", new Variable(type, s.stackFrame));
+			result = (Variable) s.add("Result", new Variable(type, s.stackFrame));
 		if(argDefs!=null) {
 			for(ArgDef arg : argDefs) {
 				arg.var = (Variable) s.add(arg.name, arg.lvalue ? new RefArgument(arg.type, s.stackFrame) : new Variable(arg.type, s.stackFrame));

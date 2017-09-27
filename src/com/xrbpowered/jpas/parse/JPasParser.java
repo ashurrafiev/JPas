@@ -1020,7 +1020,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		}
 	}
 	
-	private Statement makeWith(Scope scope, List<String> names, int index) {
+	private Statement makeWith(Scope scope, List<String> names, int index, boolean lvalue) {
 		if(index>=names.size()) {
 			return checkedStatement(scope);
 		}
@@ -1029,12 +1029,15 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			ScopeEntry e = scope.find(name);
 			if(e==null)
 				throw new JPasError("Unknown identifier: "+name);
-			if(e.getScopeEntryType()==EntryType.variable && e instanceof LValue) {
-				Type type = ((LValue) e).getType();
+			if(e.getScopeEntryType()==EntryType.variable && (!lvalue || lvalue && e instanceof LValue)) {
+				Type type = ((Expression) e).getType();
 				if(type instanceof RecordType) {
-					Scope inner = new Scope(scope);
-					((RecordType) type).addTo((LValue) e, inner);
-					Statement s = makeWith(inner, names, index+1);
+					Scope inner = new Scope(scope, true);
+					if(lvalue)
+						((RecordType) type).addLValueTo((LValue) e, inner);
+					else
+						((RecordType) type).addTo((Expression) e, inner);
+					Statement s = makeWith(inner, names, index+1, lvalue);
 					if(s==null)
 						return null;
 					inner.checkDefs();
@@ -1224,12 +1227,20 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		
 		else if(JPasToken.keyword("with").equals(token)) {
 			next();
+			Expression ex = expression(scope);
+			if(ex==null)
+				return null;
+			Type type = ex.getType();
+			if(!(type instanceof RecordType))
+				throw new JPasError("Not a record");
+			Scope inner = new Scope(scope, true);
+			if(ex instanceof LValue)
+				((RecordType) type).addLValueTo((LValue) ex, inner);
+			else
+				((RecordType) type).addTo(ex, inner);
+			
 			List<String> names = new ArrayList<>();
 			for(;;) {
-				JPasToken t = token;
-				if(!accept(TokenType.identifier.token))
-					return null;
-				names.add((String) t.value);
 				if(JPasToken.keyword("do").equals(token)) {
 					next();
 					break;
@@ -1239,8 +1250,18 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				}
 				else
 					return null;
+				
+				JPasToken t = token;
+				if(!accept(TokenType.identifier.token))
+					return null;
+				names.add((String) t.value);
 			}
-			return makeWith(scope, names, 0);
+			
+			Statement s = makeWith(inner, names, 0, ex instanceof LValue);
+			if(s==null)
+				return null;
+			inner.checkDefs();
+			return s;
 		}
 		
 		else if(JPasToken.keyword("if").equals(token)) {
