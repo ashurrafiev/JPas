@@ -58,6 +58,6 @@ public class Sqr extends Function {
 		else if(args[0].getType()==Type.real)
 			return new Function.Call(realSqr, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 }

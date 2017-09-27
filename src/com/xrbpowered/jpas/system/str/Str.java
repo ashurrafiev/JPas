@@ -30,7 +30,7 @@ public class Str extends Function {
 	public Function.Call makeCall(Expression[] args) {
 		testArgNumber(getArgNum(), args);
 		if(!args[0].getType().builtIn)
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 		return new Function.Call(this, args);
 	}
 

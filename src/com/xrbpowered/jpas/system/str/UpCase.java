@@ -56,7 +56,7 @@ public class UpCase extends Function {
 		else if(args[0].getType()==Type.string)
 			return new Function.Call(strUpCase, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 	
 }

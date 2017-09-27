@@ -81,7 +81,7 @@ public class Val extends Function {
 		else if(args[1].getType()==Type.real)
 			return new Function.Call(realVal, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 	
 }

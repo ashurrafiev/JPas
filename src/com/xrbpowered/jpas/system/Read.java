@@ -129,7 +129,7 @@ public class Read extends Function {
 			for(int i=0; i<args.length; i++) {
 				Type type = args[i].getType();
 				if(!type.builtIn || type==Type.string && args.length!=1)
-					throw new JPasError("Argument type mismatch");
+					throw JPasError.argumentTypeError();
 				checkLValue(i, args[i]);
 			}
 		}

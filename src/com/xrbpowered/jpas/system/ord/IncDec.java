@@ -89,7 +89,7 @@ public class IncDec extends Function {
 		if(type.getOrdinator()!=null)
 			return new IncDec.Call(this, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 	
 }

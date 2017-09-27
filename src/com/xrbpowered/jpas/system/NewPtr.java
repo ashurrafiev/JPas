@@ -66,7 +66,7 @@ public class NewPtr extends Function {
 		if(type instanceof PointerType)
 			return new NewPtr.Call(this, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 	
 }

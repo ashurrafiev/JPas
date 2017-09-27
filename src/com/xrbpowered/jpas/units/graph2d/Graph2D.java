@@ -64,7 +64,7 @@ public class Graph2D extends StandardUnit {
 	
 	public void setWindow(String title, int width, int height, int pixelScale) {
 		if(width<1 || height<1)
-			throw JPasError.rangeCheckError.get();
+			throw JPasError.rangeCheckError();
 		if(target==null) {
 			screenBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			target = new Target(screenBuffer);

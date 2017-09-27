@@ -10,6 +10,7 @@ import com.xrbpowered.jpas.system.Elapsed;
 import com.xrbpowered.jpas.system.Fill;
 import com.xrbpowered.jpas.system.Halt;
 import com.xrbpowered.jpas.system.NewPtr;
+import com.xrbpowered.jpas.system.NewPtrArray;
 import com.xrbpowered.jpas.system.Read;
 import com.xrbpowered.jpas.system.ReadLn;
 import com.xrbpowered.jpas.system.RunError;
@@ -132,7 +133,7 @@ public class Scope {
 		global.add("RunError", new RunError());
 
 		global.add("New", new NewPtr());
-		// FIXME NewArray
+		global.add("NewArray", new NewPtrArray());
 
 		global.add("Write", new Write(false));
 		global.add("WriteLn", new Write(true));

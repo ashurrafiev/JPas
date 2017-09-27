@@ -62,6 +62,6 @@ public class Min extends Function {
 			return new Function.Call(realMin, args);
 		}
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 }

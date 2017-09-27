@@ -56,6 +56,6 @@ public class Abs extends Function {
 		else if(args[0].getType()==Type.real)
 			return new Function.Call(realAbs, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 }

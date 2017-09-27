@@ -56,7 +56,7 @@ public class Write extends Function {
 		if(args!=null) {
 			for(int i=0; i<args.length; i++) {
 				if(!args[i].getType().builtIn)
-					throw new JPasError("Argument type mismatch");
+					throw JPasError.argumentTypeError();
 			}
 		}
 		return new Function.Call(this, args);

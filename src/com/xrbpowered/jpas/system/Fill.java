@@ -70,7 +70,7 @@ public class Fill extends Function {
 			else if(at.type instanceof ArrayType)
 				return checkType((ArrayType) at.type, t, depth+1);
 			else
-				throw new JPasError("Argument type mismatch");
+				throw JPasError.argumentTypeError();
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class Fill extends Function {
 			return new Fill.Call(this, args, depth);
 		}
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 	
 }

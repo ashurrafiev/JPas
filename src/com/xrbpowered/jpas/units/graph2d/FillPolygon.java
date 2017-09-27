@@ -28,7 +28,7 @@ public class FillPolygon extends StdProcedure {
 		// This is very slow and inefficient, but I don't know the way around it
 		Object[] values = ar.getValues();
 		if(n>values.length)
-			throw JPasError.rangeCheckError.get();
+			throw JPasError.rangeCheckError();
 		int[] ints = new int[n];
 		for(int i=0; i<n; i++)
 			ints[i] = (Integer) values[i];

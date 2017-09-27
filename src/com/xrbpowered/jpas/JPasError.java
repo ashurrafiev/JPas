@@ -5,11 +5,17 @@ public class JPasError extends RuntimeException {
 	public JPasError(String msg) {
 		super(msg);
 	}
+
+	public static JPasError rangeCheckError() {
+		return new JPasError("Range check error");
+	}
 	
-	public JPasError get() {
-		return new JPasError(getMessage());
+	public static JPasError argumentTypeError() {
+		return new JPasError("Argument type mismatch");
 	}
 
-	public static final JPasError rangeCheckError = new JPasError("Range check error.");
-	
+	public static JPasError lvalueError() {
+		return new JPasError("Expected LValue");
+	}
+
 }

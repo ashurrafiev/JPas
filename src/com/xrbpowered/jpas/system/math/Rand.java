@@ -63,7 +63,7 @@ public class Rand extends Function {
 			if(args[0].getType()==Type.integer)
 				return new Function.Call(intRand, args);
 			else
-				throw new JPasError("Argument type mismatch");
+				throw JPasError.argumentTypeError();
 		}
 	}
 

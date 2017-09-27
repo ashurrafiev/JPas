@@ -56,7 +56,7 @@ public class LowCase extends Function {
 		else if(args[0].getType()==Type.string)
 			return new Function.Call(strLowCase, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 	
 }

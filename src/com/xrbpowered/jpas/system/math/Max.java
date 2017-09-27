@@ -62,6 +62,6 @@ public class Max extends Function {
 			return new Function.Call(realMax, args);
 		}
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 }

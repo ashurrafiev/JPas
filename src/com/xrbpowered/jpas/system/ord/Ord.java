@@ -49,6 +49,6 @@ public class Ord extends Function {
 		if(type.getOrdinator()!=null)
 			return new Ord.Call(this, args);
 		else
-			throw new JPasError("Argument type mismatch");
+			throw JPasError.argumentTypeError();
 	}
 }

@@ -139,6 +139,10 @@ Software.
 \vspace{0.5em}
 }
 
+\newlength{\mkwidth}
+\settowidth{\mkwidth}{$^{*}$}
+\newcommand{\hsmk}{\hspace{\mkwidth}}
+
 \setlength\LTleft{\parindent}
 \setlength\LTright{0pt}
 \let\myIndex\theindex\renewcommand{\theindex}%
@@ -2153,7 +2157,27 @@ Language Elements
 \end_layout
 
 \begin_layout Subsection
-Whitespace and Comments
+Whitespace
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Whitespace
+\end_layout
+
+\end_inset
+
+ and Comments
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Comment
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2611,12 +2635,12 @@ status open
 \begin_layout Plain Layout
 
 $^{*}$
+\backslash
+hsmk
+\backslash
+hsmk 
 \end_layout
 
-\end_inset
-
-
-\begin_inset space ~
 \end_inset
 
 
@@ -2644,12 +2668,10 @@ status open
 \begin_layout Plain Layout
 
 $^{**}$
+\backslash
+hsmk 
 \end_layout
 
-\end_inset
-
-
-\begin_inset space ~
 \end_inset
 
 In the current version of JPas, 
@@ -2800,13 +2822,9 @@ status open
 
 \begin_layout Plain Layout
 
-$^{*}$
+$^{*}$~
 \end_layout
 
-\end_inset
-
-
-\begin_inset space ~
 \end_inset
 
 
@@ -4718,6 +4736,275 @@ kw{procedure} New(
 kw{var} Ptr: 
 \backslash
 ^{}SomeType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Allocates a new value of type 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SomeType}
+\end_layout
+
+\end_inset
+
+ and puts the pointer to the variable.
+\end_layout
+
+\begin_layout Subsubsection
+NewArray
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+NewArray
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} NewArray(
+\backslash
+kw{var} Ptr: 
+\backslash
+^{}
+\backslash
+kw{array} 
+\backslash
+kw{of} SomeType; Size, ...
+ : Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Allocates a new array of type 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{SomeType}
+\end_layout
+
+\end_inset
+
+ with the given 
+\emph on
+Size
+\emph default
+ and puts the pointer to the variable.
+ You can allocate multi-dimensional arrays by specifying sizes for each
+ dimension.
+ If the type of array has a fixed range and 
+\emph on
+Size
+\emph default
+ does not match, a range check error will be issued during runtime.
+\end_layout
+
+\begin_layout Standard
+The benefit of using 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{NewArray}
+\end_layout
+
+\end_inset
+
+ instead of 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{New}
+\end_layout
+
+\end_inset
+
+ is that it does not require knowing the size of the array in advance.
+ Consider the following example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} P: 
+\backslash
+^{}
+\backslash
+kw{array}[0..3] 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} Q: 
+\backslash
+^{}
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+New(P); 
+\backslash
+comm{Works fine.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+New(Q); 
+\backslash
+comm{Error! Unknown range, cannot create array.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The array cannot be allocated unless its size is known.
+ However, sometimes it is only known in runtime.
+ This problem can be solved using 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{NewArray}
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} N: Integer = 8; 
+\backslash
+comm{N is variable.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+NewArray(Q, N); 
+\backslash
+comm{Creates an array[0..7] of Integer.}%
 \end_layout
 
 \begin_layout Plain Layout
@@ -7142,6 +7429,160 @@ Target
 Value
 \emph default
 .
+ The procedure also works with multi-dimensional arrays, like shown in the
+ code below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} X: 
+\backslash
+kw{array}{[}1..4, 1..3] 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Fill(X, 1);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The result is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{[[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]]}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Value
+\emph default
+ can be an array too, if the ranges match:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} X: 
+\backslash
+kw{array}[1..4, 1..3] 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} Y: 
+\backslash
+kw{array}[1..3] 
+\backslash
+kw{of} Integer = [1, 2, 3];
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Fill(X, Y);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And the result is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{[[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection

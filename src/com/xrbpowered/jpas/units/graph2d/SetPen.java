@@ -18,7 +18,7 @@ public class SetPen extends StdProcedure {
 		t.penColor = t.makeColor(args[0]);
 		float w = new Float((Double) args[1]);
 		if(w<0f)
-			throw JPasError.rangeCheckError.get();
+			throw JPasError.rangeCheckError();
 		t.gr.setStroke(new BasicStroke(w));
 		return null;
 	}

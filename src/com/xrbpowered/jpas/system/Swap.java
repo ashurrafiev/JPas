@@ -1,5 +1,6 @@
 package com.xrbpowered.jpas.system;
 
+import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
@@ -48,6 +49,8 @@ public class Swap extends Function {
 		testArgNumber(getArgNum(), args);
 		checkLValue(0, args[0]);
 		checkLValue(1, args[1]);
+		if(!args[0].getType().equals(args[1].getType()))
+			throw JPasError.argumentTypeError();
 		return new Function.Call(this, args);
 	}
 

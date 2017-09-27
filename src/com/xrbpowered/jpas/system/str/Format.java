@@ -48,7 +48,7 @@ public class Format extends Function {
 			args[0] = checkTypeCast(getArgType(0, args), args[0]);
 			for(int i=1; i<args.length; i++) {
 				if(!args[i].getType().builtIn)
-					throw new JPasError("Argument type mismatch");
+					throw JPasError.argumentTypeError();
 			}
 		}
 		return new Function.Call(this, args);

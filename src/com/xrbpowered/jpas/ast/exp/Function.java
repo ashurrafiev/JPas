@@ -92,14 +92,14 @@ public abstract class Function implements ScopeEntry {
 	
 	protected void checkLValue(int index, Expression arg) {
 		if(isLValue(index) && !(arg instanceof LValue))
-			throw new JPasError("Expected LValue");
+			throw JPasError.lvalueError();
 	}
 	
 	protected Expression checkTypeCast(Type dt, Expression arg) {
 		Expression ex = Expression.implicitCast(dt, arg);
 		if(ex!=null)
 			return ex;
-		throw new JPasError("Argument type mismatch");
+		throw JPasError.argumentTypeError();
 	}
 	
 	public Function.Call makeCall(Expression[] args) {
