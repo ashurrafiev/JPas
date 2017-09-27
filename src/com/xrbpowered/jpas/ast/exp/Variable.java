@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.ast.exp;
 
 import com.xrbpowered.jpas.ast.Statement;
+import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.ast.data.Type;
@@ -40,6 +41,8 @@ public class Variable extends LValue implements ScopeEntry, StackFrameObject {
 	
 	@Override
 	public int register(StackFrameDesc sf) {
+		if(sf==null)
+			throw new JPasError("Outside of stack frame.");
 		return sf.register(this);
 	}
 	

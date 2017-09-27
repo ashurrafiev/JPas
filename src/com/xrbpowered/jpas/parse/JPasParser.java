@@ -1112,6 +1112,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	}
 
 	private Statement interfaceDecl(Scope scope) {
+		if(scope.stackFrame==null)
+			throw new JPasError("Top-level interface is not allowed.");
 		List<Statement> block = new ArrayList<>();
 		boolean sep = true;
 		for(;;) {
