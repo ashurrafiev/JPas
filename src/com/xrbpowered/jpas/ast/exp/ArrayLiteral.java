@@ -3,6 +3,7 @@ package com.xrbpowered.jpas.ast.exp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.Range;
@@ -62,6 +63,8 @@ public class ArrayLiteral extends FluidTypeExpression {
 		ArrayLiteral obj = new ArrayLiteral(at, expressions);
 		boolean c = true;
 		for(Expression ex : expressions) {
+			if(!type.equals(ex.getType()))
+				throw new JPasError("Array literal error.");
 			if(!ex.isConst()) {
 				c = false;
 				break;

@@ -50,9 +50,7 @@ public class Range {
 	public static boolean checkEqual(Range rx, Range ry) {
 		Type tx = rx==null ? Type.integer : rx.type;
 		Type ty = ry==null ? Type.integer : ry.type;
-		if(tx==null || ty==null)
-			return true;
-		if(!tx.equals(ty))
+		if(tx!=null && ty!=null && !tx.equals(ty))
 			return false;
 		if(rx!=null && ry!=null)
 			return rx.min==ry.min && rx.max==ry.max;

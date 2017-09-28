@@ -44,7 +44,6 @@ import com.xrbpowered.jpas.ast.exp.InRangeOp;
 import com.xrbpowered.jpas.ast.exp.LValue;
 import com.xrbpowered.jpas.ast.exp.LValueArrayItem;
 import com.xrbpowered.jpas.ast.exp.LValueRecordItem;
-import com.xrbpowered.jpas.ast.exp.RangeCheck;
 import com.xrbpowered.jpas.ast.exp.RecordItem;
 import com.xrbpowered.jpas.ast.exp.RecordLiteral;
 import com.xrbpowered.jpas.ast.exp.UnaryOp;
