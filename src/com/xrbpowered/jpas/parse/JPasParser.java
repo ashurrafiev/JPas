@@ -488,12 +488,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 				if(!sep)
 					throw new JPasError("Expected ,");
 				Expression ex = expression(scope);
-				if(ex!=null) {
-					args.add(ex);
-					sep = false;
-				}
-				else
-					next();
+				if(ex==null)
+					return null;
+				args.add(ex);
+				sep = false;
 			}
 		}
 	}
@@ -542,8 +540,6 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 						block.add(s);
 					sep = false;
 				}
-				else
-					next();
 			}
 		}
 	}
@@ -978,7 +974,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		Type type = type(scope);
 		if(type==null)
 			return null;
-		type.init(null);
+		type.init(null); // TODO checkInitDef
 		scope.add(name, type);
 		return Statement.nop;
 	}
