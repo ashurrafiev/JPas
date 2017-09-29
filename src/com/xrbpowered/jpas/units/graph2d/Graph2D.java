@@ -28,6 +28,9 @@ import com.xrbpowered.jpas.units.graph2d.input.InputManager;
 
 public class Graph2D extends StandardUnit {
 
+	private Object mutex = new Object();
+	private boolean ready = true;
+	
 	private class WindowPane extends JPanel {
 		public WindowPane() {
 			setFocusable(true);
@@ -48,6 +51,11 @@ public class Graph2D extends StandardUnit {
 			g2.setColor(Color.BLACK);
 			g2.fillRect(0, 0, sw, sh);
 			g2.drawImage(screenBuffer, (sw-w)/2, (sh-h)/2, w, h, null);
+			
+			synchronized(mutex) {
+				ready = true;
+				mutex.notifyAll();
+			}
 		}
 	}
 	
@@ -169,8 +177,11 @@ public class Graph2D extends StandardUnit {
 	public void present() {
 		check();
 		try {
+			ready = false;
 			if(presenter!=null)
-				SwingUtilities.invokeAndWait(presenter);
+				SwingUtilities.invokeLater(presenter);
+			while(!ready)
+				mutex.wait();
 		}
 		catch(Exception e) {			
 		}
