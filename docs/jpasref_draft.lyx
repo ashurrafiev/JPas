@@ -3925,7 +3925,239 @@ Memory and Stack
 \end_layout
 
 \begin_layout Section
-Variables and Constants
+Declarations
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Variable declarations
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} VarName: VarType;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} VarName: VarType = InitialValue;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Constant declarations
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{const} ConstName = Value;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{const} ConstName: ConstType = Value;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Type declarations
+\end_layout
+
+\begin_layout Standard
+Type declaration statement:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} TypeName = TypeDefinition;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The statement above create a new type with the name 
+\emph on
+TypeName
+\emph default
+.
+ 
+\emph on
+TypeDefinition
+\emph default
+ can be either a name of another type, simple or declared, or one of the
+ structured type definitions:
+\end_layout
+
+\begin_layout Itemize
+Enumerated type.
+\end_layout
+
+\begin_layout Itemize
+Subrange type.
+\end_layout
+
+\begin_layout Itemize
+Array type.
+\end_layout
+
+\begin_layout Itemize
+Record type.
+\end_layout
+
+\begin_layout Itemize
+Pointer type.
+\end_layout
+
+\begin_layout Subsection
+Function and procedure declarations
+\end_layout
+
+\begin_layout Standard
+See Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Procedures-and-Functions"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Unit inclusion
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{uses} StandardUnitName;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{uses} `PathToUnitFile'; 
+\backslash
+comm{User defined module.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3944,24 +4176,1829 @@ Types
 Simple Types
 \end_layout
 
+\begin_layout Subsubsection
+Integer
+\end_layout
+
+\begin_layout Standard
+32-bit signed integer numbers.
+\end_layout
+
+\begin_layout Subsubsection
+Real
+\end_layout
+
+\begin_layout Standard
+64-bit floating point numbers.
+\end_layout
+
+\begin_layout Subsubsection
+Boolean
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{False}
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{True}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Char
+\end_layout
+
+\begin_layout Standard
+Unicode characters (16-bit).
+\end_layout
+
+\begin_layout Subsubsection
+String
+\end_layout
+
+\begin_layout Standard
+Strings of characters.
+\end_layout
+
 \begin_layout Subsection
 Enumerated and Subrange Types
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Ordinal types
+\end_layout
+
+\begin_layout Standard
+Ordinal types are the types that have ordering of their values.
+ Ordinal types are 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Integer}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Boolean}
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Char}
+\end_layout
+
+\end_inset
+
+, enumerated, and subrange types.
 \end_layout
 
 \begin_layout Subsection
 Array Types
 \end_layout
 
-\begin_layout Subsection
-Record Types
+\begin_layout Standard
+...
 \end_layout
 
-\begin_layout Subsection
-Pointers
+\begin_layout Subsubsection
+Array definitions
+\end_layout
+
+\begin_layout Standard
+Array definition example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{array}[1..5] 
+\backslash
+kw{of} Integer%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Multi-dimensional arrays:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{array}[1..5] 
+\backslash
+kw{of} 
+\backslash
+kw{array}[0..2] 
+\backslash
+kw{of}Integer%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is the same as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{array}[1..5, 0..2] 
+\backslash
+kw{of}Integer%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Index ranges can be of any ordinal type:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} Month = [January, February, March, April,
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad May, June, July, August,
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad September, October, November, December];
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} SummerTime = 
+\backslash
+kw{array}[June..August] 
+\backslash
+kw{of} Boolean;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Enumerated or subrange types can be used for the entire index range.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} Direction = [North, East, South, West];
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} Passability = 
+\backslash
+kw{array}[Direction] 
+\backslash
+kw{of} Boolean;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{The same as [North..West].}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Array literals
 \end_layout
 
 \begin_layout Standard
 ...
+\end_layout
+
+\begin_layout Subsubsection
+Accessing elements
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+SomeArray[3]
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+MultiArray[1, 3]
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+EnumArray[North]%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Index types must match:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} P: Passability;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P[East] := True; 
+\backslash
+comm{Ok.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P[Direction(1)] := True; 
+\backslash
+comm{Also ok.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P[1] := True; 
+\backslash
+comm{Error! Index type mismatch.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Copy on assign
+\end_layout
+
+\begin_layout Standard
+Arrays implement copy on assign:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} X, Y: 
+\backslash
+kw{array}[0..3] 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Y[2] := 5;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+X := Y; 
+\backslash
+comm{Copies all values from Y to X.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+X[2] := 8; 
+\backslash
+comm{Does not affect Y.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WriteLn(X[2], `, ', Y[2]);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Outputs:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{8, 5}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assigning array variables requires both arrays to have not only the same
+ sizes, but also same index types and ranges.
+ Copying is done recursively in multi-dimensional arrays, meaning that all
+ dimensions of the array are copied over.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Abstract arrays
+\end_layout
+
+\begin_layout Standard
+Defined without the range:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cannot be instantiated, but can be used as argument types for functions
+ and procedures, or within pointer types.
+\end_layout
+
+\begin_layout Standard
+Abstract arrays cannot be used to declare types:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} ArrayOfInt = 
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Error! Unknown range, cannot create array.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+To do:
+\emph default
+ array literals as abstract array initialisers.
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Record Types
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Record definitions
+\end_layout
+
+\begin_layout Standard
+Record definition example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad X: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Y: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Pressed: Boolean;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{end}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fields of the same type can be grouped together:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad X, Y: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Pressed: Boolean;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{end}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Record fields may have any type, including arrays and other records.
+ A record type cannot contain itself, but it can contain a pointer to the
+ itself, as described in
+\begin_inset space ~
+\end_inset
+
+Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Pointers"
+
+\end_inset
+
+.
+ If a record contains an abstract array, it is also considered abstract
+ and cannot be instantiated or declared as a type.
+\end_layout
+
+\begin_layout Subsubsection
+Record literals
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+[X: 5; Y: 10; Pressed: False]%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Record literal with all fields set to compile-time constants is itself a
+ compile-time constant.
+\end_layout
+
+\begin_layout Standard
+Examples of an array literal inside a record literal and an array literal
+ of records:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+{[Values: [1, 2, 3]]}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+{[[X: 0; Y: 1], [X: 1; Y: 0]]}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Accessing fields
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+SomeRecord.X%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A great way to efficiently access multiple fields of the same record variable
+ or value is to use 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{with}}
+\end_layout
+
+\end_inset
+
+ statement:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{with} Rec 
+\backslash
+kw{do}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{begin}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad X := 10;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Y := 3;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Pressed := True;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{end};%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Copy on assign
+\end_layout
+
+\begin_layout Standard
+Records also implement copy on assign, which is done recursively for all
+ embedded records and arrays.
+\end_layout
+
+\begin_layout Subsection
+Pointers
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Pointers"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Pointer definitions
+\end_layout
+
+\begin_layout Standard
+A pointer is defined by putting 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+^{}}
+\end_layout
+
+\end_inset
+
+ in front of another type.
+ The pointer will be able to reference memory objects of that type.
+ For instance, a pointer to integer is defined as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+^{}Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pointer can reference any type, including arrays, records, and other pointers.
+\end_layout
+
+\begin_layout Standard
+Sometimes it is necessary to use a pointer to a type even before that type
+ is defined.
+ The syntax of JPascal allows that.
+ Pointer to a record type can be defined inside that type's declaration:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} Item = 
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Value: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Next: 
+\backslash
+^{}Item;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{end};%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following example is also allowed:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} PRecA = 
+\backslash
+^{}RecA;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} PRecB = 
+\backslash
+^{}RecB;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} RecA = 
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad P: PRecB;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{end};
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} RecB = 
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad P: PRecA;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{end};%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is called 
+\emph on
+forward type referencing
+\emph default
+, and it is only allowed when defining pointers.
+ Referenced types must be declared within the same scope as the pointers.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+To do:
+\emph default
+ pointers to abstract arrays.
+\end_layout
+
+\begin_layout Subsubsection
+Referencing and allocation
+\end_layout
+
+\begin_layout Standard
+Operator 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{@}
+\end_layout
+
+\end_inset
+
+ returns a reference to an existing memory object, such as variables, items
+ within arrays, or record fields:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} N: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} A: 
+\backslash
+kw{array}[1..5] 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} Rec: 
+\backslash
+kw{record}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad X, Y: Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{end};
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} P: 
+\backslash
+^{}Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P := @N; 
+\backslash
+comm{Reference a variable.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P := @A[3]; 
+\backslash
+comm{Reference an array item.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P := @Rec.X; 
+\backslash
+comm{Reference a record field.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is possible to allocate memory objects directly using 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{New}
+\end_layout
+
+\end_inset
+
+ procedure.
+ Such an object will persist in memory as long as there is at least one
+ pointer referencing it.
+ Once there are no references, the object will be automatically deleted
+ by the Garbage Collector.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+New(P); 
+\backslash
+comm{Create new integer object.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+To do:
+\emph default
+ array allocation using New and NewArray.
+\end_layout
+
+\begin_layout Subsubsection
+Dereferencing
+\end_layout
+
+\begin_layout Standard
+Dereferencing a pointer is done by placing 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+^{}}
+\end_layout
+
+\end_inset
+
+ after the pointer.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} N: Integer = 3;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} P: 
+\backslash
+^{}Integer = @N;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+P
+\backslash
+^{} := 5;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WriteLn(P
+\backslash
+^{}, `, ', N);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Because 
+\emph on
+P
+\emph default
+ refers to the variable 
+\emph on
+N
+\emph default
+, writing to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{P
+\backslash
+^{}}
+\end_layout
+
+\end_inset
+
+ actually writes to 
+\emph on
+N
+\emph default
+.
+ Hence the code above will output:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{5, 5}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+To do:
+\emph default
+ object lifetime.
 \end_layout
 
 \begin_layout Section
@@ -3988,6 +6025,22 @@ name "sec:Statements"
 \end_layout
 
 \begin_layout Subsection
+Assignments
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+L-values versus R-values
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
 Block Statements
 \end_layout
 
@@ -4001,6 +6054,13 @@ Declaration Statements
 
 \begin_layout Section
 Procedures and Functions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Procedures-and-Functions"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6046,10 +8106,19 @@ kw{function} Succ(N: Ordinal): Odrinal;%
 \end_layout
 
 \begin_layout Standard
-Returns the next ordinal value for 
+Returns the ordinal successor value for 
 \emph on
 N
 \emph default
+.
+ For integer 
+\emph on
+N
+\emph default
+, it is 
+\begin_inset Formula $\left(N+1\right)$
+\end_inset
+
 .
  This function never goes out of range, but may overflow, as shown in the
  example below:
@@ -6148,10 +8217,19 @@ kw{function} Pred(N: Ordinal): Odrinal;%
 \end_layout
 
 \begin_layout Standard
-Returns the previous ordinal value for 
+Returns the ordinal predecessor value for 
 \emph on
 N
 \emph default
+.
+ For integer 
+\emph on
+N
+\emph default
+, it is 
+\begin_inset Formula $\left(N-1\right)$
+\end_inset
+
 .
  This function never goes out of range, but may overflow (see
 \begin_inset space ~
@@ -6226,7 +8304,7 @@ Change the value of the variable
 \emph on
 N
 \emph default
- to its next ordinal value.
+ to its ordinal successor.
  This is the same as:
 \end_layout
 
@@ -6305,7 +8383,7 @@ Change the value of the variable
 \emph on
 N
 \emph default
- to its previous ordinal value.
+ to its ordinal predecessor.
  This is the same as:
 \end_layout
 
