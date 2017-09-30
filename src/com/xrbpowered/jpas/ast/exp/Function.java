@@ -81,9 +81,9 @@ public abstract class Function implements ScopeEntry {
 	protected void testArgNumber(int numArgs, Expression[] args) {
 		int num = args==null ? 0 : args.length;
 		if(num<numArgs-1 || !isVarArgs() && num<numArgs)
-			throw new JPasError("Too few arguments");
+			throw JPasError.argumentNumberError(false);
 		if(!isVarArgs() && num>numArgs)
-			throw new JPasError("Too many arguments");
+			throw JPasError.argumentNumberError(true);
 	}
 	
 	protected Type getArgType(int i, Expression[] args) {
@@ -114,9 +114,4 @@ public abstract class Function implements ScopeEntry {
 		return new Function.Call(this, args);
 	}
 	
-	public boolean isEquivalent(Function f) {
-		// only custom function declarations are checked for equivalence
-		return false;
-	}
-
 }

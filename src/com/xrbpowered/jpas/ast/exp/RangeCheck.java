@@ -23,7 +23,7 @@ public class RangeCheck extends Expression {
 	public Object evaluate() {
 		Object obj = ex.evaluate();
 		if(!range.check(obj))
-			throw new JPasError("Range check error.");
+			JPasError.rangeCheckError();
 		return obj;
 	}
 

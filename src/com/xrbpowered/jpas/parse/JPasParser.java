@@ -23,6 +23,7 @@ import com.xrbpowered.jpas.ast.UnitRef;
 import com.xrbpowered.jpas.ast.WhileLoop;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.EnumType;
+import com.xrbpowered.jpas.ast.data.FileType;
 import com.xrbpowered.jpas.ast.data.ForwardPointerType;
 import com.xrbpowered.jpas.ast.data.IndexableType;
 import com.xrbpowered.jpas.ast.data.PointerType;
@@ -169,6 +170,13 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		else if(JPasToken.keyword("nil").equals(token)) {
 			next();
 			return Constant.constNil;
+		}
+		else if(JPasToken.keyword("result").equals(token)) {
+			ScopeEntry e = scope.find("result");
+			if(e==null || e.getScopeEntryType()!=EntryType.variable)
+				throw new JPasError("Not in a function");
+			next();
+			return (Expression) e;
 		}
 		else if(TokenType.identifier.token.equals(token)) {
 			String name = (String) token.value;
@@ -715,6 +723,22 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		else if(JPasToken.keyword("string").equals(token)) {
 			next();
 			return Type.string;
+		}
+		else if(JPasToken.keyword("text").equals(token)) {
+			next();
+			return FileType.text;
+		}
+		else if(JPasToken.keyword("file").equals(token)) {
+			next();
+			Type type = null;
+			if(JPasToken.keyword("of").equals(token)) {
+				next();
+				type = type(scope);
+				// FIXME checkInitDef
+				if(type==null)
+					return null;
+			}
+			return FileType.make(type);
 		}
 		else if(JPasToken.keyword("array").equals(token)) {
 			next();

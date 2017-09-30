@@ -441,7 +441,7 @@ status open
 
 
 \backslash
-begin{multicols}{4}
+begin{multicols}{3}
 \backslash
 code{
 \backslash
@@ -462,15 +462,6 @@ noindent absolute
 \begin_layout Plain Layout
 
 external
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-file
 \backslash
 
 \backslash
@@ -2149,6 +2140,15 @@ exit$^{*}$
 
 \begin_layout Plain Layout
 
+file$^{**}$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
 for
 \backslash
 
@@ -2194,7 +2194,7 @@ implementation
 
 \begin_layout Plain Layout
 
-in$^{**}$
+in
 \backslash
 
 \backslash
@@ -2454,7 +2454,7 @@ status open
 \backslash
 code{
 \backslash
-kw{in}}
+kw{file}}
 \end_layout
 
 \end_inset
@@ -2508,7 +2508,7 @@ status open
 
 
 \backslash
-begin{multicols}{4}
+begin{multicols}{3}
 \backslash
 code{
 \end_layout
@@ -2562,7 +2562,25 @@ Real
 
 \begin_layout Plain Layout
 
+Result
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
 String$^{*}$
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Text
 \backslash
 
 \backslash

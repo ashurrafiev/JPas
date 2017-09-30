@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +57,7 @@ public abstract class Tokeniser<T> {
 		byte[] buf = new byte[f.available()];
 		f.read(buf);
 		f.close();
-		start(new String(buf));
+		start(new String(buf, StandardCharsets.UTF_8));
 	}
 	
 	public void start(String string) {

@@ -24,7 +24,7 @@ public class ArrayObject {
 		this.range = range;
 		this.values = new Object[range.length()];
 		if(values.length<v.values.length)
-			throw new JPasError("Range check error.");
+			JPasError.rangeCheckError();
 		for(int i=0; i<values.length; i++)
 			values[i] = i>=v.values.length ? type.init(null) : type.init(v.values[i]);
 	}
@@ -43,7 +43,7 @@ public class ArrayObject {
 		this.values = null;
 	}
 	
-	private void check() {
+	public void check() {
 		if(values==null)
 			throw new JPasError("Access violation.");
 	}
@@ -51,14 +51,14 @@ public class ArrayObject {
 	private int calcIndex(Object index) {
 		int i = range==null ? (Integer) index : (range.type.getOrdinator().ord(index) - range.min);
 		if(i<0 || i>=values.length)
-			throw new JPasError("Range check error.");
+			JPasError.rangeCheckError();
 		return i;
 	}
 	
 	public Object get(int index) {
 		return values[index];
 	}
-	
+
 	public Object read(Object index) {
 		check();
 		return values[calcIndex(index)];
@@ -89,7 +89,7 @@ public class ArrayObject {
 		dst.check();
 		src.check();
 		if(dst.values.length<src.values.length)
-			throw new JPasError("Range check error.");
+			JPasError.rangeCheckError();
 		if(type.type instanceof ArrayType) {
 			for(int i=0; i<dst.values.length; i++)
 				copy((ArrayType) type.type, (ArrayObject) dst.values[i], (ArrayObject) src.values[i]);

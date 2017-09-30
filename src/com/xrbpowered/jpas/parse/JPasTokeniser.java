@@ -11,14 +11,14 @@ public class JPasTokeniser extends Tokeniser<JPasToken> {
 			"begin", "end", "interface", "implementation", "label", "exit",
 			"var", "const", "type", "function", "procedure", "forward", "uses",
 			"if", "then", "else", "while", "do", "repeat", "until", "for", "to", "downto", "case", "with",
-			"array", "of", "record", "in",
+			"array", "of", "record", "in", "file",
 			"not", "div", "mod", "and", "shl", "shr", "or", "xor",
 			"nil",
 		};
 	
 	public static final String[] RESIDS = {
-			"integer", "real", "boolean", "char", "string",
-			"true", "false", 
+			"integer", "real", "boolean", "char", "string", "text",
+			"true", "false", "result"
 		};
 	
 	private final boolean toLatex;

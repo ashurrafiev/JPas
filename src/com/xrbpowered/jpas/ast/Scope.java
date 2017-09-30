@@ -11,12 +11,23 @@ import com.xrbpowered.jpas.system.Fill;
 import com.xrbpowered.jpas.system.Halt;
 import com.xrbpowered.jpas.system.NewPtr;
 import com.xrbpowered.jpas.system.NewPtrArray;
-import com.xrbpowered.jpas.system.Read;
-import com.xrbpowered.jpas.system.ReadLn;
 import com.xrbpowered.jpas.system.RunError;
 import com.xrbpowered.jpas.system.Swap;
 import com.xrbpowered.jpas.system.SysTime;
-import com.xrbpowered.jpas.system.Write;
+import com.xrbpowered.jpas.system.io.Assign;
+import com.xrbpowered.jpas.system.io.BlockRead;
+import com.xrbpowered.jpas.system.io.BlockWrite;
+import com.xrbpowered.jpas.system.io.ByteRead;
+import com.xrbpowered.jpas.system.io.ByteWrite;
+import com.xrbpowered.jpas.system.io.Close;
+import com.xrbpowered.jpas.system.io.Eof;
+import com.xrbpowered.jpas.system.io.EraseFile;
+import com.xrbpowered.jpas.system.io.FileSize;
+import com.xrbpowered.jpas.system.io.Read;
+import com.xrbpowered.jpas.system.io.ReadLn;
+import com.xrbpowered.jpas.system.io.RenameFile;
+import com.xrbpowered.jpas.system.io.Rewrite;
+import com.xrbpowered.jpas.system.io.Write;
 import com.xrbpowered.jpas.system.math.Abs;
 import com.xrbpowered.jpas.system.math.IntMath;
 import com.xrbpowered.jpas.system.math.Max;
@@ -132,10 +143,29 @@ public class Scope {
 		global.add("New", new NewPtr());
 		global.add("NewArray", new NewPtrArray());
 
+		global.add("Assign", new Assign());
+		global.add("Erase", new EraseFile());
+		global.add("Rename", new RenameFile());
+		global.add("FileSize", new FileSize());
+		
+		global.add("Reset", new Rewrite(false, false));
+		global.add("Rewrite", new Rewrite(true, false));
+		global.add("Append", new Rewrite(true, true));
+		global.add("Flush", new Close(false));
+		global.add("Close", new Close(true));
+		global.add("Eof", new Eof());
+
 		global.add("Write", new Write(false));
 		global.add("WriteLn", new Write(true));
 		global.add("Read", new Read(false));
 		global.add("ReadLn", new ReadLn());
+		global.add("BlockRead", new BlockRead());
+		global.add("BlockWrite", new BlockWrite());
+		global.add("ByteRead", new ByteRead());
+		global.add("ByteWrite", new ByteWrite());
+
+		// TODO dir functions
+		
 		global.add("Delay", new Delay());
 		global.add("SysTime", new SysTime());
 		global.add("Elapsed", new Elapsed());

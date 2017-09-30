@@ -17,5 +17,9 @@ public class JPasError extends RuntimeException {
 	public static JPasError lvalueError() {
 		return new JPasError("Expected LValue");
 	}
+	
+	public static JPasError argumentNumberError(boolean exceed) {
+		return new JPasError(exceed ? "Too many arguments" : "Too few arguments");
+	}
 
 }
