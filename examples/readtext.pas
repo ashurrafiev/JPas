@@ -3,10 +3,11 @@ This program reads numbers from file into a dynamically created array,
 then it finds minimum and maximum, and computes the sum.
 }
 Begin
+ChDir('examples');
 
 {Open a text file for reading.}
 var Input: Text;
-Assign(Input, 'examples/input.txt');
+Assign(Input, 'input.txt');
 Reset(Input);
 
 {Read N.}

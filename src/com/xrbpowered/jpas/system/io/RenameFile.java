@@ -2,6 +2,7 @@ package com.xrbpowered.jpas.system.io;
 
 import java.io.File;
 
+import com.xrbpowered.jpas.JPas;
 import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.data.FileObject;
 import com.xrbpowered.jpas.ast.data.Type;
@@ -27,7 +28,7 @@ public class RenameFile extends FileProc {
 		checkNotOpen(file);
 		checkFile(f);
 		try {
-			f.renameTo(new File(name));
+			f.renameTo(new File(JPas.workingDir, name));
 		}
 		catch(Exception e) {
 			throw new JPasError("Access denied");

@@ -37,17 +37,17 @@ public abstract class FileProc extends Function {
 		return null;
 	}
 
-	protected static void checkNotOpen(FileObject file) {
+	public static void checkNotOpen(FileObject file) {
 		if(file.isOpen())
 			throw new JPasError("File is open");
 	}
 
-	protected static void checkFile(File f) {
+	public static void checkFile(File f) {
 		if(!f.isFile())
 			throw new JPasError("Not a file");
 	}
 
-	protected static JPasError accessDenied() {
+	public static JPasError accessDenied() {
 		return new JPasError("Access denied");
 	}
 

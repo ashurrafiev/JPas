@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.xrbpowered.jpas.JPas;
 import com.xrbpowered.jpas.JPasError;
 
 public abstract class FileObject {
@@ -21,7 +22,7 @@ public abstract class FileObject {
 	
 	public void assign(String path) {
 		closeIfOpen();
-		file = new File(path);
+		file = new File(JPas.workingDir, path);
 	}
 	
 	public abstract boolean isEof();

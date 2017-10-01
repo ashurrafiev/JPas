@@ -21,9 +21,12 @@ public class Write extends IOProc {
 		public Object evaluate() {
 			int startArg = fileArg==null ? 0 : 1;
 			PrintStream in = fileArg==null ? System.out : ((TextFileObject) fileArg.evaluate()).getPrintWriter();
-			Object[] v = new Object[args.length];
-			for(int i=startArg; i<args.length; i++) {
-				v[i] = args[i].evaluate();
+			Object[] v = null;
+			if(args!=null) {
+				v = new Object[args.length];
+				for(int i=startArg; i<args.length; i++) {
+					v[i] = args[i].evaluate();
+				}
 			}
 			((Write) f).call(in, startArg, v);
 			return null;

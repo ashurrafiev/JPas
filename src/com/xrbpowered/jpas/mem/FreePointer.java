@@ -10,6 +10,10 @@ public class FreePointer implements Pointer {
 		value = type.init(null);
 	}
 	
+	public FreePointer(Type type, Object v) {
+		value = type.init(v);
+	}
+	
 	@Override
 	public Object read() {
 		return value;

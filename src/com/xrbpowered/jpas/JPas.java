@@ -11,7 +11,8 @@ public class JPas extends Thread {
 	private static boolean verboseErrors = false;
 	private static boolean timing = false;
 	
-	public static long execStarted = 0L; 
+	public static long execStarted = 0L;
+	public static File workingDir;
 	
 	private final Statement code;
 	
@@ -78,6 +79,8 @@ public class JPas extends Thread {
 	}
 	
 	public static void main(String[] args) {
+		workingDir = new File(".");
+		
 		String in = null;
 		boolean help = false;
 		if(args.length<1)

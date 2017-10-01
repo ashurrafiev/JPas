@@ -28,6 +28,11 @@ import com.xrbpowered.jpas.system.io.ReadLn;
 import com.xrbpowered.jpas.system.io.RenameFile;
 import com.xrbpowered.jpas.system.io.Rewrite;
 import com.xrbpowered.jpas.system.io.Write;
+import com.xrbpowered.jpas.system.io.dir.ChDir;
+import com.xrbpowered.jpas.system.io.dir.FindFiles;
+import com.xrbpowered.jpas.system.io.dir.GetDir;
+import com.xrbpowered.jpas.system.io.dir.MakeDir;
+import com.xrbpowered.jpas.system.io.dir.RemoveDir;
 import com.xrbpowered.jpas.system.math.Abs;
 import com.xrbpowered.jpas.system.math.IntMath;
 import com.xrbpowered.jpas.system.math.Max;
@@ -164,7 +169,12 @@ public class Scope {
 		global.add("ByteRead", new ByteRead());
 		global.add("ByteWrite", new ByteWrite());
 
-		// TODO dir functions
+		global.add("GetDir", new GetDir());
+		global.add("ChDir", new ChDir());
+		global.add("RmDir", new RemoveDir());
+		global.add("MkDir", new MakeDir());
+		global.add("FindDirs", new FindFiles(true));
+		global.add("FindFiles", new FindFiles(false));
 		
 		global.add("Delay", new Delay());
 		global.add("SysTime", new SysTime());
