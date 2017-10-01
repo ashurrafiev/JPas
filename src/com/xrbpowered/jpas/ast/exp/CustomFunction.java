@@ -108,8 +108,10 @@ public class CustomFunction extends Function {
 			sf.release();
 			return res;
 		}
-		else
+		else {
+			sf.release();
 			return null;
+		}
 	}
 
 	public static boolean isDuplicateId(ScopeEntry e, EntryType etype) {
