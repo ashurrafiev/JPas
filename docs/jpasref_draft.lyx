@@ -6269,7 +6269,7 @@ code{SimpleType} &
 
 \end_inset
 
-Only simple built-in types (
+Only simple types (
 \begin_inset ERT
 status open
 
@@ -6321,7 +6321,7 @@ code{Char}
 
 \end_inset
 
-, or 
+) or 
 \begin_inset ERT
 status open
 
@@ -6334,14 +6334,18 @@ code{String}
 
 \end_inset
 
-) are accepted.
+ are accepted.
 \begin_inset VSpace 0.7em
 \end_inset
 
 
+\series bold
+
 \begin_inset Newline newline
 \end_inset
 
+
+\series default
 
 \begin_inset ERT
 status open
@@ -6396,6 +6400,72 @@ code{Char}
 \end_inset
 
 , enumerated, and subrange types.
+\begin_inset VSpace 0.7em
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{AnyFile} & 
+\end_layout
+
+\end_inset
+
+Untyped files (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{file}}
+\end_layout
+
+\end_inset
+
+), typed files (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{file} 
+\backslash
+kw{of} SomeType}
+\end_layout
+
+\end_inset
+
+), and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Text}
+\end_layout
+
+\end_inset
+
+ files are accepted.
 \begin_inset Newline newline
 \end_inset
 
@@ -6857,157 +6927,6 @@ comm{N is variable.}
 NewArray(Q, N); 
 \backslash
 comm{Creates an array[0..7] of Integer.}%
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Console Input and Output
-\end_layout
-
-\begin_layout Subsubsection
-Write
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-Write
-\end_layout
-
-\end_inset
-
- and WriteLn
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-WriteLn
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-codebox{%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-kw{procedure} Write(Value, ...
- : SimpleType);
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-kw{procedure} WriteLn(Value, ...
- : SimpleType);%
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Read
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-Read
-\end_layout
-
-\end_inset
-
- and ReadLn
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-ReadLn
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-codebox{%
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-kw{procedure} Read(
-\backslash
-kw{var} Target, ...
- : SimpleType);
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-kw{procedure} ReadLn(
-\backslash
-kw{var} Target, ...
- : SimpleType);
-\backslash
-
-\backslash
-
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-kw{procedure} ReadLn(
-\backslash
-kw{var} Line: String);%
 \end_layout
 
 \begin_layout Plain Layout
@@ -8949,6 +8868,13 @@ Length
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Length-str"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8981,6 +8907,22 @@ kw{function} Length(S: String): Integer;%
 
 \begin_layout Standard
 Returns the number of characters in a string.
+ For array length function, see
+\begin_inset space ~
+\end_inset
+
+Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Length-array"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
@@ -9457,6 +9399,108 @@ code{[[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]}
 \end_layout
 
 \begin_layout Subsubsection
+Length
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Length
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Length-array"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Length(
+\backslash
+kw{var} Target: 
+\backslash
+kw{Array} 
+\backslash
+kw{of} SomeType): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the number of items in an array.
+ For non-abstract arrays, this number is statically defined by the range
+ as 
+\begin_inset Formula $\left(max-min+1\right)$
+\end_inset
+
+.
+ For abstract arrays allocated using 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{NewArray}
+\end_layout
+
+\end_inset
+
+, this number is defined by the 
+\emph on
+Size
+\emph default
+ parameter during array allocation.
+\end_layout
+
+\begin_layout Standard
+For string length function, see
+\begin_inset space ~
+\end_inset
+
+Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Length-str"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
 Swap
 \begin_inset Index idx
 status open
@@ -9629,7 +9673,11 @@ Generate a random value.
 \end_inset
 
 .
- For the given integer argument 
+ For the given integer argument
+\begin_inset space ~
+\end_inset
+
+
 \emph on
 N
 \emph default
@@ -9647,6 +9695,2051 @@ N
 N
 \emph default
  must be positive.
+\end_layout
+
+\begin_layout Section
+Input and Output
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Console
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Write
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Write
+\end_layout
+
+\end_inset
+
+ and WriteLn
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+WriteLn
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Write(Value, ...
+ : SimpleType);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} WriteLn(Value, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} WriteLn;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{WriteLn}
+\end_layout
+
+\end_inset
+
+ without parameters outputs a newline character.
+\end_layout
+
+\begin_layout Subsubsection
+Read
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Read
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Read(
+\backslash
+kw{var} Target, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+ReadLn
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ReadLn
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn(
+\backslash
+kw{var} Line: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn(
+\backslash
+kw{var} Target, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Working with Files
+\end_layout
+
+\begin_layout Subsubsection
+Assign
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Assign
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Assign(F: AnyFile; FileName: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assign a file name 
+\emph on
+FileName
+\emph default
+ to a file object
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+F
+\emph default
+.
+ The file must not be opened, call 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Close}
+\end_layout
+
+\end_inset
+
+ before re-assigning the file.
+\end_layout
+
+\begin_layout Subsubsection
+Reset
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Reset
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Reset(F: AnyFile);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Open file for reading.
+ If the file is already opened, it will be closed first.
+\end_layout
+
+\begin_layout Subsubsection
+Rewrite
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Rewrite
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Rewrite(F: AnyFile);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Create a new file and open it for writing.
+ If the file already exists, it will be overwritten.
+ If the file is already opened, it will be closed first.
+\end_layout
+
+\begin_layout Subsubsection
+Append
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Append
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Append(F: AnyFile);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Open a file for writing.
+ If the file already exists, new output will be appended to the end of the
+ file.
+ If the file is already opened, it will be closed first.
+\end_layout
+
+\begin_layout Subsubsection
+Eof
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Eof
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Eof(F: AnyFile): Boolean;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Test if there is any data in a file to be read.
+ The file must be opened for reading.
+\end_layout
+
+\begin_layout Subsubsection
+Flush
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Flush
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Flush(F: AnyFile);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Flush any pending buffers to the disk.
+ The file must be opened for writing.
+\end_layout
+
+\begin_layout Subsubsection
+Close
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Close
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Close(F: AnyFile);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Close the file if it has been opened.
+\end_layout
+
+\begin_layout Subsubsection
+Erase
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Erase
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Erase(F: AnyFile);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Erase the file from the disk.
+ The file must not be opened.
+ The function will fail if 
+\emph on
+F
+\emph default
+ is assigned to the console.
+\end_layout
+
+\begin_layout Subsubsection
+Rename
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Rename
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Rename(F: AnyFile, NewName: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Rename the file to 
+\emph on
+NewName
+\emph default
+.
+ The file must not be opened.
+ The function will fail if 
+\emph on
+F
+\emph default
+ is assigned to the console.
+\end_layout
+
+\begin_layout Subsubsection
+FileSize
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FileSize
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} FileSize(F: AnyFile): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Returns the file size in bytes.
+ The file must not be opened.
+ The function will fail if 
+\emph on
+F
+\emph default
+ is assigned to the console.
+\end_layout
+
+\begin_layout Subsection
+Working with Directories
+\end_layout
+
+\begin_layout Subsubsection
+GetDir
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+GetDir
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} GetDir: String;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Get full path to the current working directory.
+\end_layout
+
+\begin_layout Subsubsection
+ChDir
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ChDir
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ChDir(Path: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Change working directory.
+\end_layout
+
+\begin_layout Subsubsection
+MkDir
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+MkDir
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} MkDir(Path: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Create new directory at the specified location.
+\end_layout
+
+\begin_layout Subsubsection
+RmDir
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+RmDir
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} RmDir(Path: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Delete directory.
+ Only empty directories can be deleted using this procedure.
+\end_layout
+
+\begin_layout Subsubsection
+FindFiles
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FindFiles
+\end_layout
+
+\end_inset
+
+ and FindDirs
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+FindDirs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} FindFiles(
+\backslash
+kw{var} Ptr: 
+\backslash
+^{}
+\backslash
+kw{array} 
+\backslash
+kw{of} String): Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} FindDirs(
+\backslash
+kw{var} Ptr: 
+\backslash
+^{}
+\backslash
+kw{array} 
+\backslash
+kw{of} String): Integer;%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+List names of all files (or subdirectories) in the current working directory.
+\end_layout
+
+\begin_layout Standard
+The function allocates the array of required size and links it to the pointer
+\begin_inset space ~
+\end_inset
+
+
+\emph on
+Ptr
+\emph default
+.
+ The number of elements in the array is returned as the function result.
+\end_layout
+
+\begin_layout Subsection
+Text Files
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Write
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Write
+\end_layout
+
+\end_inset
+
+ and WriteLn
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+WriteLn
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Write(
+\backslash
+kw{var} T: Text; Value, ...
+ : SimpleType);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} WriteLn(
+\backslash
+kw{var} T: Text; Value, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} WriteLn(T: Text);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{WriteLn}
+\end_layout
+
+\end_inset
+
+ without parameters outputs a newline character.
+\end_layout
+
+\begin_layout Subsubsection
+Read
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Read
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Read(
+\backslash
+kw{var} T: Text; 
+\backslash
+kw{var} Target, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+ReadLn
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ReadLn
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn(
+\backslash
+kw{var} T: Text);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn(
+\backslash
+kw{var} T: Text; 
+\backslash
+kw{var} Line: String);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ReadLn(
+\backslash
+kw{var} T: Text; 
+\backslash
+kw{var} Target, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Untyped Files
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Write
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Write
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Write(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; Value, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+BlockWrite
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+BlockWrite
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} BlockWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; 
+\backslash
+kw{var} Values: 
+\backslash
+kw{array} 
+\backslash
+kw{of} SimpleType;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Count: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+ByteWrite
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ByteWrite
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ByteWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; Value, ...
+ : Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ByteWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; 
+\backslash
+kw{var} Values: 
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad Count: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Read
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Read
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Write(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; 
+\backslash
+kw{var} Target, ...
+ : SimpleType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+BlockRead
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+BlockRead
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} BlockWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; 
+\backslash
+kw{var} Target: 
+\backslash
+kw{array} 
+\backslash
+kw{of} SimpleType;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad MaxCount: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+ByteRead
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+ByteRead
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ByteWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; 
+\backslash
+kw{var} Target, ...
+ : Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} ByteWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file}; 
+\backslash
+kw{var} Target: 
+\backslash
+kw{array} 
+\backslash
+kw{of} Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad MaxCount: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Typed Files
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Write
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Write
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Write(
+\backslash
+kw{var} F: 
+\backslash
+kw{file} 
+\backslash
+kw{of} SomeType; Value, ...
+ : SomeType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+BlockWrite
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+BlockWrite
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} BlockWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file} 
+\backslash
+kw{of} SomeType;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad 
+\backslash
+kw{var} Values: 
+\backslash
+kw{array} 
+\backslash
+kw{of} SomeType; Count: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Read
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Read
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} Write(
+\backslash
+kw{var} F: 
+\backslash
+kw{file} 
+\backslash
+kw{of} SomeType; 
+\backslash
+kw{var} Target, ...
+ : SomeType);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+BlockRead
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+BlockRead
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} BlockWrite(
+\backslash
+kw{var} F: 
+\backslash
+kw{file} 
+\backslash
+kw{of} SomeType;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad
+\backslash
+quad 
+\backslash
+kw{var} Target: 
+\backslash
+kw{array} 
+\backslash
+kw{of} SomeType; MaxCount: Integer);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
 \end_layout
 
 \begin_layout Section

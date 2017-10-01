@@ -26,7 +26,7 @@ public class NewPtrArray extends Function {
 			for(int i=1; i<args.length; i++) {
 				v[i-1] = (Integer) args[i].evaluate();
 			}
-			((NewPtrArray) f).call((PointerType) args[0].getType(), ((LValue) args[0]).getPointer(), v);
+			NewPtrArray.call((PointerType) args[0].getType(), ((LValue) args[0]).getPointer(), v);
 			return null;
 		}
 	}
@@ -61,7 +61,7 @@ public class NewPtrArray extends Function {
 		return argIndex>0 ? Type.integer : null;
 	}
 	
-	private Type makeType(Type dstType, int[] ranges, int dim) {
+	public static Type makeType(Type dstType, int[] ranges, int dim) {
 		if(dim<ranges.length) {
 			ArrayType at = (ArrayType) dstType;
 			Type type = makeType(at.type, ranges, dim+1);
@@ -80,7 +80,7 @@ public class NewPtrArray extends Function {
 			return dstType;
 	}
 	
-	public void call(PointerType type, Pointer ptr, int[] ranges) {
+	public static void call(PointerType type, Pointer ptr, int[] ranges) {
 		Type t = makeType(type.getType(), ranges, 0);
 		ptr.write(new FreePointer(t));
 	}

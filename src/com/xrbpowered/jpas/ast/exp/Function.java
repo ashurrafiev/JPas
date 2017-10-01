@@ -17,6 +17,11 @@ public abstract class Function implements ScopeEntry {
 			this.args = args;
 		}
 		
+		public Call(Function.Call call) {
+			this.f = call.f;
+			this.args = call.args;
+		}
+		
 		@Override
 		public Type getType() {
 			return f.getType();

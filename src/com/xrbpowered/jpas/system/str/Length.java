@@ -1,10 +1,25 @@
 package com.xrbpowered.jpas.system.str;
 
+import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.data.ArrayObject;
+import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.Type;
+import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
+import com.xrbpowered.jpas.ast.exp.LValue;
 
 public class Length extends Function {
 
+	public static class LengthArray extends Length {
+		@Override
+		public Object call(Object[] args) {
+			ArrayObject ar = (ArrayObject) args[0];
+			return new Integer(ar.range.length());
+		}
+	}
+	
+	private static final LengthArray lengthArray = new LengthArray();
+	
 	@Override
 	public Type getType() {
 		return Type.integer;
@@ -17,10 +32,23 @@ public class Length extends Function {
 	
 	@Override
 	public Type getArgType(int argIndex) {
-		return Type.string;
+		return null;
 	}
+	
 	@Override
 	public Object call(Object[] args) {
 		return new Integer(((String) args[0]).length());
+	}
+	
+	@Override
+	public Call makeCall(Expression[] args) {
+		testArgNumber(getArgNum(), args);
+		if(args[0].getType() instanceof ArrayType) {
+			if(!(args[0] instanceof LValue))
+				throw JPasError.lvalueError();
+			return new Function.Call(lengthArray, args); 
+		}
+		args[0] = checkTypeCast(Type.string, args[0]);
+		return new Function.Call(this, args);
 	}
 }

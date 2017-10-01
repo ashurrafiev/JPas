@@ -6,14 +6,28 @@ import com.xrbpowered.jpas.JPas;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.PointerType;
-import com.xrbpowered.jpas.ast.data.Range;
 import com.xrbpowered.jpas.ast.data.Type;
+import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
+import com.xrbpowered.jpas.ast.exp.LValue;
 import com.xrbpowered.jpas.mem.FreePointer;
 import com.xrbpowered.jpas.mem.Pointer;
+import com.xrbpowered.jpas.system.NewPtrArray;
 
 public class FindFiles extends Function {
 
+	public static class Call extends Function.Call {
+
+		public Call(Function.Call call) {
+			super(call);
+		}
+		
+		@Override
+		public Object evaluate() {
+			return ((FindFiles) f).call((PointerType) args[0].getType(), ((LValue) args[0]).getPointer());
+		}
+	}
+	
 	private final boolean dirs;
 	
 	public FindFiles(boolean dirs) {
@@ -47,10 +61,7 @@ public class FindFiles extends Function {
 			return f.isFile();
 	}
 	
-	@Override
-	public Object call(Object[] args) {
-		Pointer ptr = (Pointer) args[0]; // ((LValue) args[0]).getPointer();
-		
+	private int call(PointerType type, Pointer ptr) {
 		File[] files = JPas.workingDir.listFiles();
 		int count = 0;
 		for(File f : files) {
@@ -71,10 +82,20 @@ public class FindFiles extends Function {
 				}
 			}
 			
-			ArrayType t = new ArrayType(new Range(Type.integer, 0, count-1), Type.string);
+			ArrayType t = (ArrayType) NewPtrArray.makeType(type.getType(), new int[] {count}, 0);
 			ptr.write(new FreePointer(t, new ArrayObject(t.range, v)));
 			return count;
 		}
+	}
+	
+	@Override
+	public Object call(Object[] args) {
+		return null;
+	}
+	
+	@Override
+	public Function.Call makeCall(Expression[] args) {
+		return new FindFiles.Call(super.makeCall(args));
 	}
 
 }
