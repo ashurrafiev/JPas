@@ -49,6 +49,22 @@ public class RecordType extends Type {
 	public boolean isFluid() {
 		return fluid;
 	}
+
+	@Override
+	public boolean isSerialisable() {
+		for(Type t : members)
+			if(!t.isSerialisable())
+				return false;
+		return true;
+	}
+	
+	@Override
+	public boolean isInitialisable() {
+		for(Type t : members)
+			if(!t.isInitialisable())
+				return false;
+		return true;
+	}
 	
 	@Override
 	public Object init(Object v) {
@@ -56,8 +72,6 @@ public class RecordType extends Type {
 			return new RecordObject(members);
 		else
 			return new RecordObject(members, (RecordObject) v);
-//			RecordObject.copy(this, rec, (RecordObject) v);
-//		return rec;
 	}
 	
 	@Override

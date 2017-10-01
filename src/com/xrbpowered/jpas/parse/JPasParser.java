@@ -734,9 +734,10 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			if(JPasToken.keyword("of").equals(token)) {
 				next();
 				type = type(scope);
-				// FIXME checkInitDef
 				if(type==null)
 					return null;
+				if(!type.isSerialisable())
+					throw new JPasError("Type is not serializable");
 			}
 			return FileType.make(type);
 		}
@@ -998,7 +999,8 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 		Type type = type(scope);
 		if(type==null)
 			return null;
-		type.init(null); // TODO checkInitDef
+		if(!type.isInitialisable())
+			throw new JPasError("Type value cannot be initialized");
 		scope.add(name, type);
 		return Statement.nop;
 	}

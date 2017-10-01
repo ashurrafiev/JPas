@@ -152,6 +152,14 @@ public class Type implements ScopeEntry {
 		return true;
 	}
 	
+	public boolean isSerialisable() {
+		return true;
+	}
+	
+	public boolean isInitialisable() {
+		return true;
+	}
+	
 	public Object init(Object v) {
 		return v==null ? defValue : v;
 	}

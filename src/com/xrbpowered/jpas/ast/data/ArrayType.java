@@ -26,6 +26,16 @@ public class ArrayType extends IndexableType {
 	}
 	
 	@Override
+	public boolean isSerialisable() {
+		return range!=null && type.isSerialisable();
+	}
+	
+	@Override
+	public boolean isInitialisable() {
+		return range!=null;
+	}
+	
+	@Override
 	public Object init(Object v) {
 		Range r = range;
 		if(r==null && v!=null)

@@ -14,6 +14,11 @@ public class PointerType extends Type {
 	}
 
 	@Override
+	public boolean isSerialisable() {
+		return false;
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if(!super.equals(obj)) {
 			if(obj instanceof PointerType) {

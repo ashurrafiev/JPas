@@ -31,6 +31,11 @@ public class FileType extends Type {
 	}
 
 	@Override
+	public boolean isSerialisable() {
+		return false;
+	}
+	
+	@Override
 	public Object init(Object v) {
 		return v==null ? new DataFileObject() : v;
 	}
