@@ -14,6 +14,7 @@ import com.xrbpowered.jpas.JPasError;
 import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Statement;
 import com.xrbpowered.jpas.units.StandardUnit;
+import com.xrbpowered.jpas.units.graph2d.bitmaps.BitmapManager;
 import com.xrbpowered.jpas.units.graph2d.colors.BlendColors;
 import com.xrbpowered.jpas.units.graph2d.colors.GetAlpha;
 import com.xrbpowered.jpas.units.graph2d.colors.GetBlue;
@@ -25,6 +26,11 @@ import com.xrbpowered.jpas.units.graph2d.fonts.SetTextFont;
 import com.xrbpowered.jpas.units.graph2d.fonts.SetTextSize;
 import com.xrbpowered.jpas.units.graph2d.fonts.TextWidth;
 import com.xrbpowered.jpas.units.graph2d.input.InputManager;
+import com.xrbpowered.jpas.units.graph2d.transform.TFPush;
+import com.xrbpowered.jpas.units.graph2d.transform.TFReset;
+import com.xrbpowered.jpas.units.graph2d.transform.TFRotate;
+import com.xrbpowered.jpas.units.graph2d.transform.TFScale;
+import com.xrbpowered.jpas.units.graph2d.transform.TFTranslate;
 
 public class Graph2D extends StandardUnit {
 
@@ -68,20 +74,30 @@ public class Graph2D extends StandardUnit {
 	public final InputManager input = new InputManager();
 	
 	private BufferedImage screenBuffer = null;
+	private Target screenTarget = null;
 	private Target target = null;
 	
 	public void setWindow(String title, int width, int height, int pixelScale) {
 		if(width<1 || height<1)
 			throw JPasError.rangeCheckError();
-		if(target==null) {
+		if(window==null) {
 			screenBuffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-			target = new Target(screenBuffer);
+			target = screenTarget = new Target(screenBuffer);
 			windowedPixelScale = 0;
 		}
 		else {
-			throw new JPasError("Graphics already initialized.");
+			throw new JPasError("Window already initialized.");
 		}
 		resetWindow(title, pixelScale);
+	}
+	
+	public void setTarget(BufferedImage image) {
+		if(image==null) {
+			checkWindow();
+			target = screenTarget;
+		}
+		else
+			target = new Target(image);
 	}
 	
 	protected void resetWindow(String title, int pixelScale) {
@@ -164,18 +180,23 @@ public class Graph2D extends StandardUnit {
 		return Math.min(xscale, yscale);
 	}
 	
-	public void check() {
+	public void checkTarget() {
 		if(target==null)
 			throw new JPasError("Graphics not initialized.");
 	}
-	
+
+	public void checkWindow() {
+		if(window==null)
+			throw new JPasError("Window not initialized.");
+	}
+
 	public Target getTarget() {
-		check();
+		checkTarget();
 		return target;
 	}
 	
 	public void present() {
-		check();
+		checkWindow();
 		try {
 			ready = false;
 			if(presenter!=null)
@@ -236,8 +257,14 @@ public class Graph2D extends StandardUnit {
 		scope.add("Interpolate", new Interpolate());
 		scope.add("BlendColors", new BlendColors());
 
-		// TODO transforms
-		// TODO bitmaps
+		scope.add("TFTranslate", new TFTranslate());
+		scope.add("TFRotate", new TFRotate());
+		scope.add("TFScale", new TFScale());
+		scope.add("TFReset", new TFReset());
+		scope.add("TFPush", new TFPush(true));
+		scope.add("TFPop", new TFPush(false));
+		
+		BitmapManager.register(scope);
 		
 		return Statement.nop;
 	}

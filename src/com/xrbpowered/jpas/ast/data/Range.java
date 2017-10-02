@@ -48,8 +48,8 @@ public class Range {
 	}
 
 	public static boolean checkEqual(Range rx, Range ry) {
-		Type tx = rx==null ? Type.integer : rx.type;
-		Type ty = ry==null ? Type.integer : ry.type;
+		Type tx = rx==null ? null : rx.type;
+		Type ty = ry==null ? null : ry.type;
 		if(tx!=null && ty!=null && !tx.equals(ty))
 			return false;
 		if(rx!=null && ry!=null)
