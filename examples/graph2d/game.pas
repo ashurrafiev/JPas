@@ -9,7 +9,7 @@ const MaxCols = 12;
 InitWindow('Game', 320, 200, 4);
 SetBackground($F0F0F0);
 LowQuality;
-ClearScreen;
+ClearCanvas;
 
 type MapTile = [Void, Wall, Empty, Target, Box, BoxOnTarget, PlayerTile];
 
@@ -67,10 +67,10 @@ end;
 
 procedure DrawState;
 begin
-	ClearScreen;
+	ClearCanvas;
 	
-	var Sx: Integer = ScreenWidth div 2 - MapWidth * 8;
-	var Sy: Integer = ScreenHeight div 2 - MapHeight * 8;
+	var Sx: Integer = CanvasWidth div 2 - MapWidth * 8;
+	var Sy: Integer = CanvasHeight div 2 - MapHeight * 8;
 	
 	var X, Y: Integer;
 	for X:=1 to MapWidth do
@@ -81,7 +81,7 @@ begin
 	PutBitmap(Sx+(Player.X-1)*16, Sy+(Player.Y-1)*16, Tiles[PlayerTile]);
 				
 	{End frame, refresh window}
-	PresentScreen;
+	PresentWindow;
 end;
 
 procedure Move(Dx, Dy: Integer);

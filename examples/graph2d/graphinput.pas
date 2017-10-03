@@ -8,14 +8,14 @@ uses Graph2D;
 {Initialise}
 InitWindow('Graph2D Input', 1280, 768, 1);
 SetBackground($F0F0F0);
-ClearScreen;
+ClearCanvas;
 HighQuality;
 SetTextSize(20);
 
 {Display welcome message}
 const Hint = 'Draw with a mouse or type a key.';
 SetPen($000000, 1);
-DrawText(ScreenWidth div 2 - TextWidth(Hint) div 2, 50, Hint);
+DrawText(CanvasWidth div 2 - TextWidth(Hint) div 2, 50, Hint);
 
 var PrevX, PrevY: Integer;
 repeat
@@ -47,25 +47,25 @@ repeat
 					{Extended key, read again to get key code}
 					Code := Ord(ReadKey);
 					SetPaint($DDDDDD);
-					FillRect(ScreenWidth div 2 - 70, 90-25, 40, 35);
+					FillRect(CanvasWidth div 2 - 70, 90-25, 40, 35);
 				end
 			else
 				begin
 					{Draw pressed character.}
 					SetPaint($000000);
-					FillRect(ScreenWidth div 2 - 70, 90-25, 40, 35);
+					FillRect(CanvasWidth div 2 - 70, 90-25, 40, 35);
 					SetPen($FFFFFF, 1);
-					DrawText(ScreenWidth div 2 -50 - TextWidth(Symbol) div 2, 90, Symbol);
+					DrawText(CanvasWidth div 2 -50 - TextWidth(Symbol) div 2, 90, Symbol);
 				end;
 			{Draw key code.}
 			SetPaint($DDDDDD);
-			FillRect(ScreenWidth div 2 - 20, 90-25, 80, 35);
+			FillRect(CanvasWidth div 2 - 20, 90-25, 80, 35);
 			SetPen($777777, 1);
-			DrawText(ScreenWidth div 2 - 10, 90, Str(Code));
+			DrawText(CanvasWidth div 2 - 10, 90, Str(Code));
 		end;
 
 	{End frame, refresh window}
-	PresentScreen;
+	PresentWindow;
 	Delay(5)
 until False;
 

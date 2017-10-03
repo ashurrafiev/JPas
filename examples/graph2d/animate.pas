@@ -12,7 +12,7 @@ SetPen($000000, 1);
 
 repeat
 	{Start new frame}
-	ClearScreen;
+	ClearCanvas;
 	
 	{Show FPS}
 	DrawText(20, 30, Format('%.2f FPS', FPSCount));
@@ -28,7 +28,7 @@ repeat
 		
 		{Draw the box}
 		SetPaint(Color);
-		FillRect(Round(X-Width/2), Round(ScreenHeight/2-YTop), Round(Width), Round(Height));
+		FillRect(Round(X-Width/2), Round(CanvasHeight/2-YTop), Round(Width), Round(Height));
 	end;
 
 	DrawBox(440, 200, Elapsed*3, $DD3300);
@@ -36,7 +36,7 @@ repeat
 	DrawBox(840, 200, Elapsed*3+1, $0099FF);
 
 	{End frame, refresh window}
-	PresentScreen;
+	PresentWindow;
 	Delay(5)
 until False;
 

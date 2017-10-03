@@ -35,7 +35,7 @@ begin
 		DrawLine(CurX, Y, CurX, Y+Height);
 		
 		{Display and wait for key events}
-		PresentScreen;
+		PresentWindow;
 		repeat Delay(10) until KeyPressed;
 		
 		var Len: Integer = Length(Str);
@@ -61,7 +61,7 @@ end;
 {Main program cycle}
 var OldStr:String = '';
 repeat
-	ClearScreen;
+	ClearCanvas;
 
 	{Display previously entered text}
 	if OldStr<>'' then

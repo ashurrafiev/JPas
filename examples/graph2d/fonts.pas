@@ -7,20 +7,20 @@ uses Graph2D;
 {Initialise}
 InitWindow('Graph2D Fonts', 1280, 768, 1);
 SetBackground($F0F0F0);
-ClearScreen;
+ClearCanvas;
 HighQuality;
 SetTextSize(20);
 
 {Draw welcome message}
 const Hint = 'Press any key to exit.';
 SetPen($000000, 1);
-DrawText(ScreenWidth div 2 - TextWidth(Hint) div 2, ScreenHeight - 40, Hint);
+DrawText(CanvasWidth div 2 - TextWidth(Hint) div 2, CanvasHeight - 40, Hint);
 
 {Draw page}
 SetPaint($FFFFFF);
 SetPen($999999, 1);
-FillRect(200, 50, ScreenWidth-400, ScreenHeight-150);
-DrawRect(200, 50, ScreenWidth-400, ScreenHeight-150);
+FillRect(200, 50, CanvasWidth-400, CanvasHeight-150);
+DrawRect(200, 50, CanvasWidth-400, CanvasHeight-150);
 
 {Draw text}
 SetPen($000000, 1);
@@ -58,7 +58,7 @@ SetTextSize(35);
 DrawText(650, 570, 'Arial, Bold Italic.');
 
 {End drawing, refresh screen}
-PresentScreen;
+PresentWindow;
 {Wait for any key}
 repeat Delay(10) until KeyPressed;
 

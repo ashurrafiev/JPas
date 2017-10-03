@@ -30,6 +30,10 @@ public class BitmapManager {
 		return image;
 	}
 	
+	public void discard(int handle) {
+		cache.remove(handle);
+	}
+	
 	public static BitmapManager getInstance() {
 		if(instance==null)
 			instance = new BitmapManager();
@@ -40,12 +44,16 @@ public class BitmapManager {
 		scope.add("CreateBitmap", new CreateBitmap());
 		scope.add("LoadBitmap", new LoadBitmap());
 		scope.add("LoadAtlas", new LoadAtlas());
+		scope.add("GetBitmap", new GetBitmap());
+		scope.add("DiscardBitmap", new DiscardBitmap());
 
 		scope.add("PutBitmap", new PutBitmap());
 		scope.add("StretchBitmap", new StretchBitmap());
 
-		scope.add("UseBitmap", new UseBitmap());
-		scope.add("UseWindow", new UseWindow());
+		scope.add("UseBitmapCanvas", new UseBitmap());
+		scope.add("UseWindowCanvas", new UseWindow());
 
+		scope.add("GetPixel", new GetPixel());
+		scope.add("PutPixel", new PutPixel());
 	}
 }

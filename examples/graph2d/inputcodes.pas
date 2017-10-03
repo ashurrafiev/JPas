@@ -8,13 +8,13 @@ uses Graph2D;
 {Initialise}
 InitWindow('Graph2D Input Codes', 1280, 768, 1);
 SetBackground($F0F0F0);
-ClearScreen;
+ClearCanvas;
 HighQuality;
 
 {Display welcome message}
 const Hint = 'Press keys to see their codes highlight.';
 SetPen($000000, 1);
-DrawText(ScreenWidth div 2 - TextWidth(Hint) div 2, 50, Hint);
+DrawText(CanvasWidth div 2 - TextWidth(Hint) div 2, 50, Hint);
 
 repeat
 	{Start new frame}
@@ -23,7 +23,7 @@ repeat
 	var N: Integer;
 	for N:=0 to 255 do
 		begin
-			var X: Integer = N div 16 * 60 + (ScreenWidth div 2 - 16*60 div 2);
+			var X: Integer = N div 16 * 60 + (CanvasWidth div 2 - 16*60 div 2);
 			var Y: Integer = N mod 16 * 35 + 90;
 			
 			{Set colors depending on the state of respective key}
@@ -37,7 +37,7 @@ repeat
 		end;
 
 	{End frame, refresh window}
-	PresentScreen;
+	PresentWindow;
 	Delay(10)
 until False;
 

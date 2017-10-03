@@ -198,14 +198,6 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			else
 				return null;
 		}
-		else if(new JPasToken('@').equals(token)) {
-			next();
-			Expression x = expressionPost(scope);
-			if(x instanceof LValue)
-				return new GetPointer((LValue) x);
-			else
-				throw new JPasError("Expected LValue.");
-		}
 		else if(new JPasToken('[').equals(token)) {
 			int index = tokeniser.getIndex();
 			next();
@@ -342,6 +334,16 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return makeUnaryOp(scope, UnaryOp.Operation.pos);
 		else if(JPasToken.keyword("not").equals(token))
 			return makeUnaryOp(scope, UnaryOp.Operation.not);
+		else if(new JPasToken('@').equals(token)) {
+			next();
+			Expression x = expressionTerm(scope);
+			if(x==null)
+				return null;
+			if(x instanceof LValue)
+				return new GetPointer((LValue) x);
+			else
+				throw new JPasError("Expected LValue.");
+		}
 		else
 			return expressionPost(scope);
 	}
@@ -607,7 +609,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 	private Range range(Scope scope, ScopeEntry emin) {
 		Expression min;
 		if(emin==null)
-			min = Expression.precalc(expressionLit(scope));
+			min = Expression.precalc(expressionTerm(scope));
 		else if(emin.getScopeEntryType()==EntryType.variable)
 			min = (Expression) emin;
 		else
@@ -616,7 +618,7 @@ public class JPasParser extends RecursiveDescentParser<JPasToken, Statement> {
 			return null;
 		if(!accept(new JPasToken(TokenType.operator, "..")))
 			return null;
-		Expression max = Expression.precalc(expressionLit(scope));
+		Expression max = Expression.precalc(expressionTerm(scope));
 		if(max==null)
 			return null;
 		return Range.make(min, max);

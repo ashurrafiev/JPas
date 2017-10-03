@@ -211,11 +211,12 @@ public class Graph2D extends StandardUnit {
 	@Override
 	public Statement use(Scope scope) {
 		scope.add("InitWindow", new InitWindow());
-		scope.add("ClearScreen", new ClearScreen());
-		scope.add("ScreenWidth", new ScreenSize(true));
-		scope.add("ScreenHeight", new ScreenSize(false));
-		scope.add("PresentScreen", new Present());
+		scope.add("PresentWindow", new Present());
 		scope.add("FPSCount", new FPSCount());
+		
+		scope.add("ClearCanvas", new ClearScreen());
+		scope.add("CanvasWidth", new ScreenSize(true));
+		scope.add("CanvasHeight", new ScreenSize(false));
 
 		scope.add("SetBackground", new SetBackground());
 		scope.add("SetPen", new SetPen());

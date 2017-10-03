@@ -11,7 +11,7 @@ InitWindow('Graph2D Colors', 1280, 768, 1);
 SetBackground($F0F0F0);
 
 repeat
-	ClearScreen;
+	ClearCanvas;
 
 	{Generate random colors}
 	var ColorA, ColorB, ColorC, ColorD: Integer;
@@ -22,9 +22,9 @@ repeat
 	
 	{Calculate grid coordinates}
 	var XLeft, XRight, YTop, YBottom: Integer;
-	XLeft := ScreenWidth div 2 - 235;
+	XLeft := CanvasWidth div 2 - 235;
 	XRight := XLeft + 470;
-	YTop := ScreenHeight div 2 - 235;
+	YTop := CanvasHeight div 2 - 235;
 	YBottom := YTop + 470;
 
 	{Paint corners}
@@ -64,11 +64,10 @@ repeat
 				end;
 		end;
 
-	PresentScreen;
+	PresentWindow;
 	repeat Delay(10) until KeyPressed;
-	ReadKey;
 	{Wait for a key then redraw}
 
-until False;
+until ReadKey=#27;
 
 End.

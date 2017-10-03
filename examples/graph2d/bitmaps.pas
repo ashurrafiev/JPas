@@ -14,13 +14,13 @@ HighQuality;
 procedure DrawSmile(Bitmap: Integer);
 begin
 	{Use bitmap for drawing}
-	UseBitmap(Bitmap);
+	UseBitmapCanvas(Bitmap);
 	HighQuality;
 	
 	{Clear bitmap to transparent color}
 	TransparencyOn;
 	SetBackground(0);
-	ClearScreen;
+	ClearCanvas;
 	TransparencyOff;
 	
 	{Draw a smile}
@@ -34,7 +34,7 @@ begin
 	FillOval(65-3, 35-3, 7, 7);
 	
 	{Switch back to drawing on the screen}
-	UseWindow;
+	UseWindowCanvas;
 end;
 
 {Create a bitmap}
@@ -42,7 +42,7 @@ var Smile: Integer = CreateBitmap(100, 100, True);
 DrawSmile(Smile);
 
 repeat
-ClearScreen;
+ClearCanvas;
 
 {Draw the bitmap on the screen 50 times 
 in random locations and varying the size}
@@ -51,13 +51,13 @@ for i:=1 to 50 do
 	begin
 		var Size: Integer = Random(50)+50;
 		StretchBitmap(
-			Random(ScreenWidth+100)-100,
-			Random(ScreenHeight+100)-100,
+			Random(CanvasWidth+100)-100,
+			Random(CanvasHeight+100)-100,
 			Size, Size, Smile);
 	end;
 
 {End frame, refresh window}
-PresentScreen;
+PresentWindow;
 {Wait for a key press}
 repeat Delay(10) until KeyPressed;
 

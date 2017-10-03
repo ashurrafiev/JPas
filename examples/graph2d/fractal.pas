@@ -9,7 +9,7 @@ uses Graph2D;
 InitWindow('Transform', 1280, 768, 1);
 SetBackground($F0F0F0);
 HighQuality;
-ClearScreen;
+ClearCanvas;
 
 {Recursive function to draw a fractal shape.}
 procedure Draw(D: Integer);
@@ -44,12 +44,12 @@ begin
 end;
 
 {Start drawing in the middle of the screen}
-TFTranslate(ScreenWidth div 2, ScreenHeight div 2);
+TFTranslate(CanvasWidth div 2, CanvasHeight div 2);
 SetPen($335577, 10);
 Draw(7);
 
 {End frame, refresh window}
-PresentScreen;
+PresentWindow;
 {Wait for a key press}
 repeat Delay(10) until KeyPressed;
 
