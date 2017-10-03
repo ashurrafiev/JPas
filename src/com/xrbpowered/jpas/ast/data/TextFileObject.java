@@ -69,12 +69,26 @@ public class TextFileObject extends FileObject {
 
 	@Override
 	public boolean isEof() {
-		return getScanner().hasNext();
+		return !getScanner().hasNext() && !getScanner().hasNextLine();
 	}
 	
 	@Override
 	public void flush() {
 		getPrintWriter().flush();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(this==obj)
+			return true;
+		if(obj instanceof TextFileObject) {
+			TextFileObject f = (TextFileObject) obj;
+			if(std || f.std)
+				return std && f.std;
+			else
+				return super.equals(obj);
+		}
+		return false;
 	}
 
 }

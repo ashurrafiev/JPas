@@ -41,7 +41,7 @@ public class LoadAtlas extends StdProcedure {
 			g2.clearRect(0, 0, w, h);
 			g2.drawImage(image, 0, 0, w, h, sx, sy, sx+w, sy+h, null);
 			sx += w;
-			if(w>image.getWidth()) {
+			if(sx>=image.getWidth()) {
 				sx = 0;
 				sy = h;
 			}

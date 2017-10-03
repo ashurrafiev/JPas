@@ -48,4 +48,18 @@ public abstract class FileObject {
 		}
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(this==obj)
+			return true;
+		if(obj instanceof FileObject) {
+			FileObject f = (FileObject) obj;
+			if(file==null || f.file==null)
+				return file==null && f.file==null;
+			else
+				return file.equals(f.file);
+		}
+		return false;
+	}
+	
 }
