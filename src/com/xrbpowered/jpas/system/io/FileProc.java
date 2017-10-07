@@ -3,9 +3,11 @@ package com.xrbpowered.jpas.system.io;
 import java.io.File;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.FileObject;
 import com.xrbpowered.jpas.ast.data.FileType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -51,15 +53,16 @@ public abstract class FileProc extends Function {
 		return new JPasError("Access denied");
 	}
 
-	public Function.Call makeCall(Expression[] args) {
+	public Function.Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(getArgNum(), args);
 		if(args.length>0) {
 			for(int i=1; i<args.length; i++) {
 				Type dt = getArgType(i, args);
-				args[i] = checkTypeCast(dt, args[i]);
+				args[i] = checkTypeCast(scope, dt, args[i]);
 				checkLValue(i, args[i]);
 			}
 		}
+		args[0] = FunctionType.dereference(scope, args[0]);
 		checkLValue(0, args[0]);
 		Type type = args[0].getType();
 		if(type instanceof FileType) {

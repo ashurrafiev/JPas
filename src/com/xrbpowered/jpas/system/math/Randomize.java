@@ -2,6 +2,7 @@ package com.xrbpowered.jpas.system.math;
 
 import java.util.Random;
 
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
@@ -42,11 +43,11 @@ public class Randomize extends Function {
 	}
 	
 	@Override
-	public Function.Call makeCall(Expression[] args) {
+	public Function.Call makeCall(Scope scope, Expression[] args) {
 		if(args==null || args.length==0)
 			return new Function.Call(this, null);
 		else
-			return super.makeCall(args);
+			return super.makeCall(scope, args);
 	}
 
 }

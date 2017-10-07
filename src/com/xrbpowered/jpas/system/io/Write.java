@@ -3,7 +3,9 @@ package com.xrbpowered.jpas.system.io;
 import java.io.PrintStream;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.FileType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.TextFileObject;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
@@ -68,8 +70,8 @@ public class Write extends IOProc {
 		return null;
 	}
 	
-	public Function.Call makeCall(Expression[] args) {
-		IOType io = getIOType(args);
+	public Function.Call makeCall(Scope scope, Expression[] args) {
+		IOType io = getIOType(scope, args);
 		int startArg = io!=IOType.stdio ? 1 : 0;
 		Expression fileArg = io!=IOType.stdio ? args[0] : null;
 		testArgNumber(getArgNum()+startArg, args);
@@ -77,6 +79,7 @@ public class Write extends IOProc {
 		if(io==IOType.stdio || io==IOType.text) {
 			if(args!=null) {
 				for(int i=startArg; i<args.length; i++) {
+					args[i] = FunctionType.dereference(scope, args[i]);
 					if(!args[i].getType().builtIn)
 						throw JPasError.argumentTypeError();
 				}
@@ -89,6 +92,7 @@ public class Write extends IOProc {
 			
 			if(io==IOType.untypedFile) {
 				for(int i=startArg; i<args.length; i++) {
+					args[i] = FunctionType.dereference(scope, args[i]);
 					if(!args[i].getType().builtIn)
 						throw JPasError.argumentTypeError();
 				}
@@ -97,6 +101,7 @@ public class Write extends IOProc {
 			else if(io==IOType.typedFile) {
 				FileType ft = (FileType) args[0].getType();
 				for(int i=1; i<args.length; i++) {
+					args[i] = FunctionType.dereference(scope, args[i]);
 					if(args[i].getType() != ft.type)
 						throw JPasError.argumentTypeError();
 				}

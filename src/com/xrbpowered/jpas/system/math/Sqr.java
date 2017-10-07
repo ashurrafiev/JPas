@@ -1,6 +1,8 @@
 package com.xrbpowered.jpas.system.math;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -51,8 +53,9 @@ public class Sqr extends Function {
 		return null;
 	}
 
-	public Function.Call makeCall(Expression[] args) {
+	public Function.Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(1, args);
+		args[0] = FunctionType.dereference(scope, args[0]);
 		if(args[0].getType()==Type.integer)
 			return new Function.Call(intSqr, args);
 		else if(args[0].getType()==Type.real)

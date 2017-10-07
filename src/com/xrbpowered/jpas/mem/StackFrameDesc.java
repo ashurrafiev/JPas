@@ -10,6 +10,12 @@ public class StackFrameDesc {
 	private ArrayList<StackFrameObject> objects = new ArrayList<>();
 	private LinkedList<StackFrame> frames = new LinkedList<>();
 	
+	private final StackFrameDesc parent;
+	
+	public StackFrameDesc(StackFrameDesc parent) {
+		this.parent = parent;
+	}
+	
 	public int register(StackFrameObject sfo) {
 		objects.add(sfo);
 		return size()-1;
@@ -37,6 +43,19 @@ public class StackFrameDesc {
 	
 	public void write(int index, Object value) {
 		frames.getLast().write(index, value);
+	}
+	
+	public StackFrameDesc getParent() {
+		return parent;
+	}
+	
+	public boolean isVisible(StackFrameDesc sf) {
+		if(sf==this)
+			return true;
+		else if(parent!=null)
+			return parent.isVisible(sf);
+		else
+			return false;
 	}
 	
 }

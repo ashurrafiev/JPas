@@ -4,7 +4,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.FileType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.TextFileObject;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
@@ -104,14 +106,16 @@ public class Read extends IOProc {
 		return null;
 	}
 	
-	public Function.Call makeCall(Expression[] args) {
-		IOType io = getIOType(args);
+	@Override
+	public Function.Call makeCall(Scope scope, Expression[] args) {
+		IOType io = getIOType(scope, args);
 		int startArg = io!=IOType.stdio ? 1 : 0;
 		Expression fileArg = io!=IOType.stdio ? args[0] : null;
 		testArgNumber(getArgNum()+startArg, args);
 
 		if(io==IOType.stdio || io==IOType.text) {
 			for(int i=startArg; i<args.length; i++) {
+				args[i] = FunctionType.dereference(scope, args[i]);
 				Type type = args[i].getType();
 				if(!type.builtIn)
 					throw JPasError.argumentTypeError();
@@ -121,6 +125,7 @@ public class Read extends IOProc {
 		}
 		else if(io==IOType.untypedFile) {
 			for(int i=1; i<args.length; i++) {
+				args[i] = FunctionType.dereference(scope, args[i]);
 				Type type = args[i].getType();
 				if(!type.builtIn)
 					throw JPasError.argumentTypeError();
@@ -131,6 +136,7 @@ public class Read extends IOProc {
 		else if(io==IOType.typedFile) {
 			FileType ft = (FileType) args[0].getType();
 			for(int i=1; i<args.length; i++) {
+				args[i] = FunctionType.dereference(scope, args[i]);
 				Type type = args[i].getType();
 				if(type != ft.type)
 					throw JPasError.argumentTypeError();

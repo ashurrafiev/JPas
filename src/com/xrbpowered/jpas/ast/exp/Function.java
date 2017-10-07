@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.ast.exp;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.ast.data.Type;
@@ -9,7 +10,7 @@ public abstract class Function implements ScopeEntry {
 
 	public static class Call extends Expression {
 		
-		protected final Function f;
+		protected Function f;
 		protected final Expression[] args;
 		
 		public Call(Function f, Expression[] args) {
@@ -22,9 +23,16 @@ public abstract class Function implements ScopeEntry {
 			this.args = call.args;
 		}
 		
+		protected Type checkResultType(Type t) {
+			if(t==null)
+				throw new JPasError("Procedure call in expression");
+			else
+				return t;
+		}
+		
 		@Override
 		public Type getType() {
-			return f.getType();
+			return checkResultType(f.getType());
 		}
 		
 		@Override
@@ -100,19 +108,19 @@ public abstract class Function implements ScopeEntry {
 			throw JPasError.lvalueError();
 	}
 	
-	protected Expression checkTypeCast(Type dt, Expression arg) {
-		Expression ex = Expression.implicitCast(dt, arg);
+	protected Expression checkTypeCast(Scope scope, Type dt, Expression arg) {
+		Expression ex = Expression.implicitCast(scope, dt, arg);
 		if(ex!=null)
 			return ex;
 		throw JPasError.argumentTypeError();
 	}
 	
-	public Function.Call makeCall(Expression[] args) {
+	public Function.Call makeCall(Scope scope, Expression[] args) { // FIXME check system makeCall
 		testArgNumber(getArgNum(), args);
 		if(args!=null) {
 			for(int i=0; i<args.length; i++) {
 				Type dt = getArgType(i, args);
-				args[i] = checkTypeCast(dt, args[i]);
+				args[i] = checkTypeCast(scope, dt, args[i]);
 				checkLValue(i, args[i]);
 			}
 		}

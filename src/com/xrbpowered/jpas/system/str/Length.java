@@ -1,8 +1,10 @@
 package com.xrbpowered.jpas.system.str;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -41,14 +43,15 @@ public class Length extends Function {
 	}
 	
 	@Override
-	public Call makeCall(Expression[] args) {
+	public Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(getArgNum(), args);
+		args[0] = FunctionType.dereference(scope, args[0]);
 		if(args[0].getType() instanceof ArrayType) {
 			if(!(args[0] instanceof LValue))
 				throw JPasError.lvalueError();
 			return new Function.Call(lengthArray, args); 
 		}
-		args[0] = checkTypeCast(Type.string, args[0]);
+		args[0] = checkTypeCast(scope, Type.string, args[0]);
 		return new Function.Call(this, args);
 	}
 }

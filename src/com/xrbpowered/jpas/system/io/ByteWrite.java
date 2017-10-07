@@ -4,9 +4,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.DataFileObject;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -115,35 +117,36 @@ public class ByteWrite extends IOProc {
 	}
 
 	@Override
-	public Call makeCall(Expression[] args) {
+	public Call makeCall(Scope scope, Expression[] args) {
 		if(args.length<2)
 			JPasError.argumentNumberError(false);
 		
-		IOType io = getIOType(args);
+		IOType io = getIOType(scope, args);
 		if(io!=IOType.untypedFile)
 			throw JPasError.argumentTypeError();
 		
+		args[1] = FunctionType.dereference(scope, args[1]);
 		Expression dst = args[1];
 		if(dst.getType() instanceof ArrayType) {
 			if(((ArrayType) dst.getType()).type!=Type.integer)
 				throw JPasError.argumentTypeError();
 			testArgNumber(getArgNum(), args);
-			args[2] = checkTypeCast(Type.integer, args[2]);
+			args[2] = checkTypeCast(scope, Type.integer, args[2]);
 			return new ByteWrite.ArrayCall(this, args);
 		}
 		
-		dst = Expression.implicitCast(Type.string, args[1]);
+		dst = Expression.implicitCast(scope, Type.string, args[1]);
 		if(dst!=null) {
 			testArgNumber(getArgNum(), args);
 			args[1] = dst;
-			args[2] = checkTypeCast(Type.integer, args[2]);
+			args[2] = checkTypeCast(scope, Type.integer, args[2]);
 			return new ByteWrite.StringCall(this, args);
 		}
 		
-		dst = Expression.implicitCast(Type.integer, args[1]);
+		dst = Expression.implicitCast(scope, Type.integer, args[1]);
 		if(dst!=null) {
 			for(int i=1; i<args.length; i++) {
-				args[i] = checkTypeCast(Type.integer, args[i]);
+				args[i] = checkTypeCast(scope, Type.integer, args[i]);
 			}
 			return new ByteWrite.IntsCall(this, args);
 		}

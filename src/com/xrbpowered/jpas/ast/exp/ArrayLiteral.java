@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.Range;
@@ -42,13 +43,13 @@ public class ArrayLiteral extends FluidTypeExpression {
 	}
 
 	@Override
-	public Expression backPropagateType(Type t) {
+	public Expression backPropagateType(Scope scope, Type t) {
 		if(!(t instanceof ArrayType))
 			return null;
 		ArrayType tt = (ArrayType) t;
 		List<Expression> expressions = new ArrayList<>();
 		for(int i=0; i<at.range.length(); i++) {
-			Expression ex = Expression.implicitCast(tt.type, vals.get(i));
+			Expression ex = Expression.implicitCast(scope, tt.type, vals.get(i));
 			if(ex==null)
 				return null;
 			expressions.add(ex);

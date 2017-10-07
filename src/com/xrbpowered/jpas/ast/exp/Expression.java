@@ -1,6 +1,8 @@
 package com.xrbpowered.jpas.ast.exp;
 
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Statement;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.RangeType;
 import com.xrbpowered.jpas.ast.data.Type;
 
@@ -24,10 +26,24 @@ public abstract class Expression {
 	public abstract Object evaluate();
 	public abstract boolean isConst();
 	
-	public static Expression implicitCast(Type dt, Expression src) {
+	public static Expression implicitCast(Scope scope, Type dt, Expression src) {
 		Type st = src.getType();
+		
+		if(st instanceof FunctionType) {
+			if(dt instanceof FunctionType) {
+				if(dt.equals(st))
+					return src;
+				else
+					return null;
+			}
+			else {
+				src = ((FunctionType) st).makeCall(scope, src, null);
+				st = src.getType();
+			}
+		}
+		
 		if(st.isFluid())
-			return ((FluidTypeExpression) src).backPropagateType(dt);
+			return ((FluidTypeExpression) src).backPropagateType(scope, dt);
 		else if(dt.equals(st))
 			return src;
 		else if(dt==Type.string)

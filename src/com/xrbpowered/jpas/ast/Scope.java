@@ -94,7 +94,7 @@ public class Scope {
 		}
 		else {
 			this.forwardScope = this;
-			this.stackFrame = new StackFrameDesc();
+			this.stackFrame = new StackFrameDesc(parent==null ? null : parent.stackFrame);
 		}
 	}
 	

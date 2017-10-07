@@ -3,6 +3,7 @@ package com.xrbpowered.jpas.ast.exp;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.RecordObject;
 import com.xrbpowered.jpas.ast.data.RecordType;
 import com.xrbpowered.jpas.ast.data.Type;
@@ -38,7 +39,7 @@ public class RecordLiteral extends FluidTypeExpression {
 	}
 	
 	@Override
-	public Expression backPropagateType(Type t) {
+	public Expression backPropagateType(Scope scope, Type t) {
 		if(!(t instanceof RecordType))
 			return null;
 		RecordType tt = (RecordType) t;
@@ -50,7 +51,7 @@ public class RecordLiteral extends FluidTypeExpression {
 			int index = tt.find(name);
 			if(index<0)
 				return null;
-			Expression ex = Expression.implicitCast(tt.getType(index), vals.get(rt.find(name)));
+			Expression ex = Expression.implicitCast(scope, tt.getType(index), vals.get(rt.find(name)));
 			if(ex==null)
 				return null;
 			expressions.set(index, ex);

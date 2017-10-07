@@ -1,8 +1,10 @@
 package com.xrbpowered.jpas.system;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.ArrayType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.PointerType;
 import com.xrbpowered.jpas.ast.data.Range;
 import com.xrbpowered.jpas.ast.data.Type;
@@ -101,12 +103,13 @@ public class NewPtrArray extends Function {
 			return true;
 	}
 	
-	public Function.Call makeCall(Expression[] args) {
+	public Function.Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(getArgNum(), args);
 		for(int i=1; i<args.length; i++) {
 			Type dt = getArgType(i, args);
-			args[i] = checkTypeCast(dt, args[i]);
+			args[i] = checkTypeCast(scope, dt, args[i]);
 		}
+		args[0] = FunctionType.dereference(scope, args[0]);
 		checkLValue(0, args[0]);
 		Type type = args[0].getType();
 		if(type instanceof PointerType) {

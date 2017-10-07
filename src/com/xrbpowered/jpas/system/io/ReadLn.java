@@ -3,6 +3,8 @@ package com.xrbpowered.jpas.system.io;
 import java.util.Scanner;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.TextFileObject;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
@@ -52,20 +54,23 @@ public class ReadLn extends IOProc {
 	}
 	
 	@Override
-	public Function.Call makeCall(Expression[] args) {
-		IOType io = getIOType(args);
+	public Function.Call makeCall(Scope scope, Expression[] args) {
+		IOType io = getIOType(scope, args);
 		int startArg = io!=IOType.stdio ? 1 : 0;
 		Expression fileArg = io!=IOType.stdio ? args[0] : null;
 		
 		if(io==IOType.stdio || io==IOType.text) {
 			if(args==null || args.length==startArg)
 				return new ReadLn.Call(this, fileArg, null);
-			else if(args.length==startArg+1 && args[startArg].getType()==Type.string) {
-				checkLValue(startArg, args[startArg]);
-				return new ReadLn.Call(this, fileArg, args);
+			else {
+				args[startArg] = FunctionType.dereference(scope, args[startArg]);
+				if(args.length==startArg+1 && args[startArg].getType()==Type.string) {
+					checkLValue(startArg, args[startArg]);
+					return new ReadLn.Call(this, fileArg, args);
+				}
+				else
+					return Read.readLn.makeCall(scope, args);
 			}
-			else
-				return Read.readLn.makeCall(args);
 		}
 		else
 			throw JPasError.argumentTypeError();

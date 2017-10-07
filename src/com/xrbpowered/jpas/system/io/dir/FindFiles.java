@@ -3,6 +3,7 @@ package com.xrbpowered.jpas.system.io.dir;
 import java.io.File;
 
 import com.xrbpowered.jpas.JPas;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.PointerType;
@@ -94,8 +95,8 @@ public class FindFiles extends Function {
 	}
 	
 	@Override
-	public Function.Call makeCall(Expression[] args) {
-		return new FindFiles.Call(super.makeCall(args));
+	public Function.Call makeCall(Scope scope, Expression[] args) {
+		return new FindFiles.Call(super.makeCall(scope, args));
 	}
 
 }

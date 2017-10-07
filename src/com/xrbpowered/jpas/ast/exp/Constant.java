@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
@@ -50,7 +51,7 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 	}
 	
 	@Override
-	public Expression backPropagateType(Type t) {
+	public Expression backPropagateType(Scope scope, Type t) {
 		if(type instanceof ArrayType) {
 			ArrayType at = (ArrayType) type;
 			if(!(t instanceof ArrayType))
@@ -60,7 +61,7 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 			List<Expression> expressions = new ArrayList<>();
 			for(int i=0; i<at.range.length(); i++) {
 				Expression ex = new Constant(at.type, ar.get(i));
-				ex = Expression.implicitCast(tt.type, ex);
+				ex = Expression.implicitCast(scope, tt.type, ex);
 				if(ex==null || !ex.isConst())
 					return null;
 				expressions.add(ex);
@@ -85,7 +86,7 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 					return null;
 				int i = rt.find(name);
 				Expression ex = new Constant(rt.getType(i), rec.get(i));
-				ex = Expression.implicitCast(tt.getType(index), ex);
+				ex = Expression.implicitCast(scope, tt.getType(index), ex);
 				if(ex==null || !ex.isConst())
 					return null;
 				expressions.set(index, ex);

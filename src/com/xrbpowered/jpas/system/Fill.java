@@ -1,9 +1,11 @@
 package com.xrbpowered.jpas.system;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -58,31 +60,32 @@ public class Fill extends Function {
 
 	private Expression checkArg;
 	
-	public int checkType(ArrayType at, Type t, int depth) {
+	public int checkType(Scope scope, ArrayType at, Type t, int depth) {
 		if(at.type.equals(t))
 			return depth;
 		else {
-			Expression ex = Expression.implicitCast(at.type, checkArg);
+			Expression ex = Expression.implicitCast(scope, at.type, checkArg);
 			if(ex!=null) {
 				checkArg = ex;
 				return depth;
 			}
 			else if(at.type instanceof ArrayType)
-				return checkType((ArrayType) at.type, t, depth+1);
+				return checkType(scope, (ArrayType) at.type, t, depth+1);
 			else
 				throw JPasError.argumentTypeError();
 		}
 	}
 	
 	@Override
-	public Call makeCall(Expression[] args) {
+	public Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(getArgNum(), args);
+		args[0] = FunctionType.dereference(scope, args[0]);
 		checkLValue(0, args[0]);
 		Type at = args[0].getType();
 		if(at instanceof ArrayType) {
 			checkArg= args[1];
 			Type t = checkArg.getType();
-			int depth = checkType((ArrayType) at, t, 0);
+			int depth = checkType(scope, (ArrayType) at, t, 0);
 			args[1] = checkArg;
 			return new Fill.Call(this, args, depth);
 		}

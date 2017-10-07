@@ -1,62 +1,41 @@
 package com.xrbpowered.jpas.ast.exp;
 
-import java.util.List;
-
 import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.Scope.ScopeEntry;
 import com.xrbpowered.jpas.ast.Statement;
+import com.xrbpowered.jpas.ast.data.FunctionDeclaration;
+import com.xrbpowered.jpas.ast.data.FunctionDeclaration.ArgDef;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.mem.Pointer;
 import com.xrbpowered.jpas.mem.StackFrameDesc;
 
 public class CustomFunction extends Function {
 
-	public static class ArgDef {
-		public final String name;
-		public final Type type;
-		public final boolean lvalue;
-		public Variable var;
-		
-		public ArgDef(String name, Type type, boolean lvalue) {
-			this.name = name;
-			this.type = type;
-			this.lvalue = lvalue;
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			ArgDef def = (ArgDef) obj;
-			return lvalue==def.lvalue && Type.checkEqual(type, def.type);
-		}
-	}
-	
 	private StackFrameDesc sf = null;
 	private Variable result = null;
 	
+	private final FunctionDeclaration decl;
 	public Scope forwardScope = null;
 	public Statement body = null;
 	
-	private List<ArgDef> argDefs;
-	private final Type type;
-	
-	public CustomFunction(List<ArgDef> args, Type type) {
-		this.argDefs = args;
-		this.type = type;
+	public CustomFunction(FunctionDeclaration decl) {
+		this.decl = decl;
 	}
 	
 	@Override
 	public EntryType getScopeEntryType() {
-		return type==null ? EntryType.procedure : EntryType.function;
+		return decl.type==null ? EntryType.procedure : EntryType.function;
 	}
 	
 	public Scope createScope(Scope parent) {
 		Scope s = new Scope(parent);
 		sf = s.stackFrame;
-		if(type!=null)
-			result = (Variable) s.add("Result", new Variable(type, s.stackFrame));
-		if(argDefs!=null) {
-			for(ArgDef arg : argDefs) {
+		if(decl.type!=null)
+			result = (Variable) s.add("Result", new Variable(decl.type, s.stackFrame));
+		if(decl.argDefs!=null) {
+			for(ArgDef arg : decl.argDefs) {
 				arg.var = (Variable) s.add(arg.name, arg.lvalue ? new RefArgument(arg.type, s.stackFrame) : new Variable(arg.type, s.stackFrame));
 			}
 		}
@@ -67,25 +46,38 @@ public class CustomFunction extends Function {
 	public boolean checkImpl() {
 		return body!=null;
 	}
+	
+	public StackFrameDesc getStackFrame() {
+		return sf;
+	}
+	
+	public Constant makeFuncRef() {
+		return new Constant(new FunctionType(decl), this);
+	}
 
 	@Override
 	public Type getType() {
-		return type;
+		return decl.type;
+	}
+	
+	@Override
+	public boolean hasSideEffects() {
+		return true;
 	}
 
 	@Override
 	public int getArgNum() {
-		return argDefs==null ? 0 : argDefs.size();
+		return decl.argDefs==null ? 0 : decl.argDefs.size();
 	}
 	
 	@Override
 	public boolean isLValue(int argIndex) {
-		return argDefs.get(argIndex).lvalue;
+		return decl.argDefs.get(argIndex).lvalue;
 	}
 	
 	@Override
 	public Type getArgType(int argIndex) {
-		return argDefs.get(argIndex).type;
+		return decl.argDefs.get(argIndex).type;
 	}
 
 	@Override
@@ -95,7 +87,7 @@ public class CustomFunction extends Function {
 			result.init(null);
 		if(args!=null) {
 			for(int i=0; i<args.length; i++) {
-				ArgDef arg = argDefs.get(i);
+				ArgDef arg = decl.argDefs.get(i);
 				if(arg.lvalue)
 					((RefArgument) arg.var).setPointer((Pointer) args[i]);
 				else
@@ -124,22 +116,13 @@ public class CustomFunction extends Function {
 		return ((CustomFunction) e).body!=null; 
 	}
 	
-	public static CustomFunction match(CustomFunction prev, List<ArgDef> args, Type type) {
-		if(args==null && type==null)
-			return prev;
-		if(!Type.checkEqual(prev.type, type))
+	public CustomFunction implement(FunctionDeclaration decl) {
+		if(decl.argDefs==null && decl.type==null)
+			return this;
+		if(!this.decl.equals(decl))
 			return null;
-		if((prev.argDefs==null || prev.argDefs.size()==0) && args!=null && args.size()>0)
-			return null;
-		if(prev.argDefs!=null) {
-			if(prev.argDefs.size()!=args.size())
-				return null;
-			for(int i=0; i<prev.argDefs.size(); i++)
-				if(!prev.argDefs.get(i).equals(args.get(i)))
-					return null;
-		}
-		prev.argDefs = args;
-		return prev;
+		this.decl.updateArgs(decl.argDefs);
+		return this;
 	}
 	
 }

@@ -4,10 +4,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.ArrayObject;
 import com.xrbpowered.jpas.ast.data.ArrayType;
 import com.xrbpowered.jpas.ast.data.DataFileObject;
 import com.xrbpowered.jpas.ast.data.FileType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -59,14 +61,15 @@ public class BlockWrite extends IOProc {
 	}
 
 	@Override
-	public Call makeCall(Expression[] args) {
+	public Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(getArgNum(), args);
-		args[2] = checkTypeCast(Type.integer, args[2]);
+		args[2] = checkTypeCast(scope, Type.integer, args[2]);
+		args[1] = FunctionType.dereference(scope, args[1]);
 		if(!(args[1].getType() instanceof ArrayType))
 			throw JPasError.argumentTypeError();
 		ArrayType at = (ArrayType) args[1].getType();
 		
-		IOType io = getIOType(args);
+		IOType io = getIOType(scope, args);
 		if(io==IOType.untypedFile) {
 			if(!at.type.builtIn)
 				throw JPasError.argumentTypeError();

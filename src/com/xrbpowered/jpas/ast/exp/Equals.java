@@ -28,7 +28,6 @@ public class Equals extends BinaryOp {
 			return xv==null && yv==null;
 		else
 			return xv.equals(yv);
-		// TODO check that equals is implemented for for all types
 	}
 
 }

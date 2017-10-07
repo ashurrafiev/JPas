@@ -1,8 +1,10 @@
 package com.xrbpowered.jpas.system.io;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.FileType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -29,10 +31,11 @@ public abstract class IOProc extends Function {
 		return null;
 	}
 	
-	protected IOType getIOType(Expression[] args) {
+	protected IOType getIOType(Scope scope, Expression[] args) {
 		IOType io = IOType.stdio;
 		if(args==null || args.length<1)
 			return io;
+		args[0] = FunctionType.dereference(scope, args[0]);
 		Type t = args[0].getType();
 		if(t==FileType.text)
 			io = IOType.text;

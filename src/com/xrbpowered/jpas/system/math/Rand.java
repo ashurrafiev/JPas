@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.system.math;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -55,12 +56,13 @@ public class Rand extends Function {
 		return null;
 	}
 
-	public Function.Call makeCall(Expression[] args) {
+	public Function.Call makeCall(Scope scope, Expression[] args) {
 		if(args==null || args.length==0)
 			return new Function.Call(realRand, null);
 		else {
 			testArgNumber(1, args);
-			if(args[0].getType()==Type.integer)
+			args[0] = checkTypeCast(scope, Type.integer, args[0]);
+			if(args[0]!=null)
 				return new Function.Call(intRand, args);
 			else
 				throw JPasError.argumentTypeError();

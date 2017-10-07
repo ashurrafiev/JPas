@@ -1,6 +1,7 @@
 package com.xrbpowered.jpas.system;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
@@ -45,7 +46,7 @@ public class Swap extends Function {
 	}
 	
 	@Override
-	public Call makeCall(Expression[] args) {
+	public Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(getArgNum(), args);
 		checkLValue(0, args[0]);
 		checkLValue(1, args[1]);

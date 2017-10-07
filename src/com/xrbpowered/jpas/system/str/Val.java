@@ -1,7 +1,9 @@
 package com.xrbpowered.jpas.system.str;
 
 import com.xrbpowered.jpas.JPasError;
+import com.xrbpowered.jpas.ast.Scope;
 import com.xrbpowered.jpas.ast.Scope.EntryType;
+import com.xrbpowered.jpas.ast.data.FunctionType;
 import com.xrbpowered.jpas.ast.data.Type;
 import com.xrbpowered.jpas.ast.exp.Expression;
 import com.xrbpowered.jpas.ast.exp.Function;
@@ -70,10 +72,11 @@ public class Val extends Function {
 	}
 
 	@Override
-	public Call makeCall(Expression[] args) {
+	public Call makeCall(Scope scope, Expression[] args) {
 		testArgNumber(getArgNum(), args);
-		args[0] = checkTypeCast(getArgType(0, args), args[0]);
-		args[2] = checkTypeCast(getArgType(2, args), args[2]);
+		args[0] = checkTypeCast(scope, getArgType(0, args), args[0]);
+		args[2] = checkTypeCast(scope, getArgType(2, args), args[2]);
+		args[1] = FunctionType.dereference(scope, args[1]);
 		checkLValue(1, args[1]);
 		checkLValue(2, args[2]);
 		if(args[1].getType()==Type.integer)
