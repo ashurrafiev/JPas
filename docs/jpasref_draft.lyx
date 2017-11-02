@@ -12,6 +12,7 @@
 \usepackage{nameref}
 \usepackage{titlesec}
 \usepackage{framed}
+\usepackage{needspace}
 \usepackage{color}
 \usepackage{longtable}
 \usepackage{multicol}
@@ -106,7 +107,7 @@ Software.
 \makeatother
 
 \titlespacing{\subsection}{\parindent}{30pt plus 15pt}{15pt}
-\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{0.5em}{}[]
+\titleformat{\subsection}{\needspace{108pt}\Large\bfseries}{\thesubsection}{0.5em}{}[]
 \titlespacing{\subsubsection}{\parindent}{10pt plus 10pt}{5pt}
 \titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{0.5em}{}[]
 
@@ -385,7 +386,7 @@ Pascal version
 5.0 is used in this manual only as a historical reference and a baseline
  for feature comparison, and is further referred as 
 \emph on
-classic
+classical
 \begin_inset space ~
 \end_inset
 
@@ -415,7 +416,7 @@ end{note}
 \end_layout
 
 \begin_layout Subsection
-Differences from Classic Pascal
+Differences from Classical Pascal
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Differences-from-Classic"
@@ -426,15 +427,15 @@ name "subsec:Differences-from-Classic"
 \end_layout
 
 \begin_layout Standard
-JPascal adds new features and removes some from the classic Pascal.
+JPascal adds new features and removes some from the classical Pascal.
  Many of the changes are done because of JPas environment is running in
  JVM.
- JPascal is a higher level programming language than classic Pascal.
+ JPascal is a higher level programming language than classical Pascal.
  Most of the removed features are linked to a specific system architecture.
 \end_layout
 
 \begin_layout Standard
-Keywords that existed in classic Pascal, but have not been added to JPascal:
+Keywords that existed in classical Pascal, but have not been added to JPascal:
 \end_layout
 
 \begin_layout Standard
@@ -591,7 +592,7 @@ Hello world
 \begin_inset Quotes erd
 \end_inset
 
- program in classic Pascal:
+ program in classical Pascal:
 \end_layout
 
 \begin_layout Standard
@@ -722,7 +723,7 @@ Interface/implementation structure is not limited to units, however it is
 \end_layout
 
 \begin_layout Standard
-In classic Pascal:
+In classical Pascal:
 \end_layout
 
 \begin_layout Standard
@@ -1151,7 +1152,7 @@ Variant records and tag fields are not possible.
 \end_layout
 
 \begin_layout Standard
-Type-forwarding for pointers is even more permissive than in classic Pascal.
+Type-forwarding for pointers is even more permissive than in classical Pascal.
  It is possible to make a pointer to a record type within this record type's
  declaration:
 \end_layout
@@ -1328,7 +1329,7 @@ code{)}
 
 \end_inset
 
- in classic Pascal.
+ in classical Pascal.
  Because of this, you can use array and record literals anywhere in the
  code.
  Regular parentheses would make no distinction between single-value array
@@ -1452,7 +1453,7 @@ code{Port}
 
 \end_inset
 
- arrays, provided in classic Pascal, do not exist in JPas.
+ arrays, provided in classical Pascal, do not exist in JPas.
  Almost all of the memory access functions and procedures are also removed.
 \end_layout
 
@@ -1497,7 +1498,7 @@ On the bright side, the memory management became much easier thanks to JVM's
 \end_layout
 
 \begin_layout Standard
-In classic Pascal, it was mandatory to call either 
+In classical Pascal, it was mandatory to call either 
 \begin_inset ERT
 status open
 
@@ -1910,7 +1911,7 @@ kw{exit}}
 \end_inset
 
  without a label to exit a function, procedure, or the program, like in
- classic Pascal.
+ classical Pascal.
 \end_layout
 
 \begin_layout Section
@@ -2428,7 +2429,7 @@ kw{exit}}
 
 \end_inset
 
- was a function in classic Pascal, not a keyword.
+ was a function in classical Pascal, not a keyword.
 \end_layout
 
 \begin_layout Standard
@@ -2597,7 +2598,7 @@ code{String}
 
 \end_inset
 
- was a keyword in classic Pascal, now it is considered a registered identifier.
+ was a keyword in classical Pascal, now it is considered a registered identifier.
  
 \end_layout
 
@@ -4107,6 +4108,14 @@ reference "sec:Procedures-and-Functions"
 \end_layout
 
 \begin_layout Subsection
+Units
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
 Unit inclusion
 \end_layout
 
@@ -4155,6 +4164,90 @@ comm{User defined module.}%
 ...
 \end_layout
 
+\begin_layout Subsubsection
+Interface blocks
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{interface}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Public declarations.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{implementation}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+comm{Unit initialisaton code with implementation.}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{end}.%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
 \begin_layout Section
 Types
 \end_layout
@@ -4169,6 +4262,16 @@ Simple Types
 
 \begin_layout Subsubsection
 Integer
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Integer
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4178,6 +4281,16 @@ Integer
 
 \begin_layout Subsubsection
 Real
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Real
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4187,6 +4300,16 @@ Real
 
 \begin_layout Subsubsection
 Boolean
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Boolean
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4234,6 +4357,16 @@ code{False}
 
 \begin_layout Subsubsection
 Char
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Char
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4257,7 +4390,27 @@ code{
 \end_layout
 
 \begin_layout Subsection
-String Type
+String
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+String
+\end_layout
+
+\end_inset
+
+ Type
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!String
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4275,6 +4428,16 @@ To do:
 
 \begin_layout Subsection
 Enumerated Types
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!enumerated
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4313,6 +4476,16 @@ codebox{%
 
 \begin_layout Subsection
 Subrange Types
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!subrange
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4351,6 +4524,16 @@ codebox{%
 
 \begin_layout Subsection
 Ordinal Types
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!ordinal
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4399,6 +4582,16 @@ code{Char}
 
 \begin_layout Subsection
 Array Types
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!array
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4652,6 +4845,16 @@ comm{The same as [North..West].}%
 
 \begin_layout Subsubsection
 Array literals
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Literals!array
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4983,6 +5186,16 @@ To do:
 
 \begin_layout Subsection
 Record Types
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!record
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5169,6 +5382,16 @@ reference "subsec:Pointers"
 
 \begin_layout Subsubsection
 Record literals
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Literals!record
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5416,6 +5639,26 @@ Records also implement copy on assign, which is done recursively for all
 
 \begin_layout Subsection
 Pointers
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Pointer
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!pointer
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Pointers"
@@ -6103,6 +6346,16 @@ To do:
 
 \begin_layout Subsection
 File types
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Types!file
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8676,7 +8929,7 @@ any
 \begin_inset space ~
 \end_inset
 
-types
+type
 \end_layout
 
 \end_inset
@@ -8746,7 +8999,7 @@ any
 \begin_inset space ~
 \end_inset
 
-types
+type
 \end_layout
 
 \end_inset
@@ -8809,10 +9062,6 @@ less
 
 \begin_layout Plain Layout
 comparable
-\begin_inset space ~
-\end_inset
-
-types
 \end_layout
 
 \end_inset
@@ -8875,10 +9124,6 @@ greater
 
 \begin_layout Plain Layout
 comparable
-\begin_inset space ~
-\end_inset
-
-types
 \end_layout
 
 \end_inset
@@ -8949,10 +9194,6 @@ equal
 
 \begin_layout Plain Layout
 comparable
-\begin_inset space ~
-\end_inset
-
-types
 \end_layout
 
 \end_inset
@@ -9023,10 +9264,6 @@ equal
 
 \begin_layout Plain Layout
 comparable
-\begin_inset space ~
-\end_inset
-
-types
 \end_layout
 
 \end_inset
@@ -9766,8 +10003,485 @@ name "sec:Procedures-and-Functions"
 ...
 \end_layout
 
-\begin_layout Section
-Units
+\begin_layout Subsection
+Declarations
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Procedure declarations
+\end_layout
+
+\begin_layout Standard
+Example of a procedure:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} WriteSum(X, Y: Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{begin}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad 
+\backslash
+kw{var} Sum: Integer = X+Y;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Write(X, `+', Y, `=', Sum);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{end};%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{note}~
+\end_layout
+
+\end_inset
+
+Unlike in classical Pascal, variables and other declarations must be placed
+ inside the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{begin} ...
+ 
+\backslash
+kw{end}}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+block.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{note}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the body is a single statement, it does not need to be enclosed in a
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{
+\backslash
+kw{begin} ...
+ 
+\backslash
+kw{end}}
+\end_layout
+
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+block:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{procedure} WriteSum(X, Y: Integer);
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Write(X, `+', Y, `=', X+Y);%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Function declarations
+\end_layout
+
+\begin_layout Standard
+Example of a function:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Sum(X, Y: Integer): Integer;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{begin}
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Result := X+Y;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{end};%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Result}
+\end_layout
+
+\end_inset
+
+ is a reserved identifier representing a special variable that stores the
+ function's return value.
+ It is a bad programming style not to write any value to the 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+code{Result}
+\end_layout
+
+\end_inset
+
+, but it is not an error.
+ A default value for the function type is returned in this case.
+\end_layout
+
+\begin_layout Subsubsection
+Forward declarations
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsection
+Parameters
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Value parameters
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Subsubsection
+Reference parameters
+\end_layout
+
+\begin_layout Standard
+...
+ also called 
+\emph on
+variable parameters
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+In classical Pascal it was possible to use untyped variable parameters and
+ access them via absolute addressing.
+ JPascal does not allow absolute addressing, hence untyped parameters are
+ not allowed too.
+\end_layout
+
+\begin_layout Subsection
+Procedural Types
+\end_layout
+
+\begin_layout Standard
+...
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+codebox{%
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{type} RealFunc = 
+\backslash
+kw{function}(X, Y: Real): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{function} Sum(X, Y: Real): Real;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\backslash
+quad Result := X+Y;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+kw{var} Func: RealFunc;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Func := Sum;
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+~
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+WriteLn(Func(3, 5)); 
+\backslash
+comm{Calls Sum(3, 5) and outputs 8.}%
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

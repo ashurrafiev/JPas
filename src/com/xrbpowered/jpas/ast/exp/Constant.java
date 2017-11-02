@@ -128,6 +128,6 @@ public class Constant extends FluidTypeExpression implements ScopeEntry {
 	
 	public static final Constant constTrue = new Constant(Type.bool, true);
 	public static final Constant constFalse = new Constant(Type.bool, false);
-	public static final Constant constNil = new Constant(new PointerType(null), null);
+	public static final Constant constNil = new Constant(new PointerType(null), null); // TODO null type
 	public static final Constant constPi = new Constant(Type.real, Math.PI);
 }

@@ -31,6 +31,7 @@ public class FunctionDeclaration {
 	public FunctionDeclaration(List<ArgDef> args, Type type) {
 		this.argDefs = args;
 		this.type = type;
+		// FIXME FunctionType as a result is not allowed
 	}
 	
 	public int numArgs() {
