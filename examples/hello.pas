@@ -1,0 +1,1 @@
+WriteLn('Hello world!').
